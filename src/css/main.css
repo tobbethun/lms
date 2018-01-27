@@ -1,0 +1,65 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+h1 {
+  color: white;
+}
+input {
+  margin: 0 10px 0 0;
+}
+.main-wrapper {
+  height: 100vh;
+}
+.authenticate {
+  text-align: right;
+}
+.authenticate-logo {
+  -webkit-animation: authenticate-logo-spin infinite 20s linear;
+          animation: authenticate-logo-spin infinite 20s linear;
+  height: 2.5em;
+}
+.authenticate-header {
+  background-color: #000000;
+  padding: 10px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+.authenticate-title {
+  font-size: 1em;
+}
+.authenticate-form {
+  -ms-flex-item-align: center;
+      align-self: center;
+  padding: 0 0 0 10px;
+}
+.authenticate-intro {
+  font-size: large;
+}
+@-webkit-keyframes authenticate-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes authenticate-logo-spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
