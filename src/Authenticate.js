@@ -24,14 +24,14 @@ export class Authenticate extends React.Component {
   }
   handleChange(key) {
     return( e => {
-      var state = {};
+      const state = {};
       state[key] = e.target.value;
       this.setState(state);
     });
   }
   handleSubmit(e) {
     e.preventDefault();
-    var data = {
+    const data = {
         email: this.state.email,
 	    	password: this.state.password
 	  }
@@ -80,12 +80,12 @@ export class Authenticate extends React.Component {
           <img src={logo} className="authenticate-logo" alt="logo" />
           <h1 className="authenticate-title">{this.state.loginMessage}</h1>
           <div className="authenticate-form">
-          <form onSubmit={this.handleSubmit}>
-               <input type="email" placeholder="email" value={this.state.email} onChange={this.handleChange('email')} required />
-               <input type="password" placeholder="password" value={this.state.password} onChange={this.handleChange('password')} required />
-               <input type="submit" value="LOGIN" />
-           </form>
-      </div>
+              <form onSubmit={this.handleSubmit}>
+                   <input type="email" placeholder="email" value={this.state.email} onChange={this.handleChange('email')} required />
+                   <input type="password" placeholder="password" value={this.state.password} onChange={this.handleChange('password')} required />
+                   <input type="submit" value="LOGIN" />
+               </form>
+          </div>
         </header>
         { this.state.verified &&
           <div className="authenticate-intro">
