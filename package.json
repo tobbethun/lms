@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "body-parser": "^1.18.2",
+    "contentful": "^5.0.5",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mysql": "^2.15.0",

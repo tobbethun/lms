@@ -2,9 +2,10 @@
 // Basic Setup
 var http     = require('http');
 	express  = require('express');
-  cors      = require('cors');
+    cors      = require('cors');
 	mysql    = require('mysql');
 	parser   = require('body-parser');
+    contentful = require('contentful');
 	crypto = require('crypto');
 
 	var crypto = require('crypto'),
@@ -98,14 +99,14 @@ app.post('/login', cors(corsOptions), function (req,res) {
   } else {
     if(results.length >0){
       if(results[0].password == encryptedPassword){
-				console.log("login sucessfull");
+        console.log("login sucessfull");
         res.send({
           "code":200,
           "success":"login sucessfull"
             });
       }
       else {
-				console.log("Email and password does not match");
+        console.log("Email and password does not match");
         res.send({
           "code":204,
           "success":"Email and password does not match"
@@ -113,7 +114,7 @@ app.post('/login', cors(corsOptions), function (req,res) {
       }
     }
     else {
-			console.log("Email does not exits");
+      console.log("Email does not exits");
       res.send({
         "code":204,
         "success":"Email does not exits"
@@ -122,3 +123,45 @@ app.post('/login', cors(corsOptions), function (req,res) {
   }
   });
 });
+
+
+// _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
+
+var client = contentful.createClient({
+    space: '9wq1nwc23wz5',
+    accessToken: 'e2759746697348fd582517b58a84683b6954b4b12f0cdeec31868b6b00fa2295'
+});
+
+client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
+    .then(function (entry) {
+        // logs the entry metadata
+        console.log('1', entry.sys)
+
+        // logs the field with ID title
+        console.log('2', entry.fields.title)
+    })
+
+/*
+client.getEntries()
+    .then(function (entries) {
+        // log the title for all the entries that have it
+        entries.items.forEach(function (entry) {
+            if(entry.fields.course) {
+                console.log('3', entry.fields)
+                if(entry.fields.media) {
+                    console.log('4', entry.fields.media[0].fields.file.url)
+                }
+            }
+        })
+    });
+*/
+
+client.getEntries({
+    'content_type': 'lessons'
+})
+    .then(function (entries) {
+        console.log(JSON.stringify(entries))
+        entries.items.forEach(function (entry) {
+            console.log(JSON.stringify(entry.fields.title))
+        })
+    })
