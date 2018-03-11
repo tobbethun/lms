@@ -2,7 +2,7 @@
 // Basic Setup
 var http     = require('http');
 	express  = require('express');
-    cors      = require('cors');
+    cors     = require('cors');
 	mysql    = require('mysql');
 	parser   = require('body-parser');
     contentful = require('contentful');
@@ -38,7 +38,7 @@ try {
   console.log('Database connected');
 
 } catch(e) {
-	console.log('Database Connetion failed:' + e);
+	console.log('Database Connection failed:' + e);
 }
 
 var corsOptions = {
@@ -135,33 +135,27 @@ var client = contentful.createClient({
 client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
     .then(function (entry) {
         // logs the entry metadata
-        console.log('1', entry.sys)
+        console.log('1', entry)
 
         // logs the field with ID title
-        console.log('2', entry.fields.title)
+        console.log('2', entry.fields.lessons)
     })
 
-/*
-client.getEntries()
-    .then(function (entries) {
-        // log the title for all the entries that have it
-        entries.items.forEach(function (entry) {
-            if(entry.fields.course) {
-                console.log('3', entry.fields)
-                if(entry.fields.media) {
-                    console.log('4', entry.fields.media[0].fields.file.url)
-                }
-            }
-        })
-    });
-*/
 
-client.getEntries({
-    'content_type': 'lessons'
-})
-    .then(function (entries) {
-        console.log(JSON.stringify(entries))
-        entries.items.forEach(function (entry) {
-            console.log(JSON.stringify(entry.fields.title))
-        })
+
+app.get('/course', function (req,res) {
+    let payLoad = [];
+
+    res.setHeader('Content-Type', 'application/json');
+    client.getEntries({
+        'content_type': 'course'
     })
+        .then(function (entries) {
+
+            entries.items.forEach(function (entry) {
+                console.log('hela entry______:', JSON.stringify(entry, null, 2))
+                payLoad.push(entry.fields);
+            })
+            res.status(200).send(payLoad);
+        });
+});
