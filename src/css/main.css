@@ -10,7 +10,12 @@ input {
   margin: 0 10px 0 0;
 }
 .main-wrapper {
+  padding: 5%;
   height: 100vh;
+}
+.main-wrapper img {
+  width: 100%;
+  height: auto;
 }
 .authenticate {
   text-align: right;

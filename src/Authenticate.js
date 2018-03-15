@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import {Link} from 'react-router-dom';
 
 
 export class Authenticate extends React.Component {
@@ -16,8 +17,7 @@ export class Authenticate extends React.Component {
             email: '',
             password: '',
             loginMessage: 'Please login',
-            verified: false,
-            showRegisterForm: false
+            verified: false
         };
     }
 
@@ -74,10 +74,6 @@ export class Authenticate extends React.Component {
         // });
     }
 
-    onClick() {
-        this.setState({showRegisterForm: !this.state.showRegisterForm})
-    }
-
     render() {
         return (
             <div className="authenticate">
@@ -93,12 +89,7 @@ export class Authenticate extends React.Component {
                             <input type="submit" value="LOGIN"/>
                         </form>
                     </div>
-                    <button onClick={() => {this.onClick()}}>REGISTER</button>
-                    {this.state.showRegisterForm &&
-                        <div>
-                            dockelidock
-                        </div>
-                    }
+                    <Link to="/register">Register</Link>
                 </header>
                 {this.state.verified &&
                 <div className="authenticate-intro">

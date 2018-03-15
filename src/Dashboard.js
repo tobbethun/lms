@@ -13,7 +13,7 @@ export class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {
-            courses: [],
+            courses: []
         };
     }
     componentWillMount() {
