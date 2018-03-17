@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 export class Authenticate extends React.Component {
     state = {
         redirectToReferrer: false
-    }
+    };
 
     constructor() {
         super();
@@ -20,8 +20,8 @@ export class Authenticate extends React.Component {
         };
     }
 
-    test() {
-        this.props.loginFunction();
+    test(user) {
+        this.props.loginFunction(user);
     }
 
     handleChange(key) {
@@ -37,7 +37,7 @@ export class Authenticate extends React.Component {
         const data = {
             email: this.state.email,
             password: this.state.password
-        }
+        };
         fetch("http://localhost:5000/login/", {
             method: "post",
             headers: {
@@ -47,17 +47,17 @@ export class Authenticate extends React.Component {
 
             //make sure to serialize your JSON body
             body: JSON.stringify({
-                email: data.email,
-                password: data.password
+            email: data.email,
+            password: data.password
             })
         })
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
-                this.setState({loginMessage: json.success})
+                this.setState({loginMessage: json.success});
                 if (json.code === 200) {
-                    this.test()
+                    this.test(json.user);
                 }
             });
         // On submit of the form, send a POST request with the data to the server.

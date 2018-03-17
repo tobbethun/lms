@@ -12,7 +12,7 @@ const crypto = require('crypto'),
 
 function encrypt(text) {
     const cipher = crypto.createCipher(algorithm, password);
-    let crypted = cipher.update(text, 'utf8', 'hex')
+    let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted;
 }
@@ -42,7 +42,7 @@ try {
 const corsOptions = {
     origin: 'http://localhost:3000',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, constious SmartTVs) choke on 204
-}
+};
 
 
 // Setup express
@@ -116,7 +116,7 @@ app.post('/login', cors(corsOptions), function (req, res) {
     const encryptedPassword = encrypt(password);
     console.log('encryptedPassword', encryptedPassword);
 
-    connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results, fields) {
+    connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
             res.send({
@@ -126,10 +126,19 @@ app.post('/login', cors(corsOptions), function (req, res) {
         } else {
             if (results.length > 0) {
                 if (results[0].password == encryptedPassword) {
-                    console.log("login sucessfull", results[0].id);
+                    console.log("login sucessfull", results[0]);
+                    const user = {
+                        firstname: results[0].first_name,
+                        lastname: results[0].last_name,
+                        email: results[0].email,
+                        lastlogin: results[0].last_login,
+                        regdate: results[0].reg_date,
+                        role: results[0].role
+                    };
                     res.send({
                         "code": 200,
-                        "success": "login sucessfull"
+                        "success": "login sucessfull",
+                        "user": user
                     });
                     connection.query('UPDATE users SET last_login = ? WHERE id = ?', [now, results[0].id]);
                 }
@@ -167,7 +176,7 @@ client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
 
         // logs the field with ID title
         // console.log('2', entry.fields.lessons)
-    })
+    });
 
 
 app.get('/course', function (req, res) {
@@ -180,9 +189,9 @@ app.get('/course', function (req, res) {
         .then(function (entries) {
 
             entries.items.forEach(function (entry) {
-                console.log('hela entry______:', JSON.stringify(entry, null, 2))
+                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
                 payLoad.push(entry.fields);
-            })
+            });
             res.status(200).send(payLoad);
         });
 });

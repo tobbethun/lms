@@ -1,6 +1,7 @@
 import React from 'react';
 import slugify from 'slugify';
 import Course from './Course';
+import {getUser} from "./utils";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,12 +9,12 @@ import {
 } from 'react-router-dom';
 
 
-
 export class Dashboard extends React.Component {
     constructor() {
         super();
         this.state = {
-            courses: []
+            courses: [],
+            user: getUser()
         };
     }
     componentWillMount() {
@@ -32,6 +33,13 @@ export class Dashboard extends React.Component {
         if(!this.state.courses.length) return null;
         return (
             <div>
+                <div className="user-section">
+                    <h3>User:</h3>
+                    <p>{this.state.user.firstname} {this.state.user.lastname}</p>
+                    <p>{this.state.user.email}</p>
+                    <p>Registered: {this.state.user.regdate}</p>
+                    <p>Last loggedin: {this.state.user.lastlogin}</p>
+                </div>
                 <Router>
                     <div>
                         <div className="course-menu">
@@ -53,7 +61,6 @@ export class Dashboard extends React.Component {
                         }
                     </div>
                 </Router>
-
             </div>
         )
     }

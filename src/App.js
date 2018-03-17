@@ -16,9 +16,9 @@ import {
 
 const Auth = {
     isAuthenticated: false,
-    authenticate(cb) {
+    authenticate(user, cb) {
         this.isAuthenticated = true;
-        const object = {valid: true, timestamp: new Date().getTime()};
+        const object = {valid: true, timestamp: new Date().getTime(), user: user};
         localStorage.setItem("loggedIn", JSON.stringify(object));
         setTimeout(cb, 100);
     },
@@ -29,7 +29,7 @@ const Auth = {
     }
 };
 
-const Public = () => <h3>Public</h3>
+const Public = () => <h3>Public</h3>;
 
 
 class Login extends React.Component {
@@ -37,16 +37,16 @@ class Login extends React.Component {
         redirectToReferrer: false,
         showRegisterForm: false
     };
-    login = () => {
-        Auth.authenticate(() => {
+    login = (user) => {
+        Auth.authenticate(user, () => {
             this.setState(() => ({
                 redirectToReferrer: true
             }))
         })
     };
     render() {
-        const {from} = this.props.location.state || {from: {pathname: '/'}}
-        const {redirectToReferrer} = this.state
+        const {from} = this.props.location.state || {from: {pathname: '/'}};
+        const {redirectToReferrer} = this.state;
 
         if (redirectToReferrer === true) {
             return (
