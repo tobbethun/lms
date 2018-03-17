@@ -19,7 +19,7 @@ function encrypt(text) {
 
 function decrypt(text) {
     const decipher = crypto.createDecipher(algorithm, password);
-    const dec = decipher.update(text, 'hex', 'utf8')
+    let dec = decipher.update(text, 'hex', 'utf8');
     dec += decipher.final('utf8');
     return dec;
 }
