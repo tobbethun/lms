@@ -2,6 +2,7 @@ import React from 'react'
 import {Authenticate} from './Authenticate.js'
 import {Dashboard} from './Dashboard.js'
 import {Register} from './Register.js'
+import {isLoggedIn} from "./utils";
 import {
     BrowserRouter as Router,
     Route,
@@ -11,18 +12,6 @@ import {
     withRouter
 } from 'react-router-dom'
 
-// remove localstorage after one day
-const checkLS = () => {
-    const object = JSON.parse(localStorage.getItem("loggedIn")),
-        dateString = object.timestamp,
-        now = new Date().getTime();
-    if ((now - dateString) > 86400000) {
-        localStorage.removeItem('loggedIn');
-        return false
-    } else {
-        return true
-    }
-}
 
 
 const Auth = {
@@ -38,15 +27,7 @@ const Auth = {
         localStorage.removeItem('loggedIn');
         setTimeout(cb, 100);
     }
-}
-const isLoggedIn = () => {
-    console.log('isLoggedIn', localStorage.loggedIn);
-    if (localStorage.loggedIn && checkLS()) {
-        return true
-    } else {
-        return false
-    }
-}
+};
 
 const Public = () => <h3>Public</h3>
 
@@ -63,12 +44,6 @@ class Login extends React.Component {
             }))
         })
     };
-    componentDidUpdate() {
-        const currentLocation = this.props.location.pathname;
-        console.log(currentLocation);
-    }
-
-
     render() {
         const {from} = this.props.location.state || {from: {pathname: '/'}}
         const {redirectToReferrer} = this.state
@@ -80,7 +55,7 @@ class Login extends React.Component {
         }
         const AuthenticateComponent = () => {
             return (
-                <Authenticate parentFunction={this.login} />
+                <Authenticate loginFunction={this.login} />
             );
         };
         return (
@@ -130,7 +105,7 @@ export default function App() {
                 <Route path="/public" component={Public}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register} />
-                <PrivateRoute path='/dashboard' component={Dashboard}/>
+                <PrivateRoute path='/dashboard' component={Dashboard} />
             </div>
         </Router>
     )

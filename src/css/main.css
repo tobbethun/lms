@@ -2,12 +2,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 16px;
 }
-h1 {
-  color: white;
+p {
+  font-size: 16px;
 }
 input {
-  margin: 0 10px 0 0;
+  font-size: 16px;
+  margin: 10px;
+  padding: 3px;
+  text-align: center;
+}
+.button {
+  border: 1px solid #7edc97;
+}
+.button:hover {
+  outline: 2px solid #7edc97;
+}
+.no-match {
+  border: 1px solid red;
 }
 .main-wrapper {
   padding: 5%;
@@ -18,37 +31,62 @@ input {
   height: auto;
 }
 .authenticate {
-  text-align: right;
-}
-.authenticate-logo {
-  -webkit-animation: authenticate-logo-spin infinite 20s linear;
-          animation: authenticate-logo-spin infinite 20s linear;
-  height: 2.5em;
-}
-.authenticate-header {
-  background-color: #000000;
-  padding: 10px;
-  color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
-.authenticate-title {
-  font-size: 1em;
+.authenticate-container {
+  text-align: center;
+  width: 50%;
 }
 .authenticate-form {
-  -ms-flex-item-align: center;
-      align-self: center;
-  padding: 0 0 0 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 .authenticate-intro {
   font-size: large;
 }
-@-webkit-keyframes authenticate-logo-spin {
+.register {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.register img {
+  height: 2.5em;
+}
+.register-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 50%;
+}
+.register-logo {
+  -webkit-animation: register-logo-spin infinite 20s linear;
+          animation: register-logo-spin infinite 20s linear;
+}
+.no-match {
+  border: 1px solid red;
+}
+@-webkit-keyframes register-logo-spin {
   from {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);
@@ -58,7 +96,7 @@ input {
             transform: rotate(360deg);
   }
 }
-@keyframes authenticate-logo-spin {
+@keyframes register-logo-spin {
   from {
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg);

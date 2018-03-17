@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import {Link} from 'react-router-dom';
 
 
@@ -22,7 +21,7 @@ export class Authenticate extends React.Component {
     }
 
     test() {
-        this.props.parentFunction();
+        this.props.loginFunction();
     }
 
     handleChange(key) {
@@ -77,20 +76,17 @@ export class Authenticate extends React.Component {
     render() {
         return (
             <div className="authenticate">
-                <header className="authenticate-header">
-                    <img src={logo} className="authenticate-logo" alt="logo"/>
-                    <h1 className="authenticate-title">{this.state.loginMessage}</h1>
-                    <div className="authenticate-form">
-                        <form onSubmit={this.handleSubmit}>
-                            <input type="email" placeholder="email" value={this.state.email}
-                                   onChange={this.handleChange('email')} required/>
-                            <input type="password" placeholder="password" value={this.state.password}
-                                   onChange={this.handleChange('password')} required/>
-                            <input type="submit" value="LOGIN"/>
-                        </form>
-                    </div>
+                <div className="authenticate-container">
+                    <h3 className="authenticate-title">{this.state.loginMessage}</h3>
+                    <form className="authenticate-form" onSubmit={this.handleSubmit}>
+                        <input type="email" placeholder="email" value={this.state.email}
+                               onChange={this.handleChange('email')} required/>
+                        <input type="password" placeholder="password" value={this.state.password}
+                               onChange={this.handleChange('password')} required/>
+                        <input className='button' type="submit" value="LOGIN"/>
+                    </form>
                     <Link to="/register">Register</Link>
-                </header>
+                </div>
                 {this.state.verified &&
                 <div className="authenticate-intro">
                     <h1>HELLO!</h1>

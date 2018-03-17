@@ -2,12 +2,29 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  font-size: 16px;
 }
 h1 {
-  color: white;
+}
+p {
+  font-size: 16px;
 }
 input {
-  margin: 0 10px 0 0;
+  font-size: 16px;
+  margin: 10px;
+  padding: 3px;
+  text-align: center;
+}
+
+.button {
+  border: 1px solid #7edc97;
+  &:hover {
+    outline: 2px solid #7edc97;
+  }
+}
+
+.no-match {
+  border: 1px solid red;
 }
 
 .main-wrapper {
@@ -20,3 +37,4 @@ input {
 }
 
 @import "authenticate.less";
+@import "register.less";

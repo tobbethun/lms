@@ -1,0 +1,26 @@
+.register {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  img {
+    height: 2.5em;
+  }
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+.register-logo {
+  animation: register-logo-spin infinite 20s linear;
+}
+
+.no-match {
+  border: 1px solid red;
+}
+
+@keyframes register-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
