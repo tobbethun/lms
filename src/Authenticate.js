@@ -38,19 +38,25 @@ export class Authenticate extends React.Component {
             email: this.state.email,
             password: this.state.password
         };
+
+        function handleErrors(response) {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response;
+        }
+
         fetch("http://localhost:5000/login/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-
-            //make sure to serialize your JSON body
             body: JSON.stringify({
-            email: data.email,
-            password: data.password
+                email: data.email,
+                password: data.password
             })
-        })
+        }).then(handleErrors)
             .then((response) => {
                 return response.json();
             })
@@ -59,7 +65,9 @@ export class Authenticate extends React.Component {
                 if (json.code === 200) {
                     this.test(json.user);
                 }
-            });
+            })
+            .catch(() => this.setState({loginMessage: "Problem with login"}));
+
         // On submit of the form, send a POST request with the data to the server.
         // fetch('http://localhost:5000/users/', {
         //   method: 'GET'
