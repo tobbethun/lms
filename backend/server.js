@@ -80,6 +80,8 @@ app.get('/users', cors(corsOptions), function (req, res) {
     })
 });
 
+// REGISTER NEW USER
+
 app.post('/register', cors(corsOptions), function (req, res) {
     const password = req.body.password;
     const encryptedPassword = encrypt(password);
@@ -107,6 +109,49 @@ app.post('/register', cors(corsOptions), function (req, res) {
     });
 });
 
+// UPDATE PASSWORD
+
+app.post('/updatepassword', cors(corsOptions), function (req, res) {
+    const email = req.body.email;
+    const oldpassword = req.body.oldpassword;
+    const newpassword = req.body.newpassword;
+    const encryptedOldPassword = encrypt(oldpassword);
+    const encryptedPassword = encrypt(newpassword);
+    connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            if (results.length > 0) {
+                if (results[0].password === encryptedOldPassword) {
+                    connection.query('UPDATE users SET password = ? WHERE id = ?', [encryptedPassword, results[0].id]);
+                    res.send({
+                        "code": 200,
+                        "success": "Update sucessfull"
+                    });
+                }
+                else {
+                    res.send({
+                        "code": 204,
+                        "success": "wrong old password"
+                    });
+                }
+            }
+            else {
+                res.send({
+                    "code": 204,
+                    "success": "Email does not exits"
+                });
+            }
+        }
+    });
+});
+
+
+// LOGIN SECTION
 
 app.post('/login', cors(corsOptions), function (req, res) {
     console.log(req.body);

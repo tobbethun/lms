@@ -82,20 +82,21 @@ export class Authenticate extends React.Component {
     }
 
     render() {
+        const { loginMessage, email, password, verified} = this.state;
         return (
             <div className="authenticate">
                 <div className="authenticate-container">
-                    <h3 className="authenticate-title">{this.state.loginMessage}</h3>
+                    <h3 className="authenticate-title">{loginMessage}</h3>
                     <form className="authenticate-form" onSubmit={this.handleSubmit}>
-                        <input type="email" placeholder="email" value={this.state.email}
+                        <input type="email" placeholder="email" value={email}
                                onChange={this.handleChange('email')} required/>
-                        <input type="password" placeholder="password" value={this.state.password}
+                        <input type="password" placeholder="password" value={password}
                                onChange={this.handleChange('password')} required/>
                         <input className='button' type="submit" value="LOGIN"/>
                     </form>
                     <Link to="/register">Register</Link>
                 </div>
-                {this.state.verified &&
+                {verified &&
                 <div className="authenticate-intro">
                     <h1>HELLO!</h1>
                 </div>

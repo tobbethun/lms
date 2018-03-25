@@ -78,29 +78,30 @@ export class Register extends React.Component {
 
 
     render() {
+        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypepassword } = this.state;
         return (
             <div className='register'>
-                <img src={logo} className="register-logo" alt="logo"/>
-                <h3>{this.state.registerMessage}</h3>
-                { this.state.showRegistrationForm &&
+                <img src={logo} className="register-logo" alt="logo" />
+                <h3>{registerMessage}</h3>
+                { showRegistrationForm &&
                     <form className='register-form' onSubmit={this.handleSubmit}>
-                        <input type="courseid" placeholder="CourseID" value={this.state.courseid}
+                        <input type="courseid" placeholder="CourseID" value={courseid}
                                onChange={this.handleChange('courseid')} required/>
-                        <input type="firstname" placeholder="Firstname" value={this.state.firstname}
+                        <input type="firstname" placeholder="Firstname" value={firstname}
                                onChange={this.handleChange('firstname')} required/>
-                        <input type="lastname" placeholder="lastname" value={this.state.lastname}
+                        <input type="lastname" placeholder="lastname" value={lastname}
                                onChange={this.handleChange('lastname')} required/>
-                        <input type="email" placeholder="email" value={this.state.email}
+                        <input type="email" placeholder="email" value={email}
                                onChange={this.handleChange('email')} required/>
-                        <input type="password" placeholder="password" value={this.state.password}
+                        <input type="password" placeholder="password" value={password}
                                onChange={this.handleChange('password')} required/>
-                        <input className={`${this.state.noMatch && 'no-match'}`} type="password"
-                               placeholder="retypepassword" value={this.state.retypepassword}
+                        <input className={`${noMatch && 'no-match'}`} type="password"
+                               placeholder="retypepassword" value={retypepassword}
                                onChange={this.handleChange('retypepassword')} required/>
                         <input className='button' type="submit" value="Register"/>
                     </form>
                 }
-                {this.state.noMatch &&
+                {noMatch &&
                 <h3>Type the same password twice</h3>
                 }
                 <Link to="/login">Back to login</Link>
