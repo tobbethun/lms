@@ -60,7 +60,6 @@ class Login extends React.Component {
         };
         return (
             <div>
-                <p>You must log in to view the page</p>
                 <Router>
                     <div>
                         <Switch>
@@ -87,21 +86,22 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 
 const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
-        ? <button onClick={() => {
-            Auth.signout(() => history.push('/'))
-        }}>Sign out</button>
-        : <p>You are not logged in.</p>
+        ? <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logout</div>
+        : <Link to="/login" className="login">Login</Link>
 ));
 
 export default function App() {
     return (
         <Router>
             <div className="main-wrapper">
-                <AuthButton/>
-                <ul>
-                    <li><Link to="/public">Public Page</Link></li>
-                    <li><Link to="/dashboard">Dashboard Page</Link></li>
-                </ul>
+                <div className="top-bar">
+                    <Link to="/" className="logo">LMS</Link>
+                    <ul className="top-menu">
+                        <li><Link to="/public">Public Page</Link></li>
+                        <li><Link to="/dashboard">Dashboard Page</Link></li>
+                    </ul>
+                    <AuthButton/>
+                </div>
                 <Route path="/public" component={Public}/>
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register} />

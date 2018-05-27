@@ -7,9 +7,9 @@ export class UpdatePassword extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            oldpassword: '',
+            oldPassword: '',
             password: '',
-            retypepassword: '',
+            retypePassword: '',
             noMatch: false
         };
     }
@@ -23,11 +23,11 @@ export class UpdatePassword extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         const data = {
-            oldpassword: this.state.oldpassword,
+            oldPassword: this.state.oldPassword,
             password: this.state.password,
-            retypepassword: this.state.retypepassword
+            retypePassword: this.state.retypePassword
         };
-        if (data.password !== data.retypepassword) {
+        if (data.password !== data.retypePassword) {
             this.setState({noMatch: true});
         } else {
             this.setState({noMatch: false});
@@ -41,7 +41,7 @@ export class UpdatePassword extends React.Component {
                 //make sure to serialize your JSON body
                 body: JSON.stringify({
                     email: this.props.userEmail,
-                    oldpassword: data.oldpassword,
+                    oldpassword: data.oldPassword,
                     newpassword: data.password,
                 })
             })
@@ -49,26 +49,25 @@ export class UpdatePassword extends React.Component {
                     return response.json();
                 })
                 .then((json) => {
-                    this.setState({updateMessage: json.success})
-                    // if (json.code === 200) {
-                    //     this.test()
-                    // }
+                    if (json.code === 200 || 204) {
+                        this.setState({updateMessage: json.success})
+                    }
                 });
         }
     }
     render() {
-        const { oldpassword, password, retypepassword, noMatch, updateMessage } = this.state;
+        const { oldPassword, password, retypePassword, noMatch, updateMessage } = this.state;
         return (
             <div>
                 <h3>{updateMessage}</h3>
                 <form className='register-form' onSubmit={this.handleSubmit}>
-                    <input type="password" placeholder="old password" value={oldpassword}
-                           onChange={this.handleChange('oldpassword')} required/>
+                    <input type="password" placeholder="old password" value={oldPassword}
+                           onChange={this.handleChange('oldPassword')} required/>
                     <input type="password" placeholder="password" value={password}
                            onChange={this.handleChange('password')} required/>
                     <input className={`${noMatch && 'no-match'}`} type="password"
-                           placeholder="retypepassword" value={retypepassword}
-                           onChange={this.handleChange('retypepassword')} required/>
+                           placeholder="retypePassword" value={retypePassword}
+                           onChange={this.handleChange('retypePassword')} required/>
                     <input className='button' type="submit" value="Update"/>
                 </form>
                 {noMatch &&

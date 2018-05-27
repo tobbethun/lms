@@ -1,34 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 16px;
 }
 p {
   font-size: 16px;
 }
 input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #000;
   font-size: 16px;
   margin: 10px;
   padding: 3px;
-  text-align: center;
+  outline: none;
 }
+button,
 .button {
-  border: 1px solid #7edc97;
+  background: transparent;
+  border: 1px solid #000;
+  color: #000;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
 }
+button:hover,
 .button:hover {
-  outline: 2px solid #7edc97;
+  -webkit-transform: scale(1.03);
+          transform: scale(1.03);
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+a:hover {
+  color: #ff3;
 }
 .no-match {
   border: 1px solid red;
 }
 .main-wrapper {
-  padding: 5%;
   height: 100vh;
 }
 .main-wrapper img {
   width: 100%;
   height: auto;
+}
+.top-bar {
+  background: #7CE8D5;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.logo {
+  padding: 16px;
+}
+.top-menu {
+  list-style: none;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+.top-menu li {
+  margin: 0 10px;
+}
+.login,
+.logout {
+  color: #000;
+  padding: 16px;
+  cursor: pointer;
+}
+.login:hover,
+.logout:hover {
+  color: #ff3;
 }
 .authenticate {
   display: -webkit-box;
@@ -55,6 +105,7 @@ input {
   font-size: large;
 }
 .register {
+  margin-top: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -67,6 +118,8 @@ input {
           flex-direction: column;
 }
 .register img {
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
   height: 2.5em;
 }
 .register-form {
@@ -77,7 +130,6 @@ input {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 50%;
 }
 .register-logo {
   -webkit-animation: register-logo-spin infinite 20s linear;
@@ -105,4 +157,21 @@ input {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
+}
+.dashboard {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.side-bar {
+  min-width: 250px;
+  padding: 16px;
+  background-color: #7CE8D5;
+  color: #000;
+}
+.content {
+  padding: 32px;
+}
+.content a {
+  color: #000;
 }

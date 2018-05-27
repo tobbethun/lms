@@ -11,7 +11,7 @@ export class Register extends React.Component {
         this.state = {
             email: '',
             password: '',
-            retypepassword: '',
+            retypePassword: '',
             firstname: '',
             lastname: '',
             courseid: '',
@@ -41,9 +41,9 @@ export class Register extends React.Component {
             email: this.state.email,
             password: this.state.password,
             courseid: this.state.courseid,
-            retypepassword: this.state.retypepassword
+            retypePassword: this.state.retypePassword
         };
-        if (data.password !== data.retypepassword) {
+        if (data.password !== data.retypePassword) {
             this.setState({noMatch: true});
         } else {
             this.setState({noMatch: false});
@@ -67,10 +67,12 @@ export class Register extends React.Component {
                     return response.json();
                 })
                 .then((json) => {
-                    this.setState({registerMessage: json.success, showRegistrationForm: false})
-                    // if (json.code === 200) {
-                    //     this.test()
-                    // }
+                    if (json.code === 200) {
+                        this.setState({registerMessage: json.success, showRegistrationForm: false});
+                    }
+                    if (json.code === 204) {
+                        this.setState({registerMessage: json.success});
+                    }
                 });
         }
 
@@ -78,7 +80,7 @@ export class Register extends React.Component {
 
 
     render() {
-        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypepassword } = this.state;
+        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword } = this.state;
         return (
             <div className='register'>
                 <img src={logo} className="register-logo" alt="logo" />
@@ -96,8 +98,8 @@ export class Register extends React.Component {
                         <input type="password" placeholder="password" value={password}
                                onChange={this.handleChange('password')} required/>
                         <input className={`${noMatch && 'no-match'}`} type="password"
-                               placeholder="retypepassword" value={retypepassword}
-                               onChange={this.handleChange('retypepassword')} required/>
+                               placeholder="retypePassword" value={retypePassword}
+                               onChange={this.handleChange('retypePassword')} required/>
                         <input className='button' type="submit" value="Register"/>
                     </form>
                 }

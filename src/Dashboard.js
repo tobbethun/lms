@@ -15,6 +15,7 @@ export class Dashboard extends React.Component {
         super();
         this.state = {
             courses: [],
+            changePassword: false,
             user: getUser()
         };
     }
@@ -38,7 +39,7 @@ export class Dashboard extends React.Component {
         }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
     }
     render() {
-        const { courses, errorMessage, user} = this.state;
+        const { courses, errorMessage, user, changePassword } = this.state;
         if (!this.state.courses.length) return (
             <div>
                 { errorMessage ?
@@ -48,20 +49,23 @@ export class Dashboard extends React.Component {
             </div>
         );
         return (
-            <div>
-                <div className="user-section">
-                    <h3>User:</h3>
-                    <p>{user.firstname} {user.lastname}</p>
-                    <p>{user.email}</p>
-                    <p>Registered: {user.regdate}</p>
-                    <p>Last loggedin: {user.lastlogin}</p>
-                    <UpdatePassword userEmail={user.email} />
+            <div className="dashboard">
+                <div className="side-bar">
+                    <div className="user-section">
+                        <p>{user.firstname} {user.lastname}</p>
+                        <p>{user.email}</p>
+                        <p>Registered: {user.regdate}</p>
+                        <p>Last loggedin: {user.lastlogin}</p>
+                        <button onClick={() => {this.setState({changePassword: !changePassword})}}>Change password</button>
+                        { changePassword &&
+                        <UpdatePassword userEmail={user.email} />
+                        }
+                    </div>
                 </div>
                 <Router>
-                    <div>
+                    <div className="content">
                         <div className="course-menu">
                             <ul>
-                                {/*<Route path="/public" component={Public}/>*/}
                                 {courses &&
                                 courses.map((course, index) => (
                                     <li key={index}>
