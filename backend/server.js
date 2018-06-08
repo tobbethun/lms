@@ -28,12 +28,13 @@ function decrypt(text) {
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
-    database: 'lms'
+    password: 'root',
+    database: 'lms',
+    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
 });
 try {
     connection.connect();
-    console.log('Database connected');
+    console.log('Database connected y´all');
 
 } catch (e) {
     console.log('Database Connection failed:' + e);
@@ -56,7 +57,7 @@ const now = new Date().toISOString().substring(0, 10);
 
 // Set default route
 app.get('/', function (req, res) {
-    res.send('<html><body><p>Welcome to sShop App</p></body></html>');
+    res.send('<html><body><p>Welcome to L.M.S.</p></body></html>');
 });
 
 // Create server
@@ -206,6 +207,109 @@ app.post('/login', cors(corsOptions), function (req, res) {
     });
 });
 
+
+// _-_-_-_-_-_-_-_-_-_-COMMENTS SECTION-_-_-_-_-_-_-_-_-_-_
+
+app.post('/comment', function (req, res) {
+    const post  = {
+        first_name: req.body.firstname,
+        last_name: req.body.lastname,
+        comment: req.body.comment,
+        lesson: req.body.lesson
+    };
+    connection.query('INSERT INTO comments SET ?', post, function (error) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            res.send({
+                "code": 200,
+                "success": "Registration sucessfull"
+            });
+        }
+    });
+});
+
+app.post('/answers', function (req, res) {
+    const post  = {
+        first_name: req.body.firstname,
+        last_name: req.body.lastname,
+        answer: req.body.answer,
+        comment_id: req.body.commentid
+    };
+    connection.query('INSERT INTO answers SET ?', post, function (error) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            res.send({
+                "code": 200,
+                "success": "Registration sucessfull"
+            });
+        }
+    });
+});
+
+app.post('/getcomments', function (req, res) {
+    let payLoad = [];
+    const lesson = req.body.lesson;
+    console.log('lesson', lesson);
+    connection.query('SELECT * FROM comments WHERE lesson = ?', [lesson], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            console.log('results', results);
+            results.forEach(function (res) {
+                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
+                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment};
+                payLoad.push(comment);
+                console.log('comment', comment);
+            });
+            res.send({
+                "code": 200,
+                "success": "Fetch comments sucessfull",
+                "comments": payLoad
+            });
+            console.log('payLoad', payLoad);
+        }
+    });
+});
+
+app.post('/getanswers', function (req, res) {
+    let payLoad = [];
+    const commentId = req.body.commentid;
+    connection.query('SELECT * FROM answers WHERE comment_id = ?', [commentId], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            console.log('results', results);
+            results.forEach(function (res) {
+                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
+                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer};
+                payLoad.push(answer);
+            });
+            res.send({
+                "code": 200,
+                "success": "Fetch answers sucessfull",
+                "answers": payLoad
+            });
+        }
+    });
+});
 
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 

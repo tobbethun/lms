@@ -1,5 +1,6 @@
 import React from'react';
 import Markup from './Markup';
+import Comments from "./Comments";
 
 
 export class Course extends React.Component {
@@ -16,11 +17,11 @@ export class Course extends React.Component {
                 {lessons &&
                 <div>
                     <h3>Lektioner</h3>
-                    {
-                        lessons.map((lesson, index) => (
+                    {lessons.map((lesson, index) => (
                             <div key={index}>
                                 <h3>{lesson.fields.title}</h3>
                                 <Markup text={lesson.fields.text} />
+                                {lesson.fields.comments && <Comments lesson={lesson.sys.id}/> }
                                 <hr/>
                             </div>
                         ))

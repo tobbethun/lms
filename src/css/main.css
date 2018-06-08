@@ -28,8 +28,7 @@ button,
 }
 button:hover,
 .button:hover {
-  -webkit-transform: scale(1.03);
-          transform: scale(1.03);
+  outline: 1px solid black;
 }
 a {
   text-decoration: none;
@@ -49,7 +48,7 @@ a:hover {
   height: auto;
 }
 .top-bar {
-  background: #7CE8D5;
+  border-bottom: 2px solid lightsteelblue;
   color: #000;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -164,14 +163,36 @@ a:hover {
   display: flex;
 }
 .side-bar {
+  positon: fixed;
   min-width: 250px;
   padding: 16px;
-  background-color: #7CE8D5;
+  border-right: 2px solid lightsteelblue;
   color: #000;
+  height: 100vh;
 }
 .content {
   padding: 32px;
 }
 .content a {
   color: #000;
+}
+.comment-form {
+  width: 100%;
+  margin: 10px 0;
+}
+.comment-field {
+  font-size: 14px;
+  min-height: 100px;
+  width: 100%;
+}
+.comment-block {
+  padding: 10px;
+  border: 1px solid lightgray;
+}
+.comment-block__author {
+  color: grey;
+  font-size: 14px;
+}
+.comment-block__text {
+  white-space: pre-line;
 }

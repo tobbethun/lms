@@ -68,17 +68,6 @@ export class Authenticate extends React.Component {
             })
             .catch(() => this.setState({loginMessage: "Problem with login"}));
 
-        // On submit of the form, send a POST request with the data to the server.
-        // fetch('http://localhost:5000/users/', {
-        //   method: 'GET'
-        // }).then((response) => {
-        //    // Convert to JSON
-        //     return response.json();
-        //   }).then((j) => {
-        //      // Yay, `j` is a JavaScript object
-        //   const newUser = j[1].firstname;
-        //   this.setState({user: newUser});
-        // });
     }
 
     render() {
