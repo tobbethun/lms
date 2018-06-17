@@ -1,5 +1,6 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
+import Attachment from "./Attachment";
 
 
 
@@ -57,7 +58,6 @@ export class Comments extends React.Component {
             .then((json) => {
                 // this.setState({loginMessage: json.success});
                 if (json.code === 200) {
-                    console.log('comments', json);
                     this.setState({commentlist: json.comments})
                 }
             })

@@ -8,6 +8,7 @@ import {
     Link,
 } from 'react-router-dom';
 import UpdatePassword from "./UpdatePassword";
+import Loader from "./Loader";
 
 
 export class Dashboard extends React.Component {
@@ -44,7 +45,7 @@ export class Dashboard extends React.Component {
             <div>
                 { errorMessage ?
                     (<h3>Problem att hämta kursinnehåll</h3>) :
-                    (<h3>Det finns tyvärr inga kurser för tillfället</h3>)
+                    (<Loader />)
                 }
             </div>
         );

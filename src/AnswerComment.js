@@ -54,7 +54,6 @@ export class AnswerComment extends React.Component {
             .then((json) => {
                 // this.setState({loginMessage: json.success});
                 if (json.code === 200) {
-                    console.log('answers', json);
                     this.setState({answerList: json.answers})
                 }
             })
