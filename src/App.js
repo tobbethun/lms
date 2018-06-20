@@ -1,6 +1,7 @@
 import React from 'react'
 import {Authenticate} from './Authenticate.js'
 import {Dashboard} from './Dashboard.js'
+import {UserSection} from './UserSection.js'
 import {Register} from './Register.js'
 import {isLoggedIn} from "./utils";
 import {
@@ -86,8 +87,13 @@ const PrivateRoute = ({component: Component, ...rest}) => (
 
 const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
-        ? <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logout</div>
-        : <Link to="/login" className="login">Login</Link>
+        ?
+        <div>
+            <Link to="/user">User Settings</Link>
+            <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logout</div>
+        </div>
+        :
+        <Link to="/login" className="login">Login</Link>
 ));
 
 export default function App() {
@@ -106,6 +112,7 @@ export default function App() {
                 <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register} />
                 <PrivateRoute path='/dashboard' component={Dashboard} />
+                <PrivateRoute path='/user' component={UserSection} />
             </div>
         </Router>
     )

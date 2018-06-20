@@ -1,6 +1,7 @@
 import React from'react';
 import Markup from './Markup';
-import Comments from "./Comments";
+import Comments from './Comments';
+import slugify from 'slugify';
 
 
 export class Course extends React.Component {
@@ -18,7 +19,7 @@ export class Course extends React.Component {
                 <div>
                     <h3>Lektioner</h3>
                     {lessons.map((lesson, index) => (
-                            <div key={index}>
+                            <div key={index} id={slugify(lesson.fields.title)}>
                                 <h3>{lesson.fields.title}</h3>
                                 <Markup text={lesson.fields.text} />
                                 {lesson.fields.comments && <Comments lesson={lesson.sys.id}/> }

@@ -86,6 +86,7 @@ app.get('/users', cors(corsOptions), function (req, res) {
 app.post('/register', cors(corsOptions), function (req, res) {
     const password = req.body.password;
     const encryptedPassword = encrypt(password);
+    const courseData = {course_id: req.body.courseid, email: req.body.email};
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
@@ -102,9 +103,15 @@ app.post('/register', cors(corsOptions), function (req, res) {
                 "failed": "error ocurred"
             })
         } else {
-            res.send({
-                "code": 200,
-                "success": "Registration sucessfull"
+            connection.query('INSERT INTO courses SET ?', courseData, function (error) {
+                if (error) {
+                    console.log("error ocurred", error);
+                } else {
+                    res.send({
+                        "code": 200,
+                        "success": "Registration sucessfull"
+                    });
+                }
             });
         }
     });
@@ -172,14 +179,30 @@ app.post('/login', cors(corsOptions), function (req, res) {
         } else {
             if (results.length > 0) {
                 if (results[0].password == encryptedPassword) {
+                    const courses = [];
                     console.log("login sucessfull", results[0]);
+                    connection.query('SELECT course_id from courses WHERE email = ?', [results[0].email], function (error, results) {
+                       if (error) {
+                           console.log("error ocurred", error);
+                           res.send({
+                               "code": 400,
+                               "failed": "error ocurred"
+                           });
+                       } else {
+                           results.forEach(function (course) {
+                               console.log('course_id', course.course_id);
+                               courses.push(course.course_id);
+                           });
+                       }
+                    });
                     const user = {
                         firstname: results[0].first_name,
                         lastname: results[0].last_name,
                         email: results[0].email,
                         lastlogin: results[0].last_login,
                         regdate: results[0].reg_date,
-                        role: results[0].role
+                        role: results[0].role,
+                        courses: courses
                     };
                     res.send({
                         "code": 200,

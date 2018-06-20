@@ -7,7 +7,6 @@ import {
     Route,
     Link,
 } from 'react-router-dom';
-import UpdatePassword from "./UpdatePassword";
 import Loader from "./Loader";
 
 
@@ -40,7 +39,7 @@ export class Dashboard extends React.Component {
         }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
     }
     render() {
-        const { courses, errorMessage, user, changePassword } = this.state;
+        const { courses, errorMessage } = this.state;
         if (!this.state.courses.length) return (
             <div>
                 { errorMessage ?
@@ -50,32 +49,31 @@ export class Dashboard extends React.Component {
             </div>
         );
         return (
-            <div className="dashboard">
-                <div className="side-bar">
-                    <div className="user-section">
-                        <p>{user.firstname} {user.lastname}</p>
-                        <p>{user.email}</p>
-                        <p>Registered: {user.regdate}</p>
-                        <p>Last loggedin: {user.lastlogin}</p>
-                        <button onClick={() => {this.setState({changePassword: !changePassword})}}>Change password</button>
-                        { changePassword &&
-                        <UpdatePassword userEmail={user.email} />
-                        }
-                    </div>
-                </div>
-                <Router>
-                    <div className="content">
+            <Router>
+                <div className="dashboard">
+                    <div className="side-bar">
                         <div className="course-menu">
                             <ul>
                                 {courses &&
                                 courses.map((course, index) => (
                                     <li key={index}>
                                         <Link to={`/dashboard/${slugify(course.title)}`}>{course.title}</Link>
+                                        {course.lessons &&
+                                            <ul>
+                                                {course.lessons.map((lesson, index) => (
+                                                <li key={index}>
+                                                    <Link to={`/dashboard/${slugify(course.title)}/#${slugify(lesson.fields.title)}`}>{lesson.fields.title}</Link>
+                                                </li>
+                                            ))}
+                                            </ul>
+                                        }
                                     </li>
                                 ))
                                 }
                             </ul>
                         </div>
+                    </div>
+                    <div className="content">
                         {courses &&
                         courses.map((course, index) => (
                             <Route key={index} path={`/dashboard/${slugify(course.title)}`}
@@ -83,8 +81,8 @@ export class Dashboard extends React.Component {
                         ))
                         }
                     </div>
-                </Router>
-            </div>
+                </div>
+            </Router>
         )
     }
 }
