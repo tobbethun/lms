@@ -1,12 +1,17 @@
 import React from'react';
 import Markup from './Markup';
-import Comments from './Comments';
 import slugify from 'slugify';
+import Lesson from "./Lesson";
+import {Route} from 'react-router-dom';
 
 
 export class Course extends React.Component {
     render() {
         const {course, lessons} = this.props;
+        const courseLength = lessons && lessons.length;
+        const titleList = [];
+        lessons && lessons.map((lesson) => titleList.push(lesson.fields.title));
+        console.log('courseLength', courseLength);
         return (
             <div>
                 {course &&
@@ -17,15 +22,10 @@ export class Course extends React.Component {
                 }
                 {lessons &&
                 <div>
-                    <h3>Lektioner</h3>
                     {lessons.map((lesson, index) => (
-                            <div key={index} id={slugify(lesson.fields.title)}>
-                                <h3>{lesson.fields.title}</h3>
-                                <Markup text={lesson.fields.text} />
-                                {lesson.fields.comments && <Comments lesson={lesson.sys.id}/> }
-                                <hr/>
-                            </div>
-                        ))
+                        <Route key={index} path={`/dashboard/${slugify(course.title)}/${slugify(lesson.fields.title)}`}
+                               component={() => <Lesson lesson={lesson} courseLength={courseLength} index={index+1} courseTitle={course.title} nextLesson={titleList[index+1]} />}/>
+                    ))
                     }
                 </div>
                 }

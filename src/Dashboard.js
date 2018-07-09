@@ -62,7 +62,7 @@ export class Dashboard extends React.Component {
                                             <ul>
                                                 {course.lessons.map((lesson, index) => (
                                                 <li key={index}>
-                                                    <Link to={`/dashboard/${slugify(course.title)}/#${slugify(lesson.fields.title)}`}>{lesson.fields.title}</Link>
+                                                    <Link to={`/dashboard/${slugify(course.title)}/${slugify(lesson.fields.title)}`}>{lesson.fields.title}</Link>
                                                 </li>
                                             ))}
                                             </ul>
