@@ -1,7 +1,7 @@
 import React from 'react';
 import slugify from 'slugify';
 import Course from './Course';
-import {getUser} from "./utils";
+import {getUser, handleErrors} from "./utils";
 import {
     BrowserRouter as Router,
     Route,
@@ -27,18 +27,6 @@ export class Dashboard extends React.Component {
             }
             return response;
         }
-
-        fetch('http://localhost:5000/course/', {
-            method: 'GET',
-        }).then(handleErrors)
-            .then((response) => {
-                return response.json();
-
-            }).then((response) => {
-            this.setState({
-                courses: response.courses
-            });
-        }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
         fetch('http://localhost:5000/usercourses/', {
             method: 'post',
             headers: {
@@ -53,10 +41,32 @@ export class Dashboard extends React.Component {
                 return response.json();
 
             }).then((response) => {
+            this.getCourses(response.userCourses);
             this.setState({
                 userCourses: response.userCourses
             });
         }).catch(() => this.setState({errorMessage: "Problem to fetch Usercourses"}));
+    }
+
+    getCourses(usercourses) {
+        fetch('http://localhost:5000/course/', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                userCourses: usercourses,
+            })
+        }).then(handleErrors)
+            .then((response) => {
+                return response.json();
+
+            }).then((response) => {
+            this.setState({
+                courses: response.courses
+            });
+        }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
     }
     render() {
         const { courses, errorMessage } = this.state;

@@ -326,7 +326,6 @@ app.post('/getanswers', function (req, res) {
                 "failed": "error ocurred"
             })
         } else {
-            console.log('results', results);
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
                 const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer};
@@ -358,18 +357,18 @@ client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
     });
 
 
-app.get('/course', function (req, res) {
+app.post('/course', function (req, res) {
     let courses = [];
-
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
         'content_type': 'course'
     })
         .then(function (entries) {
 
-            entries.items.forEach(function (entry,i) {
-                courses.push(entry.fields);
-                courses[i].courseId = entry.sys.id;
+            entries.items.forEach(function (entry) {
+                if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
+                    courses.push(entry.fields);
+                }
             });
             res.status(200).send({
                 "courses": courses
