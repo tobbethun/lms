@@ -34,7 +34,7 @@ const connection = mysql.createConnection({
 });
 try {
     connection.connect();
-    console.log('Database connected y´all');
+    console.log('Trying to connect to database');
 
 } catch (e) {
     console.log('Database Connection failed:' + e);
@@ -159,7 +159,7 @@ app.post('/updatepassword', cors(corsOptions), function (req, res) {
 });
 
 
-// LOGIN SECTION
+// >>>>>>>>>>>> LOGIN SECTION <<<<<<<<<<<<<<<<
 
 app.post('/login', cors(corsOptions), function (req, res) {
     console.log(req.body);
@@ -179,22 +179,7 @@ app.post('/login', cors(corsOptions), function (req, res) {
         } else {
             if (results.length > 0) {
                 if (results[0].password == encryptedPassword) {
-                    const courses = [];
                     console.log("login sucessfull", results[0]);
-                    connection.query('SELECT course_id from courses WHERE email = ?', [results[0].email], function (error, results) {
-                       if (error) {
-                           console.log("error ocurred", error);
-                           res.send({
-                               "code": 400,
-                               "failed": "error ocurred"
-                           });
-                       } else {
-                           results.forEach(function (course) {
-                               console.log('course_id', course.course_id);
-                               courses.push(course.course_id);
-                           });
-                       }
-                    });
                     const user = {
                         firstname: results[0].first_name,
                         lastname: results[0].last_name,
@@ -202,7 +187,6 @@ app.post('/login', cors(corsOptions), function (req, res) {
                         lastlogin: results[0].last_login,
                         regdate: results[0].reg_date,
                         role: results[0].role,
-                        courses: courses
                     };
                     res.send({
                         "code": 200,
@@ -227,6 +211,29 @@ app.post('/login', cors(corsOptions), function (req, res) {
                 });
             }
         }
+    });
+});
+
+
+// -:-:-:-:-:-:-:-: Get USERS COURSES -:-:-:-:-:-:-:-:
+app.post('/usercourses', function(req, res) {
+    let userCourses = [];
+    const email = req.body.email;
+    console.log('userEMAIL', email);
+    connection.query('SELECT course_id from courses WHERE email = ?', [email], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+        } else {
+            results.forEach(function (course) {
+                userCourses.push(course.course_id);
+            });
+            res.send({
+                "code": 200,
+                "success": "Registration sucessfull",
+                "userCourses": userCourses
+            });
+        }
+
     });
 });
 
@@ -352,7 +359,7 @@ client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
 
 
 app.get('/course', function (req, res) {
-    let payLoad = [];
+    let courses = [];
 
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
@@ -360,10 +367,13 @@ app.get('/course', function (req, res) {
     })
         .then(function (entries) {
 
-            entries.items.forEach(function (entry) {
-                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                payLoad.push(entry.fields);
+            entries.items.forEach(function (entry,i) {
+                courses.push(entry.fields);
+                courses[i].courseId = entry.sys.id;
             });
-            res.status(200).send(payLoad);
+            res.status(200).send({
+                "courses": courses
+            });
         });
 });
+

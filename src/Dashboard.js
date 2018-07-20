@@ -23,7 +23,7 @@ export class Dashboard extends React.Component {
     componentWillMount() {
         function handleErrors(response) {
             if (!response.ok) {
-                throw Error(response.statusText);
+                    throw Error(response.statusText);
             }
             return response;
         }
@@ -35,8 +35,28 @@ export class Dashboard extends React.Component {
                 return response.json();
 
             }).then((response) => {
-            this.setState({courses: response});
+            this.setState({
+                courses: response.courses
+            });
         }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
+        fetch('http://localhost:5000/usercourses/', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: this.state.user.email,
+            })
+        }).then(handleErrors)
+            .then((response) => {
+                return response.json();
+
+            }).then((response) => {
+            this.setState({
+                userCourses: response.userCourses
+            });
+        }).catch(() => this.setState({errorMessage: "Problem to fetch Usercourses"}));
     }
     render() {
         const { courses, errorMessage } = this.state;
