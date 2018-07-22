@@ -219,7 +219,6 @@ app.post('/login', cors(corsOptions), function (req, res) {
 app.post('/usercourses', function(req, res) {
     let userCourses = [];
     const email = req.body.email;
-    console.log('userEMAIL', email);
     connection.query('SELECT course_id from courses WHERE email = ?', [email], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
@@ -358,7 +357,7 @@ client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
 
 
 app.post('/course', function (req, res) {
-    let courses = [];
+    let lessons = [];
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
         'content_type': 'course'
@@ -367,11 +366,11 @@ app.post('/course', function (req, res) {
 
             entries.items.forEach(function (entry) {
                 if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
-                    courses.push(entry.fields);
+                    lessons.push(entry.fields);
                 }
             });
             res.status(200).send({
-                "courses": courses
+                "lessons": lessons
             });
         });
 });

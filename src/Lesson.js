@@ -1,25 +1,30 @@
 import React from'react';
 import Markup from './Markup';
-import Comments from './Comments';
-import {Link} from 'react-router-dom';
 import slugify from 'slugify';
+import Step from "./Step";
+import {Route} from 'react-router-dom';
 
 
 export class Lesson extends React.Component {
     render() {
-        const {lesson, courseTitle, courseLength, index, nextLesson} = this.props;
-
-        console.log('lesson', courseLength + ' || ' + index);
+        const {lesson, steps} = this.props;
+        const lessonLength = steps && steps.length;
+        const titleList = [];
+        steps && steps.map((step) => titleList.push(step.fields.title));
         return (
             <div>
                 {lesson &&
                 <div>
-                    <h3>{lesson.fields.title}</h3>
-                    <Markup text={lesson.fields.text} />
-                    {lesson.fields.comments && <Comments lesson={lesson.sys.id}/> }
-                    <hr/>
-                    {!(courseLength === index) &&
-                        <Link to={`/dashboard/${slugify(courseTitle)}/${slugify(nextLesson)}`}>NÄSTA STEG</Link>
+                    <h2>{lesson.title}</h2>
+                    <Markup text={lesson.text} />
+                </div>
+                }
+                {steps &&
+                <div>
+                    {steps.map((step, index) => (
+                        <Route key={index} path={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`}
+                               component={() => <Step step={step} lessonLength={lessonLength} index={index+1} lessonTitle={lesson.title} nextStep={titleList[index+1]} preStep={titleList[index-1]}  />}/>
+                    ))
                     }
                 </div>
                 }
