@@ -14,7 +14,7 @@ export class Comments extends React.Component {
             firstname: object.user.firstname,
             lastname: object.user.lastname,
             commentlist: [],
-            lesson: this.props.lesson,
+            step: this.props.step,
             commentstatus: '',
             answer: false,
             attachment: false
@@ -49,7 +49,7 @@ export class Comments extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                lesson: this.state.lesson,
+                step: this.state.step,
             })
         }).then(handleErrors)
             .then((response) => {
@@ -69,7 +69,7 @@ export class Comments extends React.Component {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
             comment: this.state.comment,
-            lesson: this.state.lesson,
+            step: this.state.step,
         };
         fetch("http://localhost:5000/comment/", {
             method: "post",
@@ -83,7 +83,7 @@ export class Comments extends React.Component {
                 firstname: data.firstname,
                 lastname: data.lastname,
                 comment: data.comment,
-                lesson: data.lesson
+                step: data.step
             })
         })
             .then((response) => {

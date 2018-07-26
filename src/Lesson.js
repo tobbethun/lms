@@ -1,5 +1,4 @@
 import React from'react';
-import Markup from './Markup';
 import slugify from 'slugify';
 import Step from "./Step";
 import {Route} from 'react-router-dom';
@@ -16,7 +15,6 @@ export class Lesson extends React.Component {
                 {lesson &&
                 <div>
                     <h2>{lesson.title}</h2>
-                    <Markup text={lesson.text} />
                 </div>
                 }
                 {steps &&

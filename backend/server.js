@@ -244,7 +244,7 @@ app.post('/comment', function (req, res) {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
         comment: req.body.comment,
-        lesson: req.body.lesson
+        step: req.body.step
     };
     connection.query('INSERT INTO comments SET ?', post, function (error) {
         if (error) {
@@ -287,9 +287,8 @@ app.post('/answers', function (req, res) {
 
 app.post('/getcomments', function (req, res) {
     let payLoad = [];
-    const lesson = req.body.lesson;
-    console.log('lesson', lesson);
-    connection.query('SELECT * FROM comments WHERE lesson = ?', [lesson], function (error, results) {
+    const step = req.body.step;
+    connection.query('SELECT * FROM comments WHERE step = ?', [step], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
             res.send({
@@ -342,35 +341,46 @@ app.post('/getanswers', function (req, res) {
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 
 const client = contentful.createClient({
-    space: '9wq1nwc23wz5',
-    accessToken: 'e2759746697348fd582517b58a84683b6954b4b12f0cdeec31868b6b00fa2295'
+    space: 'klswjjv4skip',
+    accessToken: '6a383d9a2e6f2d853aaa95f41cb772f7bacf64e0bc7a6a21b422954719584725'
 });
 
-client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
-    .then(function (entry) {
+// client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
+//     .then(function (entry) {
         // logs the entry metadata
         // console.log('1', entry);
 
         // logs the field with ID title
         // console.log('2', entry.fields.lessons)
-    });
+    // });
 
 
 app.post('/course', function (req, res) {
     let lessons = [];
+    let course = [];
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
-        'content_type': 'course'
+        'content_type': 'course',
+        'include': 2
     })
         .then(function (entries) {
-
-            entries.items.forEach(function (entry) {
-                if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
-                    lessons.push(entry.fields);
-                }
-            });
+            console.log('req.body.userCourses', req.body.userCourses);
+            entries.items.map((entry, i) => (
+                course.push(entry.fields),
+                req.body.userCourses.indexOf(entry.sys.id) >= 0 &&
+                    entry.fields.lessons.map((lesson, i) => (
+                        lessons.push(lesson.fields)
+                    ))
+            ));
+            // entries.items.forEach(function (entry) {
+            //     if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
+            //         lessons.push(entry.fields);
+            //     }
+            //
+            // });
             res.status(200).send({
-                "lessons": lessons
+                "lessons": lessons,
+                "course": course
             });
         });
 });
