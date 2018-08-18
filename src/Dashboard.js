@@ -15,6 +15,7 @@ export class Dashboard extends React.Component {
         super();
         this.state = {
             lessons: [],
+            course: [],
             changePassword: false,
             user: getUser()
         };
@@ -64,12 +65,13 @@ export class Dashboard extends React.Component {
 
             }).then((response) => {
             this.setState({
-                lessons: response.lessons
+                lessons: response.lessons,
+                course: response.course
             });
         }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
     }
     render() {
-        const { lessons, errorMessage } = this.state;
+        const { lessons, course, errorMessage } = this.state;
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
@@ -78,39 +80,44 @@ export class Dashboard extends React.Component {
                 }
             </div>
         );
-        console.log('lessons', lessons);
         return (
             <Router>
-                <div className="dashboard">
-                    <div className="side-bar">
-                        <div className="course-menu">
-                            <ul>
-                                {lessons &&
-                                lessons.map((lesson, index) => (
-                                    <li key={index}>
-                                        <p>{lesson.title}</p>
-                                        {lesson.steps &&
+                <div>
+                    <div className="course-info">
+                        <h3>{course.title}</h3>
+                        <p>{course.courseInformation}</p>
+                    </div>
+                    <div className="container">
+                        <div className="side-bar">
+                            <div className="course-menu">
+                                <ul>
+                                    {lessons &&
+                                    lessons.map((lesson, index) => (
+                                        <li key={index}>
+                                            <p>{lesson.title}</p>
+                                            {lesson.steps &&
                                             <ul>
                                                 {lesson.steps.map((step, index) => (
-                                                <li key={index}>
-                                                    <Link to={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`}>{step.fields.title}</Link>
-                                                </li>
-                                            ))}
+                                                    <li key={index}>
+                                                        <Link to={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`}>{step.fields.title}</Link>
+                                                    </li>
+                                                ))}
                                             </ul>
-                                        }
-                                    </li>
-                                ))
-                                }
-                            </ul>
+                                            }
+                                        </li>
+                                    ))
+                                    }
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div className="content">
-                        {lessons &&
-                        lessons.map((lesson, index) => (
-                            <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
-                                   component={() => <Course lesson={lesson} steps={lesson.steps}/>}/>
-                        ))
-                        }
+                        <div className="content">
+                            {lessons &&
+                            lessons.map((lesson, index) => (
+                                <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
+                                       component={() => <Course lesson={lesson} steps={lesson.steps}/>}/>
+                            ))
+                            }
+                        </div>
                     </div>
                 </div>
             </Router>

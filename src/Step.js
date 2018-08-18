@@ -3,6 +3,7 @@ import Markup from './Markup';
 import Comments from './Comments';
 import {Link} from 'react-router-dom';
 import slugify from 'slugify';
+import Attachment from "./Attachment";
 
 
 export class Step extends React.Component {
@@ -15,6 +16,7 @@ export class Step extends React.Component {
                     <h3>{step.fields.title}</h3>
                     <Markup text={step.fields.text} />
                     {step.fields.comments && <Comments step={step.sys.id}/> }
+                    {step.fields.fileUpload && <Attachment step={step.sys.id} /> }
                     <hr/>
                     {(index <= lessonLength && index > 1) &&
                     <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`}>FÖREGÅENDE STEG</Link>

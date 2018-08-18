@@ -5,6 +5,9 @@ cors = require('cors');
 mysql = require('mysql');
 parser = require('body-parser');
 contentful = require('contentful');
+multer  = require('multer');
+upload = multer({ dest: 'uploads/' });
+bodyParser = require('body-parser');
 
 const crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
@@ -51,6 +54,8 @@ const app = express();
 app.use(cors());
 app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
 
 const now = new Date().toISOString().substring(0, 10);
@@ -260,6 +265,7 @@ app.post('/comment', function (req, res) {
             });
         }
     });
+
 });
 
 app.post('/answers', function (req, res) {
@@ -296,19 +302,19 @@ app.post('/getcomments', function (req, res) {
                 "failed": "error ocurred"
             })
         } else {
-            console.log('results', results);
+            // console.log('results', results);
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
                 const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment};
                 payLoad.push(comment);
-                console.log('comment', comment);
+                // console.log('comment', comment);
             });
             res.send({
                 "code": 200,
                 "success": "Fetch comments sucessfull",
                 "comments": payLoad
             });
-            console.log('payLoad', payLoad);
+            // console.log('payLoad', payLoad);
         }
     });
 });
@@ -338,6 +344,36 @@ app.post('/getanswers', function (req, res) {
     });
 });
 
+
+//  ?!?!?!?!?!?!?!?!?---FILE UPLOAD SECTION---!?!?!?!?!?!?!?!?
+
+app.post('/fileupload', upload.single('file'), function (req, res) {
+    const post  = {
+        user: req.body.user,
+        user_email: req.body.useremail,
+        ref: req.body.ref,
+        file: req.file.filename,
+        filename: req.file.originalname,
+        path: req.file.path
+    };
+    connection.query('INSERT INTO uploads SET ?', post, function (error) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "failed": "error ocurred"
+            })
+        } else {
+            res.send({
+                "code": 200,
+                "success": "Upload successful"
+            });
+        }
+    });
+
+});
+
+
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 
 const client = contentful.createClient({
@@ -357,31 +393,41 @@ const client = contentful.createClient({
 
 app.post('/course', function (req, res) {
     let lessons = [];
-    let course = [];
+    let course = {};
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
         'content_type': 'course',
         'include': 2
     })
         .then(function (entries) {
-            console.log('req.body.userCourses', req.body.userCourses);
-            entries.items.map((entry, i) => (
-                course.push(entry.fields),
-                req.body.userCourses.indexOf(entry.sys.id) >= 0 &&
-                    entry.fields.lessons.map((lesson, i) => (
+            // console.log('req.body.userCourses', req.body.userCourses);
+            // entries.items.map((entry, i) => (
+            //     req.body.userCourses.indexOf(entry.sys.id) >= 0 &&
+            //         course.push(entry.fields),
+            //         entry.fields.lessons.map((lesson, i) => (
+            //             lessons.push(lesson.fields)
+            //         ))
+            // ));
+            entries.items.forEach(function (entry) {
+                if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
+                    // console.log('entry.fields', entry.fields);
+                    course = entry.fields;
+                    entry.fields.lessons.map((lesson) => (
                         lessons.push(lesson.fields)
                     ))
-            ));
-            // entries.items.forEach(function (entry) {
-            //     if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
-            //         lessons.push(entry.fields);
-            //     }
-            //
-            // });
-            res.status(200).send({
-                "lessons": lessons,
-                "course": course
+                }
+
             });
+            if (lessons.length) {
+                res.status(200).send({
+                    "lessons": lessons,
+                    "course": course
+                });
+            } else {
+                res.status(204).send({
+                    "code": 204
+                })
+            }
         });
 });
 
