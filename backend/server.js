@@ -7,6 +7,8 @@ parser = require('body-parser');
 contentful = require('contentful');
 bodyParser = require('body-parser');
 fileUpload = require('express-fileupload');
+slugify = require('slugify');
+mkdirp = require('mkdirp');
 
 const crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
@@ -351,40 +353,47 @@ app.post('/getanswers', function (req, res) {
 //  ?!?!?!?!?!?!?!?!?---FILE UPLOAD SECTION---!?!?!?!?!?!?!?!?
 
 app.post('/fileupload', function (req, res) {
+    const filename = slugify(req.files.file.name, {replacement: ' '});
     const post  = {
         user: req.body.user,
         user_email: req.body.useremail,
         ref: req.body.ref,
         step: req.body.step,
-        file: req.files.file,
-        filename: req.files.file.name,
-        path: '../src/uploads/' + req.files.file.name
+        filename: filename,
+        path: './uploads/' + req.body.step + '/' + filename
     };
-    console.log('req', req.files.file);
     let sampleFile = req.files.file;
 
-    sampleFile.mv('../src/uploads/' + post.filename, function(err) {
-        if (err) {
-            return res.status(500).send(err);
-        } else {
-            connection.query('INSERT INTO uploads SET ?', post, function (error) {
-                if (error) {
-                    console.log("error ocurred", error);
-                    res.send({
-                        "code": 400,
-                        "failed": "error ocurred"
-                    })
-                } else {
-                    res.send({
-                        "code": 200,
-                        "success": "Upload successful"
-                    });
-                }
-            });
-        }
+    mkdirp('../src/uploads/' + req.body.step, (err) => {
+       if(err) {
+           console.log(err);
+           return res.status(500).send(err);
+       } else {
+           sampleFile.mv('../src/uploads/' + req.body.step + '/' + post.filename, function(err) {
+               if (err) {
+                   console.log(err);
+                   return res.status(500).send(err);
+               } else {
+                   connection.query('INSERT INTO uploads SET ?', post, function (error) {
+                       if (error) {
+                           console.log("error ocurred", error);
+                           res.send({
+                               "code": 400,
+                               "failed": "error ocurred"
+                           })
+                       } else {
+                           setTimeout(() => {
+                               res.send({
+                                   "code": 200,
+                                   "success": "Upload successful"
+                               })
+                           }, 2000)
+                       }
+                   });
+               }
+           });
+       }
     });
-
-
 });
 
 app.post('/getuploads', function (req, res) {
@@ -408,7 +417,7 @@ app.post('/getuploads', function (req, res) {
             res.send({
                 "code": 200,
                 "success": "Fetch uploads sucessfull",
-                "uploads": payLoad
+                "uploads": payLoad.reverse()
             });
             // console.log('payLoad', payLoad);
         }

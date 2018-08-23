@@ -250,8 +250,10 @@ a:hover {
     -webkit-transform: scaleY(1);
   }
 }
-.success {
-  display: none;
+.upload-block {
+  border: 2px solid #9e9eb0;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 .stepper {
   display: -webkit-box;

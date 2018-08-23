@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Comments from "./Comments";
 
 export class Attachment extends React.Component {
     constructor(props) {
@@ -57,7 +58,6 @@ export class Attachment extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        console.log('this.state.attachment', this.state.attachment);
         let formData  = new FormData();
         formData.append('file', this.state.attachment);
         formData.append('user', this.state.firstname + ' ' + this.state.lastname);
@@ -87,7 +87,6 @@ export class Attachment extends React.Component {
     }
     render() {
         const { firstname, lastname, uploadstatus, uploadlist } = this.state;
-        const reverseduploadlist = uploadlist.reverse();
         return (
             <div>
                 <div className={`attachment ${uploadstatus}`}>
@@ -98,13 +97,13 @@ export class Attachment extends React.Component {
                     </form>
                 </div>
                 <div className="attachment-list">
-                    {reverseduploadlist &&
-                        reverseduploadlist.map((upload, index) => (
-                            upload.name &&
+                    {uploadlist &&
+                        uploadlist.map((upload, index) => (
                             <div key={index} className="upload-block">
                                 <p>{upload.name}</p>
-                                <a href={require(`./uploads/${upload.filename}`)} download>{upload.filename}</a>
+                                <a href={require(`${upload.path}`)} download>{upload.filename}</a>
                                 <hr/>
+                                <Comments step={upload.id} />
                             </div>
                         ))
                     }
