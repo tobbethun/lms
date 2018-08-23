@@ -107,7 +107,7 @@ export class AnswerComment extends React.Component {
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
                 ))}
-                <button onClick={() => {this.setState({showAnswerForm: !showAnswerForm})}}>Svara</button>
+                <button onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}}>Svara</button>
                 {showAnswerForm &&
                 <form className='answer-form' onSubmit={this.handleSubmit}>
                     <span>{firstname} {lastname}</span>

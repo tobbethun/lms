@@ -6,6 +6,8 @@
     "contentful": "^5.0.5",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "express-fileupload": "^0.4.0",
+    "js-file-download": "^0.4.1",
     "marked": "^0.3.16",
     "multer": "^1.3.1",
     "mysql": "^2.15.0",

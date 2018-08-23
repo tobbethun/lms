@@ -5,9 +5,8 @@ cors = require('cors');
 mysql = require('mysql');
 parser = require('body-parser');
 contentful = require('contentful');
-multer  = require('multer');
-upload = multer({ dest: 'uploads/' });
 bodyParser = require('body-parser');
+fileUpload = require('express-fileupload');
 
 const crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
@@ -57,6 +56,8 @@ app.use(parser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
+app.use(express.static(__dirname + '/uploads'));
+app.use(fileUpload());
 
 const now = new Date().toISOString().substring(0, 10);
 
@@ -345,18 +346,51 @@ app.post('/getanswers', function (req, res) {
 });
 
 
+
+
 //  ?!?!?!?!?!?!?!?!?---FILE UPLOAD SECTION---!?!?!?!?!?!?!?!?
 
-app.post('/fileupload', upload.single('file'), function (req, res) {
+app.post('/fileupload', function (req, res) {
     const post  = {
         user: req.body.user,
         user_email: req.body.useremail,
         ref: req.body.ref,
-        file: req.file.filename,
-        filename: req.file.originalname,
-        path: req.file.path
+        step: req.body.step,
+        file: req.files.file,
+        filename: req.files.file.name,
+        path: '../src/uploads/' + req.files.file.name
     };
-    connection.query('INSERT INTO uploads SET ?', post, function (error) {
+    console.log('req', req.files.file);
+    let sampleFile = req.files.file;
+
+    sampleFile.mv('../src/uploads/' + post.filename, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        } else {
+            connection.query('INSERT INTO uploads SET ?', post, function (error) {
+                if (error) {
+                    console.log("error ocurred", error);
+                    res.send({
+                        "code": 400,
+                        "failed": "error ocurred"
+                    })
+                } else {
+                    res.send({
+                        "code": 200,
+                        "success": "Upload successful"
+                    });
+                }
+            });
+        }
+    });
+
+
+});
+
+app.post('/getuploads', function (req, res) {
+    let payLoad = [];
+    const step = req.body.step;
+    connection.query('SELECT * FROM uploads WHERE step = ?', [step], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
             res.send({
@@ -364,14 +398,23 @@ app.post('/fileupload', upload.single('file'), function (req, res) {
                 "failed": "error ocurred"
             })
         } else {
+            // console.log('results', results);
+            results.forEach(function (res) {
+                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
+                const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path};
+                payLoad.push(upload);
+                // console.log('comment', comment);
+            });
             res.send({
                 "code": 200,
-                "success": "Upload successful"
+                "success": "Fetch uploads sucessfull",
+                "uploads": payLoad
             });
+            // console.log('payLoad', payLoad);
         }
     });
-
 });
+
 
 
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_

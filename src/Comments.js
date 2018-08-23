@@ -1,7 +1,5 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
-import Attachment from "./Attachment";
-
 
 
 export class Comments extends React.Component {
@@ -16,8 +14,7 @@ export class Comments extends React.Component {
             commentlist: [],
             step: this.props.step,
             commentstatus: '',
-            answer: false,
-            attachment: false
+            answer: false
         };
 
     }
@@ -56,7 +53,6 @@ export class Comments extends React.Component {
                 return response.json();
             })
             .then((json) => {
-                // this.setState({loginMessage: json.success});
                 if (json.code === 200) {
                     this.setState({commentlist: json.comments})
                 }
@@ -99,10 +95,8 @@ export class Comments extends React.Component {
             });
         this.getComments();
     }
-
-
     render() {
-        const { firstname, lastname, comment, commentstatus, commentlist, attachment } = this.state;
+        const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
         return (
             <div className='comment'>
                 <h2>Kommentarer</h2>
@@ -118,10 +112,6 @@ export class Comments extends React.Component {
                     <span>{firstname} {lastname}</span>
                     <textarea type="text" placeholder="Skriv din kommentar här" className={`comment-field ${commentstatus}`} value={comment}
                            onChange={this.handleChange('comment')} required/>
-                    <span onClick={() => {this.setState({attachment: !attachment})}}>Bifoga fil</span>
-                    {attachment &&
-                    <Attachment />
-                    }
                     <input className='button' type="submit" value="Kommentera"/>
                 </form>
             </div>

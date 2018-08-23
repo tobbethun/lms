@@ -250,3 +250,14 @@ a:hover {
     -webkit-transform: scaleY(1);
   }
 }
+.success {
+  display: none;
+}
+.stepper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
