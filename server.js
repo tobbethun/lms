@@ -9,6 +9,7 @@ bodyParser = require('body-parser');
 fileUpload = require('express-fileupload');
 slugify = require('slugify');
 mkdirp = require('mkdirp');
+path = require('path');
 
 const crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
@@ -59,20 +60,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
 app.use(express.static(__dirname + '/uploads'));
+app.use(express.static(path.join(__dirname, 'build/static')));
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(fileUpload());
 
 const now = new Date().toISOString().substring(0, 10);
 
 // Set default route
 app.get('/', function (req, res) {
-    res.send('<html><body><p>Welcome to L.M.S.</p></body></html>');
+    console.log(path.join(__dirname, 'build'));
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
 });
 
 // Create server
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });
-
 
 app.get('/users', cors(corsOptions), function (req, res) {
     // const id = req.params.id;
