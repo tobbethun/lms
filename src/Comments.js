@@ -39,7 +39,7 @@ export class Comments extends React.Component {
             return response;
         }
 
-        fetch("http://localhost:5000/getcomments/", {
+        fetch("/api/getcomments/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -67,7 +67,7 @@ export class Comments extends React.Component {
             comment: this.state.comment,
             step: this.state.step,
         };
-        fetch("http://localhost:5000/comment/", {
+        fetch("/api/comment/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',

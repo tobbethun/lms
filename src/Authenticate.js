@@ -46,7 +46,7 @@ export class Authenticate extends React.Component {
             return response;
         }
 
-        fetch("http://localhost:5000/login/", {
+        fetch("/api/login/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',

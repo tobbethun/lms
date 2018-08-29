@@ -38,7 +38,7 @@ export class AnswerComment extends React.Component {
             return response;
         }
 
-        fetch("http://localhost:5000/getanswers/", {
+        fetch("/api/getanswers/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -67,7 +67,7 @@ export class AnswerComment extends React.Component {
             answer: this.state.answer,
             commentid: this.state.commentid,
         };
-        fetch("http://localhost:5000/answers/", {
+        fetch("/api/answers/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',

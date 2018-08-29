@@ -36,7 +36,7 @@ export class Attachment extends React.Component {
             return response;
         }
 
-        fetch("http://localhost:5000/getuploads/", {
+        fetch("/api/getuploads/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -65,7 +65,7 @@ export class Attachment extends React.Component {
         formData.append('ref', this.state.attachmentRef);
         formData.append('step', this.props.step);
 
-        fetch("http://localhost:5000/fileupload/", {
+        fetch("/api/fileupload/", {
             method: "post",
             body: formData
         })
@@ -101,7 +101,7 @@ export class Attachment extends React.Component {
                         uploadlist.map((upload, index) => (
                             <div key={index} className="upload-block">
                                 <p>{upload.name}</p>
-                                <a href={require(`${upload.path}`)} download>{upload.filename}</a>
+                                <a href='p'>{upload.filename}</a>
                                 <hr/>
                                 <Comments step={upload.id} />
                             </div>

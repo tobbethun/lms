@@ -47,7 +47,7 @@ export class Register extends React.Component {
             this.setState({noMatch: true});
         } else {
             this.setState({noMatch: false});
-            fetch("http://localhost:5000/register/", {
+            fetch("/api/register/", {
                 method: "post",
                 headers: {
                     'Accept': 'application/json',

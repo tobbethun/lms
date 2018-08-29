@@ -31,7 +31,7 @@ export class UpdatePassword extends React.Component {
             this.setState({noMatch: true});
         } else {
             this.setState({noMatch: false});
-            fetch("http://localhost:5000/updatePassword/", {
+            fetch("/api/updatePassword/", {
                 method: "post",
                 headers: {
                     'Accept': 'application/json',

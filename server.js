@@ -59,7 +59,7 @@ app.use(parser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
-app.use(express.static(__dirname + '/uploads'));
+app.use(express.static(__dirname + 'uploads'));
 app.use(express.static(path.join(__dirname, 'build/static')));
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(fileUpload());
@@ -67,9 +67,9 @@ app.use(fileUpload());
 const now = new Date().toISOString().substring(0, 10);
 
 // Set default route
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     console.log(path.join(__dirname, 'build'));
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Create server
@@ -77,7 +77,11 @@ http.createServer(app).listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });
 
-app.get('/users', cors(corsOptions), function (req, res) {
+console.log(path.join(__dirname, 'uploads'));
+
+
+
+app.get('/api/users', cors(corsOptions), function (req, res) {
     // const id = req.params.id;
     connection.query('SELECT * FROM users', function (err, results) {
         if (err) throw err;
@@ -94,7 +98,7 @@ app.get('/users', cors(corsOptions), function (req, res) {
 
 // REGISTER NEW USER
 
-app.post('/register', cors(corsOptions), function (req, res) {
+app.post('/api/register', cors(corsOptions), function (req, res) {
     const password = req.body.password;
     const encryptedPassword = encrypt(password);
     const courseData = {course_id: req.body.courseid, email: req.body.email};
@@ -130,7 +134,7 @@ app.post('/register', cors(corsOptions), function (req, res) {
 
 // UPDATE PASSWORD
 
-app.post('/updatepassword', cors(corsOptions), function (req, res) {
+app.post('/api/updatepassword', cors(corsOptions), function (req, res) {
     const email = req.body.email;
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
@@ -172,7 +176,7 @@ app.post('/updatepassword', cors(corsOptions), function (req, res) {
 
 // >>>>>>>>>>>> LOGIN SECTION <<<<<<<<<<<<<<<<
 
-app.post('/login', cors(corsOptions), function (req, res) {
+app.post('/api/login', cors(corsOptions), function (req, res) {
     console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
@@ -227,7 +231,7 @@ app.post('/login', cors(corsOptions), function (req, res) {
 
 
 // -:-:-:-:-:-:-:-: Get USERS COURSES -:-:-:-:-:-:-:-:
-app.post('/usercourses', function(req, res) {
+app.post('/api/usercourses', function(req, res) {
     let userCourses = [];
     const email = req.body.email;
     connection.query('SELECT course_id from courses WHERE email = ?', [email], function (error, results) {
@@ -250,7 +254,7 @@ app.post('/usercourses', function(req, res) {
 
 // _-_-_-_-_-_-_-_-_-_-COMMENTS SECTION-_-_-_-_-_-_-_-_-_-_
 
-app.post('/comment', function (req, res) {
+app.post('/api/comment', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
@@ -274,7 +278,7 @@ app.post('/comment', function (req, res) {
 
 });
 
-app.post('/answers', function (req, res) {
+app.post('/api/answers', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
@@ -297,7 +301,7 @@ app.post('/answers', function (req, res) {
     });
 });
 
-app.post('/getcomments', function (req, res) {
+app.post('/api/getcomments', function (req, res) {
     let payLoad = [];
     const step = req.body.step;
     connection.query('SELECT * FROM comments WHERE step = ?', [step], function (error, results) {
@@ -325,7 +329,7 @@ app.post('/getcomments', function (req, res) {
     });
 });
 
-app.post('/getanswers', function (req, res) {
+app.post('/api/getanswers', function (req, res) {
     let payLoad = [];
     const commentId = req.body.commentid;
     connection.query('SELECT * FROM answers WHERE comment_id = ?', [commentId], function (error, results) {
@@ -355,7 +359,7 @@ app.post('/getanswers', function (req, res) {
 
 //  ?!?!?!?!?!?!?!?!?---FILE UPLOAD SECTION---!?!?!?!?!?!?!?!?
 
-app.post('/fileupload', function (req, res) {
+app.post('/api/fileupload', function (req, res) {
     const filename = slugify(req.files.file.name, {replacement: ' '});
     const post  = {
         user: req.body.user,
@@ -367,12 +371,12 @@ app.post('/fileupload', function (req, res) {
     };
     let sampleFile = req.files.file;
 
-    mkdirp('../src/uploads/' + req.body.step, (err) => {
+    mkdirp('uploads/' + req.body.step, (err) => {
        if(err) {
            console.log(err);
            return res.status(500).send(err);
        } else {
-           sampleFile.mv('../src/uploads/' + req.body.step + '/' + post.filename, function(err) {
+           sampleFile.mv('uploads/' + req.body.step + '/' + post.filename, function(err) {
                if (err) {
                    console.log(err);
                    return res.status(500).send(err);
@@ -399,7 +403,7 @@ app.post('/fileupload', function (req, res) {
     });
 });
 
-app.post('/getuploads', function (req, res) {
+app.post('/api/getuploads', function (req, res) {
     let payLoad = [];
     const step = req.body.step;
     connection.query('SELECT * FROM uploads WHERE step = ?', [step], function (error, results) {
@@ -446,7 +450,7 @@ const client = contentful.createClient({
     // });
 
 
-app.post('/course', function (req, res) {
+app.post('/api/course', function (req, res) {
     let lessons = [];
     let course = {};
     res.setHeader('Content-Type', 'application/json');

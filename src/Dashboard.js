@@ -28,7 +28,7 @@ export class Dashboard extends React.Component {
             }
             return response;
         }
-        fetch('http://localhost:5000/usercourses/', {
+        fetch('/api/usercourses/', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
@@ -50,7 +50,7 @@ export class Dashboard extends React.Component {
     }
 
     getCourses(usercourses) {
-        fetch('http://localhost:5000/course/', {
+        fetch('/api/course/', {
             method: 'post',
             headers: {
                 'Accept': 'application/json',
