@@ -1,15 +1,16 @@
 // Basic Setup
 const http = require('http');
-express = require('express');
-cors = require('cors');
-mysql = require('mysql');
-parser = require('body-parser');
-contentful = require('contentful');
-bodyParser = require('body-parser');
-fileUpload = require('express-fileupload');
-slugify = require('slugify');
-mkdirp = require('mkdirp');
-path = require('path');
+const express = require('express');
+const cors = require('cors');
+const dbc = require('./dbc.js');
+const mysql = require('mysql');
+const parser = require('body-parser');
+const contentful = require('contentful');
+const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
+const slugify = require('slugify');
+const mkdirp = require('mkdirp');
+const path = require('path');
 
 const crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
@@ -30,13 +31,9 @@ function decrypt(text) {
 }
 
 // Database Connection
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'lms',
-    socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
-});
+const connection = mysql.createConnection(dbc.connection);
+
+
 try {
     connection.connect();
     console.log('Trying to connect to database');
