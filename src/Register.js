@@ -17,12 +17,13 @@ export class Register extends React.Component {
             courseid: '',
             registerMessage: 'Fyll i uppgifterna för att registrera dig!',
             noMatch: false,
-            showRegistrationForm: true
+            showRegistrationForm: true,
+            hascourseid: false
         };
     }
     componentDidMount() {
         const courseID = window.location.href.split('?')[1];
-        courseID && this.setState({courseid: courseID});
+        courseID && this.setState({courseid: courseID, hascourseid: true});
     }
 
     handleChange(key) {
@@ -80,7 +81,7 @@ export class Register extends React.Component {
 
 
     render() {
-        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword } = this.state;
+        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid } = this.state;
         return (
             <div className='register'>
                 <img src={logo} className="register-logo" alt="logo" />
@@ -88,7 +89,7 @@ export class Register extends React.Component {
                 { showRegistrationForm &&
                     <form className='register-form' onSubmit={this.handleSubmit}>
                         <input type="courseid" placeholder="CourseID" value={courseid}
-                               onChange={this.handleChange('courseid')} required/>
+                               onChange={this.handleChange('courseid')} required disabled={hascourseid} />
                         <input type="firstname" placeholder="Firstname" value={firstname}
                                onChange={this.handleChange('firstname')} required/>
                         <input type="lastname" placeholder="lastname" value={lastname}
