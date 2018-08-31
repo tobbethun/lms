@@ -3,7 +3,7 @@ import {Authenticate} from './Authenticate.js'
 import {Dashboard} from './Dashboard.js'
 import {UserSection} from './UserSection.js'
 import {Register} from './Register.js'
-import {isLoggedIn} from "./utils";
+import {getUser, isLoggedIn} from "./utils";
 import {
     BrowserRouter as Router,
     Route,
@@ -15,7 +15,7 @@ import {
 
 
 
-const Auth = {
+export const Auth = {
     isAuthenticated: false,
     authenticate(user, cb) {
         this.isAuthenticated = true;
@@ -30,13 +30,14 @@ const Auth = {
     }
 };
 
-const Public = () => <h3>Public</h3>;
+const Public = () => <h3>Om LMS</h3>;
 
 
 class Login extends React.Component {
     state = {
         redirectToReferrer: false,
-        showRegisterForm: false
+        showRegisterForm: false,
+        user: getUser()
     };
     login = (user) => {
         Auth.authenticate(user, () => {
@@ -46,7 +47,7 @@ class Login extends React.Component {
         })
     };
     render() {
-        const {from} = this.props.location.state || {from: {pathname: '/'}};
+        const {from} = this.props.location.state || {from: {pathname: '/dashboard'}};
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer === true) {
@@ -63,6 +64,10 @@ class Login extends React.Component {
             <div>
                 <Router>
                     <div>
+                        <div className="top-bar">
+                            <Link to="/" className="logo">LMS</Link>
+                        </div>
+
                         <Switch>
                             <Route path='/login' component={AuthenticateComponent} />
                             <Route path='/register' component={Register} />
@@ -85,31 +90,26 @@ const PrivateRoute = ({component: Component, ...rest}) => (
     )}/>
 );
 
-const AuthButton = withRouter(({history}) => (
+export const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
         ?
-        <div>
-            <Link to="/user">User Settings</Link>
-            <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logout</div>
-        </div>
+        <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logout</div>
         :
-        <Link to="/login" className="login">Login</Link>
+        <div />
 ));
 
 export default function App() {
     return (
         <Router>
             <div className="main-wrapper">
-                <div className="top-bar">
-                    <Link to="/" className="logo">LMS</Link>
-                    <ul className="top-menu">
-                        <li><Link to="/public">Public Page</Link></li>
-                        <li><Link to="/dashboard">Dashboard Page</Link></li>
-                    </ul>
-                    <AuthButton/>
+                <div className="start-page">
+                <AuthButton />
+                <Switch>
+                    <Redirect exact from='/' to='/login'/>
+                    <Route path='/login' component={Login} />
+                </Switch>
                 </div>
                 <Route path="/public" component={Public}/>
-                <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register} />
                 <PrivateRoute path='/dashboard' component={Dashboard} />
                 <PrivateRoute path='/user' component={UserSection} />

@@ -98,7 +98,7 @@ export class Comments extends React.Component {
     render() {
         const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
         return (
-            <div className='comment'>
+            <div className='comments'>
                 <h2>Kommentarer</h2>
                 {commentlist &&
                     commentlist.map((comment, index) => (

@@ -15,7 +15,7 @@ export class Authenticate extends React.Component {
         this.state = {
             email: '',
             password: '',
-            loginMessage: 'Please login',
+            loginMessage: 'Logga in på din webbkurs här',
             verified: false
         };
     }
@@ -66,7 +66,7 @@ export class Authenticate extends React.Component {
                     this.test(json.user);
                 }
             })
-            .catch(() => this.setState({loginMessage: "Problem with login"}));
+            .catch(() => this.setState({loginMessage: "Något gick fel vid inloggningen. Var god försök igen."}));
 
     }
 
@@ -77,13 +77,13 @@ export class Authenticate extends React.Component {
                 <div className="authenticate-container">
                     <h3 className="authenticate-title">{loginMessage}</h3>
                     <form className="authenticate-form" onSubmit={this.handleSubmit}>
-                        <input type="email" placeholder="email" value={email}
+                        <input type="email" placeholder="e-post" value={email}
                                onChange={this.handleChange('email')} required/>
-                        <input type="password" placeholder="password" value={password}
+                        <input type="password" placeholder="lösenord" value={password}
                                onChange={this.handleChange('password')} required/>
-                        <input className='button' type="submit" value="LOGIN"/>
+                        <input className='button' type="submit" value="Logga in"/>
                     </form>
-                    <Link to="/register">Register</Link>
+                    <Link to="/register">Registrera dig</Link>
                 </div>
                 {verified &&
                 <div className="authenticate-intro">

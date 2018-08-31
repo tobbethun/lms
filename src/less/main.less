@@ -10,6 +10,7 @@ h1 {
 }
 p {
   font-size: 16px;
+    line-height: 24px;
 }
 input {
   background-color: transparent;
@@ -44,10 +45,6 @@ a {
 
 .main-wrapper {
   height: 100vh;
-  img {
-    width: 100%;
-    height: auto;
-  }
 }
 .top-bar {
   border-bottom: 2px solid lightsteelblue;
@@ -70,8 +67,13 @@ a {
   padding: 16px;
   cursor: pointer;
   &:hover {
-    color: #ff3;
+    color: grey;
   }
+}
+.logout {
+  position: fixed;
+  right: 0;
+  z-index: 1;
 }
 
 @import "authenticate.less";
@@ -81,3 +83,4 @@ a {
 @import "loader.less";
 @import "attachment.less";
 @import "step.less";
+@import "lesson.less";

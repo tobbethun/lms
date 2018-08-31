@@ -36,7 +36,7 @@ const connection = mysql.createConnection(dbc.connection);
 
 try {
     connection.connect();
-    console.log('Trying to connect to database');
+    console.log('connecting to database');
 
 } catch (e) {
     console.log('Database Connection failed:' + e);
@@ -65,7 +65,6 @@ const now = new Date().toISOString().substring(0, 10);
 
 // Set default route
 app.get('*', function (req, res) {
-    console.log(path.join(__dirname, 'build'));
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
@@ -191,7 +190,6 @@ app.post('/api/login', cors(corsOptions), function (req, res) {
         } else {
             if (results.length > 0) {
                 if (results[0].password == encryptedPassword) {
-                    console.log("login sucessfull", results[0]);
                     const user = {
                         firstname: results[0].first_name,
                         lastname: results[0].last_name,
@@ -202,7 +200,7 @@ app.post('/api/login', cors(corsOptions), function (req, res) {
                     };
                     res.send({
                         "code": 200,
-                        "success": "login sucessfull",
+                        "success": "Lyckad inloggning",
                         "user": user
                     });
                     connection.query('UPDATE users SET last_login = ? WHERE id = ?', [now, results[0].id]);
@@ -211,7 +209,7 @@ app.post('/api/login', cors(corsOptions), function (req, res) {
                     console.log("Email and password does not match");
                     res.send({
                         "code": 204,
-                        "success": "Email and password does not match"
+                        "success": "Fel e-post eller lösenord"
                     });
                 }
             }
@@ -219,7 +217,7 @@ app.post('/api/login', cors(corsOptions), function (req, res) {
                 console.log("Email does not exits");
                 res.send({
                     "code": 204,
-                    "success": "Email does not exits"
+                    "success": "Den angivna e-postadressen finns tyvärr inte registrerad."
                 });
             }
         }
@@ -466,7 +464,6 @@ app.post('/api/course', function (req, res) {
             // ));
             entries.items.forEach(function (entry) {
                 if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
-                    // console.log('entry.fields', entry.fields);
                     course = entry.fields;
                     entry.fields.lessons.map((lesson) => (
                         lessons.push(lesson.fields)

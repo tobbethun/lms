@@ -7,6 +7,9 @@ import Attachment from "./Attachment";
 
 
 export class Step extends React.Component {
+    componentDidMount() {
+        window.scrollTo(0, 0)
+    }
     render() {
         const {step, lessonTitle, lessonLength, index, nextStep, preStep} = this.props;
         return (

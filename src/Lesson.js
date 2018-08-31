@@ -11,7 +11,7 @@ export class Lesson extends React.Component {
         const titleList = [];
         steps && steps.map((step) => titleList.push(step.fields.title));
         return (
-            <div>
+            <div className="lesson-container">
                 {lesson &&
                 <div>
                     <h2>{lesson.title}</h2>

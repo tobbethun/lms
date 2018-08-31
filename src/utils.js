@@ -23,7 +23,9 @@ export const isLoggedIn = () => {
 
 export const getUser = () => {
     const object = JSON.parse(localStorage.getItem("loggedIn"));
-    return object.user;
+    if(object !== null) {
+        return object.user;
+    }
 };
 
 export const handleErrors = (response) => {

@@ -5,9 +5,14 @@ import {getUser, handleErrors} from "./utils";
 import {
     BrowserRouter as Router,
     Route,
+    NavLink,
     Link,
+    Switch,
 } from 'react-router-dom';
 import Loader from "./Loader";
+import hamburger from "./img/Hamburger_icon.svg";
+import icon from "./img/gearGreen.svg";
+import {CourseStart} from "./CourseStart";
 
 
 export class Dashboard extends React.Component {
@@ -17,6 +22,7 @@ export class Dashboard extends React.Component {
             lessons: [],
             course: [],
             changePassword: false,
+            hideMenu: false,
             user: getUser()
         };
     }
@@ -71,7 +77,7 @@ export class Dashboard extends React.Component {
         }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
     }
     render() {
-        const { lessons, course, errorMessage } = this.state;
+        const { lessons, course, errorMessage, hideMenu } = this.state;
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
@@ -80,26 +86,24 @@ export class Dashboard extends React.Component {
                 }
             </div>
         );
+        const courseStyle = {color: course.colorcode};
         return (
             <Router>
                 <div>
-                    <div className="course-info">
-                        <h3>{course.title}</h3>
-                        <p>{course.courseInformation}</p>
-                    </div>
                     <div className="container">
-                        <div className="side-bar">
+                        <div className={"side-bar " + (hideMenu && 'side-bar__hidden')} style={{borderColor: course.colorcode}}>
                             <div className="course-menu">
-                                <ul>
+                                <ul style={courseStyle}>
                                     {lessons &&
                                     lessons.map((lesson, index) => (
-                                        <li key={index}>
-                                            <p>{lesson.title}</p>
+                                        <li key={index} className="course-menu--lesson">
+                                            <span>{lesson.title}</span>
                                             {lesson.steps &&
-                                            <ul>
+                                            <ul className="course-list">
                                                 {lesson.steps.map((step, index) => (
                                                     <li key={index}>
-                                                        <Link to={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`}>{step.fields.title}</Link>
+                                                        <img src={icon} alt="ikon" />
+                                                        <NavLink exact to={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`} activeClassName='is-active'>{step.fields.title}</NavLink>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -110,13 +114,21 @@ export class Dashboard extends React.Component {
                                 </ul>
                             </div>
                         </div>
-                        <div className="content">
+                        <div className={"content " + (hideMenu && 'content--slide-left')}>
+                            <div className="course-info" style={{borderColor: course.colorcode}}>
+                                <img src={hamburger} onClick={() => this.setState({hideMenu: !this.state.hideMenu})} alt="hamburger-menu" className="hamburger" />
+                                <Link exact to="/dashboard" className="logo-link"><img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo" /></Link>
+                                <div className="spacer" />
+                            </div>
+                            <Switch>
+                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation}/>} />
                             {lessons &&
                             lessons.map((lesson, index) => (
                                 <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
                                        component={() => <Course lesson={lesson} steps={lesson.steps}/>}/>
                             ))
                             }
+                            </Switch>
                         </div>
                     </div>
                 </div>
