@@ -115,9 +115,13 @@ export class Dashboard extends React.Component {
                             </div>
                         </div>
                         <div className={"content " + (hideMenu && 'content--slide-left')}>
-                            <div className="course-info" style={{borderColor: course.colorcode}}>
+                            <div className="course-info" style={{borderColor: course.colorcode && course.colorcode}}>
                                 <img src={hamburger} onClick={() => this.setState({hideMenu: !this.state.hideMenu})} alt="hamburger-menu" className="hamburger" />
-                                <Link to="/dashboard" className="logo-link"><img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo" /></Link>
+                                {course.organizationImage &&
+                                    <Link to="/dashboard" className="logo-link">
+                                        <img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo" />
+                                    </Link>
+                                }
                                 <div className="spacer" />
                             </div>
                             <Switch>

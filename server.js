@@ -430,10 +430,7 @@ app.post('/api/getuploads', function (req, res) {
 
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 
-const client = contentful.createClient({
-    space: 'klswjjv4skip',
-    accessToken: '6a383d9a2e6f2d853aaa95f41cb772f7bacf64e0bc7a6a21b422954719584725'
-});
+const client = contentful.createClient(dbc.contentful);
 
 // client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
 //     .then(function (entry) {
