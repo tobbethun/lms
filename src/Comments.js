@@ -100,20 +100,28 @@ export class Comments extends React.Component {
         return (
             <div className='comments'>
                 <h2>Kommentarer</h2>
+                <form className='comment-form' onSubmit={this.handleSubmit}>
+                    <div className="comment-text">
+                        <textarea type="text"
+                               placeholder="Skriv din kommentar här"
+                               className={`comment-field ${commentstatus}`}
+                               value={comment}
+                               onChange={this.handleChange('comment')}
+                               required
+                        />
+                        <div className="comment-footer">
+                            <button className="comment-button" type="submit">Kommentera som {firstname}</button>
+                        </div>
+                    </div>
+                </form>
                 {commentlist &&
-                    commentlist.map((comment, index) => (
+                commentlist.map((comment, index) => (
                     <div key={index} className="comment-block">
                         <p className="comment-block__author">{comment.name}</p>
                         <p className="comment-block__text">{comment.comment}</p>
                         <AnswerComment commentid={comment.id} firstname={firstname} lastname={lastname} />
                     </div>
                 ))}
-                <form className='comment-form' onSubmit={this.handleSubmit}>
-                    <span>{firstname} {lastname}</span>
-                    <textarea type="text" placeholder="Skriv din kommentar här" className={`comment-field ${commentstatus}`} value={comment}
-                           onChange={this.handleChange('comment')} required/>
-                    <input className='button' type="submit" value="Kommentera"/>
-                </form>
             </div>
         )
     }

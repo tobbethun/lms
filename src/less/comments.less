@@ -1,20 +1,54 @@
+@borderColor: #E6E8EC;
+
 .comments {
-    max-width: 75%;
+    max-width: 100%  ;
 }
 
 .comment-form {
     width: 100%;
     margin: 10px 0;
+    display: flex;
+    flex-direction: row;
 }
-.comment-field {
-    font-size: 14px;
-    min-height: 100px;
+
+.comment-footer {
+    display: flex;
+    border: 1px solid @borderColor;
+    background-color: #F6F8F9;
+    padding: 0 0 0 12px;
+    justify-content: flex-end;
     width: 100%;
+}
+
+.comment-button {
+    color: white;
+    margin: 0;
+    padding: 12px;
+    background: #747F86;
+    border: 1px solid #747F86;
+}
+
+.comment-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.comment-field {
+    border-top: 1px solid @borderColor;
+    border-left: 1px solid @borderColor;
+    border-right: 1px solid @borderColor;
+    border-bottom: none;
+    font-size: 14px;
+    padding: 6px;
+    min-height: 80px;
+    width: 100%;
+    resize: none;
 }
 
 .comment-block {
     padding: 10px;
-    border: 1px solid lightgray;
 }
 
 .comment-block__author {

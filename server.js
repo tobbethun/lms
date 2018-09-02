@@ -317,7 +317,7 @@ app.post('/api/getcomments', function (req, res) {
             res.send({
                 "code": 200,
                 "success": "Fetch comments sucessfull",
-                "comments": payLoad
+                "comments": payLoad.reverse()
             });
             // console.log('payLoad', payLoad);
         }
