@@ -10,23 +10,24 @@ const slugify = require('slugify');
 const mkdirp = require('mkdirp');
 const path = require('path');
 
-const crypto = require('crypto'),
-    algorithm = 'aes-256-ctr',
-    password = 's9G1fEop';
+const crypto = require('crypto');
+const algorithm = dbc.cipher.algorithm;
+const password = dbc.cipher.password;
+const iv = new Buffer.alloc(16);
 
 function encrypt(text) {
-    const cipher = crypto.createCipher(algorithm, password);
+    const cipher = crypto.createCipheriv(algorithm, password, iv);
     let crypted = cipher.update(text, 'utf8', 'hex');
     crypted += cipher.final('hex');
     return crypted;
 }
 
-function decrypt(text) {
-    const decipher = crypto.createDecipher(algorithm, password);
-    let dec = decipher.update(text, 'hex', 'utf8');
-    dec += decipher.final('utf8');
-    return dec;
-}
+// function decrypt(text) {
+//     const decipher = crypto.createDecipher(algorithm, password);
+//     let dec = decipher.update(text, 'hex', 'utf8');
+//     dec += decipher.final('utf8');
+//     return dec;
+// }
 
 // Database Connection
 const connection = mysql.createConnection(dbc.connection);
