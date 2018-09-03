@@ -1,10 +1,8 @@
 // Basic Setup
 const http = require('http');
 const express = require('express');
-const cors = require('cors');
 const dbc = require('./dbc.js');
 const mysql = require('mysql');
-const parser = require('body-parser');
 const contentful = require('contentful');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
@@ -42,17 +40,9 @@ try {
     console.log('Database Connection failed:' + e);
 }
 
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, constious SmartTVs) choke on 204
-};
-
 
 // Setup express
 const app = express();
-app.use(cors());
-app.use(parser.json());
-app.use(parser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
@@ -77,7 +67,7 @@ console.log(path.join(__dirname, 'uploads'));
 
 
 
-app.get('/api/users', cors(corsOptions), function (req, res) {
+app.get('/api/users', function (req, res) {
     // const id = req.params.id;
     connection.query('SELECT * FROM users', function (err, results) {
         if (err) throw err;
@@ -94,7 +84,7 @@ app.get('/api/users', cors(corsOptions), function (req, res) {
 
 // REGISTER NEW USER
 
-app.post('/api/register', cors(corsOptions), function (req, res) {
+app.post('/api/register', function (req, res) {
     const password = req.body.password;
     const encryptedPassword = encrypt(password);
     const courseData = {course_id: req.body.courseid, email: req.body.email};
@@ -130,7 +120,7 @@ app.post('/api/register', cors(corsOptions), function (req, res) {
 
 // UPDATE PASSWORD
 
-app.post('/api/updatepassword', cors(corsOptions), function (req, res) {
+app.post('/api/updatepassword', function (req, res) {
     const email = req.body.email;
     const oldpassword = req.body.oldpassword;
     const newpassword = req.body.newpassword;
@@ -172,7 +162,7 @@ app.post('/api/updatepassword', cors(corsOptions), function (req, res) {
 
 // >>>>>>>>>>>> LOGIN SECTION <<<<<<<<<<<<<<<<
 
-app.post('/api/login', cors(corsOptions), function (req, res) {
+app.post('/api/login', function (req, res) {
     console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
