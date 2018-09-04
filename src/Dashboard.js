@@ -96,7 +96,7 @@ export class Dashboard extends React.Component {
                                 <ul style={courseStyle}>
                                     {lessons &&
                                     lessons.map((lesson, index) => (
-                                        <li key={index} className="course-menu--lesson">
+                                        <li key={index} className={"course-menu--lesson " + (lesson.inactive ? 'inactive' : '')}>
                                             <span>{lesson.title}</span>
                                             {lesson.steps &&
                                             <ul className="course-list">

@@ -257,6 +257,14 @@ a:hover {
 .course-menu--lesson span {
   padding: 8px 15px 4px;
 }
+.inactive {
+  -webkit-filter: grayscale(100%);
+          filter: grayscale(100%);
+  pointer-events: none;
+}
+.inactive span {
+  color: inherit;
+}
 .course-list {
   list-style: none;
   padding: 0;
