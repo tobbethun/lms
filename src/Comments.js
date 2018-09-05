@@ -117,7 +117,7 @@ export class Comments extends React.Component {
                 {commentlist &&
                 commentlist.map((comment) => (
                     <div key={comment.id} className="comment-block">
-                        <p className="comment-block__author">{comment.name}</p>
+                        <span className="comment-block__author">{comment.name}</span>
                         <p className="comment-block__text">{comment.comment}</p>
                         <AnswerComment commentid={comment.id} firstname={firstname} lastname={lastname} />
                     </div>

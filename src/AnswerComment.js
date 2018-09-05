@@ -100,14 +100,7 @@ export class AnswerComment extends React.Component {
         const { firstname, lastname, answer, answerList, showAnswerForm, answerstatus } = this.state;
         return (
             <div className='answer'>
-                {answerList &&
-                answerList.map((answer, index) => (
-                    <div key={index} className="comment-block">
-                        <p className="comment-block__author">{answer.name}</p>
-                        <p className="comment-block__text">{answer.answer}</p>
-                    </div>
-                ))}
-                <button onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}}>Svara</button>
+                <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara</span>
                 {showAnswerForm &&
                 <form className='answer-form' onSubmit={this.handleSubmit}>
                     <span>{firstname} {lastname}</span>
@@ -117,6 +110,13 @@ export class AnswerComment extends React.Component {
                     <input className='button' type="submit" value="Skicka"/>
                 </form>
                 }
+                {answerList &&
+                answerList.map((answer, index) => (
+                    <div key={index} className="answer-block">
+                        <p className="comment-block__author">{answer.name}</p>
+                        <p className="comment-block__text">{answer.answer}</p>
+                    </div>
+                ))}
             </div>
         )
     }
