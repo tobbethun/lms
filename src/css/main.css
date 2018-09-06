@@ -260,6 +260,7 @@ a:hover {
   padding: 8px 15px 4px;
 }
 .inactive {
+  color: rgba(1, 1, 1, 0.4);
   -webkit-filter: grayscale(100%);
           filter: grayscale(100%);
   pointer-events: none;
