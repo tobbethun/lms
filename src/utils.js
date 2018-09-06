@@ -34,3 +34,9 @@ export const handleErrors = (response) => {
     }
     return response;
 }
+
+export const formatTime = (timeStamp) => {
+    const date = timeStamp.split(' ')[0];
+    const time = timeStamp.split(' ')[1].split('.')[0];
+    return date + ' - ' + time.substring(0,5);
+}

@@ -5,17 +5,20 @@
 }
 
 .comment-form {
-    width: 100%;
+    width: auto;
     margin: 10px 0;
     display: flex;
     flex-direction: row;
+}
+
+.answer-form {
+    padding-left: 30px;
 }
 
 .comment-footer {
     display: flex;
     border: 1px solid @borderColor;
     background-color: #F6F8F9;
-    padding: 0 0 0 12px;
     justify-content: flex-end;
     width: 100%;
 }
@@ -42,19 +45,27 @@
     font-size: 14px;
     padding: 6px;
     min-height: 80px;
-    width: 100%;
+    width: calc(~'100% - 12px');
     resize: none;
     outline: none;
 }
 
 .comment-block {
-    padding: 10px;
+    border-top: 1px solid rgba(1, 1, 1, 0.1);
+    padding: 10px 0;
+    margin-bottom: 20px;
 }
 
 .comment-block__author {
+    color: #37A1FC;
+    font-size: 14px;
+    margin: 0;
+}
+
+.comment-block__time {
     color: grey;
     font-size: 12px;
-    margin: 0;
+    margin-left: 12px;
 }
 
 .comment-block__text {
@@ -73,8 +84,7 @@
 }
 
 .answer-block {
-    padding-left: 30px;
-
+    padding: 10px 30px;
 }
 
 .success {

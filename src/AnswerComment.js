@@ -1,7 +1,8 @@
 import React from'react';
+import {formatTime} from './utils.js'
 
 
-export class AnswerComment extends React.Component {
+export class AnswerComment extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -95,25 +96,32 @@ export class AnswerComment extends React.Component {
             });
         this.getAnswers();
     }
-
     render() {
-        const { firstname, lastname, answer, answerList, showAnswerForm, answerstatus } = this.state;
+        const { firstname, answer, answerList, showAnswerForm, answerstatus } = this.state;
         return (
             <div className='answer'>
                 <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara</span>
                 {showAnswerForm &&
-                <form className='answer-form' onSubmit={this.handleSubmit}>
-                    <span>{firstname} {lastname}</span>
-                    <textarea type="text" placeholder="Skriv ditt svar här"
-                              className={`answer-field ${answerstatus}`} value={answer}
-                              onChange={this.handleChange('answer')} required/>
-                    <input className='button' type="submit" value="Skicka"/>
+                <form className='comment-form answer-form' onSubmit={this.handleSubmit}>
+                    <div className="comment-text">
+                    <textarea type="text"
+                    placeholder="Delta i diskussionen..."
+                    className={`comment-field ${answerstatus}`}
+                    value={answer}
+                    onChange={this.handleChange('answer')}
+                    required
+                    />
+                    <div className="comment-footer">
+                    <button className="comment-button" type="submit">Svara som {firstname}</button>
+                    </div>
+                    </div>
                 </form>
                 }
                 {answerList &&
                 answerList.map((answer, index) => (
                     <div key={index} className="answer-block">
-                        <p className="comment-block__author">{answer.name}</p>
+                        <span className="comment-block__author">{answer.name}</span>
+                        <span className="comment-block__time">{formatTime(answer.time)}</span>
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
                 ))}

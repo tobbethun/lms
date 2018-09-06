@@ -301,7 +301,7 @@ app.post('/api/getcomments', function (req, res) {
             // console.log('results', results);
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment};
+                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment, time: res.time};
                 payLoad.push(comment);
                 // console.log('comment', comment);
             });
@@ -328,9 +328,9 @@ app.post('/api/getanswers', function (req, res) {
         } else {
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer};
+                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer, time: res.time};
                 payLoad.push(answer);
-            });
+                });
             res.send({
                 "code": 200,
                 "success": "Fetch answers sucessfull",

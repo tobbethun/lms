@@ -1,8 +1,9 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
+import {formatTime} from "./utils";
 
 
-export class Comments extends React.Component {
+export class Comments extends React.PureComponent {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -118,6 +119,7 @@ export class Comments extends React.Component {
                 commentlist.map((comment) => (
                     <div key={comment.id} className="comment-block">
                         <span className="comment-block__author">{comment.name}</span>
+                        <span className="comment-block__time">{formatTime(comment.time)}</span>
                         <p className="comment-block__text">{comment.comment}</p>
                         <AnswerComment commentid={comment.id} firstname={firstname} lastname={lastname} />
                     </div>
