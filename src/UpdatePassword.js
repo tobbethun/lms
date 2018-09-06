@@ -61,14 +61,14 @@ export class UpdatePassword extends React.Component {
             <div>
                 <h3>{updateMessage}</h3>
                 <form className='register-form' onSubmit={this.handleSubmit}>
-                    <input type="password" placeholder="old password" value={oldPassword}
+                    <input type="password" placeholder="Nuvarande lösenord" value={oldPassword}
                            onChange={this.handleChange('oldPassword')} required/>
-                    <input type="password" placeholder="password" value={password}
+                    <input type="password" placeholder="Nytt lösenord" value={password}
                            onChange={this.handleChange('password')} required/>
                     <input className={`${noMatch && 'no-match'}`} type="password"
-                           placeholder="retypePassword" value={retypePassword}
+                           placeholder="ange nytt lösenord igen" value={retypePassword}
                            onChange={this.handleChange('retypePassword')} required/>
-                    <input className='button' type="submit" value="Update"/>
+                    <input className='button' type="submit" value="Updatera lösenord"/>
                 </form>
                 {noMatch &&
                 <h3>Type the same password twice</h3>

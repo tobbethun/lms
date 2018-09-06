@@ -17,9 +17,10 @@ export class UserSection extends React.Component {
             <div className="user-section">
                 <p>{user.firstname} {user.lastname}</p>
                 <p>{user.email}</p>
-                <p>Registered: {user.regdate}</p>
-                <p>Last loggedin: {user.lastlogin}</p>
-                <button onClick={() => {this.setState({changePassword: !changePassword})}}>Change password</button>
+                <p>Registrerad: {user.regdate}</p>
+                <p>Senast inloggad: {user.lastlogin}</p>
+                <p>Roll: {user.role}</p>
+                <button onClick={() => {this.setState({changePassword: !changePassword})}}>Ändra lösenord</button>
                 { changePassword &&
                 <UpdatePassword userEmail={user.email} />
                 }

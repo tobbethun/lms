@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Comments from "./Comments";
+import Download from "./Download";
 
 export class Attachment extends React.Component {
     constructor(props) {
@@ -98,10 +99,11 @@ export class Attachment extends React.Component {
                 </div>
                 <div className="attachment-list">
                     {uploadlist &&
-                        uploadlist.map((upload, index) => (
-                            <div key={index} className="upload-block">
-                                <p>{upload.name}</p>
-                                <a href='p'>{upload.filename}</a>
+                        uploadlist.map((upload) => (
+                            <div key={upload.id} className="upload-block">
+                                <span>{upload.name}</span>
+                                <span>{upload.time}</span>
+                                <Download path={upload.path} fileName={upload.filename} />
                                 <hr/>
                                 <Comments step={upload.id} />
                             </div>

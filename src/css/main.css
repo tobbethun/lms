@@ -204,6 +204,7 @@ a:hover {
   color: #000;
   height: 100vh;
   position: fixed;
+  overflow-y: scroll;
   left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -254,6 +255,7 @@ a:hover {
 .course-menu--lesson li img {
   height: 10px;
   width: 10px;
+  min-width: 10px;
   margin: 4px 20px 5px 0;
 }
 .course-menu--lesson span {
@@ -423,8 +425,6 @@ a:hover {
   }
 }
 .upload-block {
-  border: 2px solid #9e9eb0;
-  padding: 10px;
   margin-bottom: 10px;
 }
 .stepper {

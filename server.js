@@ -353,7 +353,7 @@ app.post('/api/fileupload', function (req, res) {
         ref: req.body.ref,
         step: req.body.step,
         filename: filename,
-        path: './uploads/' + req.body.step + '/' + filename
+        path: '/uploads/' + req.body.step + '/' + filename
     };
     let sampleFile = req.files.file;
 
@@ -402,10 +402,8 @@ app.post('/api/getuploads', function (req, res) {
         } else {
             // console.log('results', results);
             results.forEach(function (res) {
-                // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path};
+                const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path, time: res.time};
                 payLoad.push(upload);
-                // console.log('comment', comment);
             });
             res.send({
                 "code": 200,
@@ -417,7 +415,11 @@ app.post('/api/getuploads', function (req, res) {
     });
 });
 
-
+app.post('/api/download/', function(req, res) {
+    console.log('req.path', req.body.path);
+    var file = __dirname + req.body.path;
+    res.download(file);
+});
 
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 
