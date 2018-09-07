@@ -375,12 +375,10 @@ app.post('/api/fileupload', function (req, res) {
                                "failed": "error ocurred"
                            })
                        } else {
-                           setTimeout(() => {
-                               res.send({
-                                   "code": 200,
-                                   "success": "Upload successful"
-                               })
-                           }, 2000)
+                           res.send({
+                               "code": 200,
+                               "success": "Upload successful"
+                           })
                        }
                    });
                }

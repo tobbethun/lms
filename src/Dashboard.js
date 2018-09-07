@@ -1,6 +1,6 @@
 import React from 'react';
 import slugify from 'slugify';
-import Course from './Lesson';
+import Lesson from './Lesson';
 import {getUser, handleErrors} from "./utils";
 import {
     BrowserRouter as Router,
@@ -129,7 +129,7 @@ export class Dashboard extends React.Component {
                             {lessons &&
                             lessons.map((lesson, index) => (
                                 <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
-                                       component={() => <Course lesson={lesson} steps={lesson.steps}/>}/>
+                                       component={() => <Lesson lesson={lesson} steps={lesson.steps}/>}/>
                             ))
                             }
                             </Switch>

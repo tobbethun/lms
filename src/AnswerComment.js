@@ -2,7 +2,7 @@ import React from'react';
 import {formatTime} from './utils.js'
 
 
-export class AnswerComment extends React.PureComponent {
+export class AnswerComment extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);

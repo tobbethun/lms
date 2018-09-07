@@ -3,7 +3,7 @@ import AnswerComment from "./AnswerComment";
 import {formatTime} from "./utils";
 
 
-export class Comments extends React.PureComponent {
+export class Comments extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
