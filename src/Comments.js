@@ -55,7 +55,7 @@ export class Comments extends React.Component {
             })
             .then((json) => {
                 if (json.code === 200) {
-                    this.setState({commentlist: json.comments})
+                    this.setState({commentlist: json.comments});
                 } else {
                     this.setState({registerMessage: json.success, uploadstatus: 'error'});
                 }
@@ -92,8 +92,8 @@ export class Comments extends React.Component {
                 if (json.code === 200) {
                     this.setState({registerMessage: json.success, commentstatus: 'success', comment: ''});
                 }
-            });
-        this.getComments();
+            })
+            .then(this.getComments())
     }
     render() {
         const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
