@@ -56,6 +56,8 @@ export class Comments extends React.Component {
             .then((json) => {
                 if (json.code === 200) {
                     this.setState({commentlist: json.comments})
+                } else {
+                    this.setState({registerMessage: json.success, uploadstatus: 'error'});
                 }
             })
     }
@@ -90,9 +92,6 @@ export class Comments extends React.Component {
                 if (json.code === 200) {
                     this.setState({registerMessage: json.success, commentstatus: 'success', comment: ''});
                 }
-                if (json.code === 204) {
-                    this.setState({registerMessage: json.success, commentstatus: 'success'});
-                }
             });
         this.getComments();
     }
@@ -100,7 +99,6 @@ export class Comments extends React.Component {
         const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
         return (
             <div className='comments'>
-                <h2>Kommentarer</h2>
                 <form className='comment-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
                         <textarea type="text"

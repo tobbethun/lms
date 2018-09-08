@@ -33,7 +33,7 @@ export class Download extends React.Component {
     }
     render() {
         return (
-            <p onClick={this.download}>Ladda ner fil</p>
+            <button className="download-file" onClick={this.download}>Ladda ner fil</button>
         )
     }
 }

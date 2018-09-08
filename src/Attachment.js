@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Comments from "./Comments";
 import Download from "./Download";
+import {formatTime, handleErrors} from "./utils";
 
 export class Attachment extends React.Component {
     constructor(props) {
@@ -17,7 +17,9 @@ export class Attachment extends React.Component {
             uploadlist: [],
             attachment: '',
             attachmentRef: ref,
-            uploadstatus: ''
+            uploadsuccess: '',
+            uploaderror: '',
+            uploaded: false
         };
     }
 
@@ -69,42 +71,48 @@ export class Attachment extends React.Component {
         fetch("/api/fileupload/", {
             method: "post",
             body: formData
-        })
+        }).then(handleErrors)
             .then((response) => {
                 return response.json();
             })
             .then((json) => {
+                console.log('json', json);
                 if (json.code === 200) {
-                    this.setState({registerMessage: json.success, uploadstatus: 'success', comment: ''});
-                    ReactDOM.findDOMNode(this.refs.form).value = '';
+                    this.setState({registerMessage: json.success, uploadsuccess: 'Din fil har blivit uppladdad', uploaded: true, uploaderror: ''})
+                    this.getUploads();
+                } else {
+                        this.setState({registerMessage: json.success, uploaderror: 'Oj nåt gick fel. Vänligen försök igen!'});
                 }
-                if (json.code === 500|| 401) {
-                    this.setState({registerMessage: json.success, uploadstatus: 'success'});
-                }
-            })
-            .then(() => {
-            this.getUploads();
+            }).catch((error) =>  {
+                console.log('error', error);
+                this.setState({uploaderror: 'Oj nåt gick knas. Vänligen försök igen!'})
         })
     }
     render() {
-        const { firstname, lastname, uploadstatus, uploadlist } = this.state;
+        const { uploadsuccess, uploadlist, uploaderror, uploaded } = this.state;
         return (
             <div>
-                <div className={`attachment ${uploadstatus}`}>
-                    {firstname} {lastname}
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="file" required ref="form" onChange={this.handleUpload} name="file" />
-                        <input type="submit" value="Ladda upp fil" />
-                    </form>
+                <div className="attachment">
+                    {!uploaded ?
+                        <form onSubmit={this.handleSubmit}>
+                            <input type="file" required ref="form" onChange={this.handleUpload} name="file" />
+                            <button type="submit">Ladda upp din fil</button>
+                        </form> :
+                        <h3>{uploadsuccess}</h3>
+                    }
+                    <span className="error-message">{uploaderror}</span>
                 </div>
                 <div className="attachment-list">
                     {uploadlist &&
                         uploadlist.map((upload) => (
                             <div key={upload.id} className="upload-block">
-                                <span>{upload.name}</span>
-                                <span>{upload.time}</span>
-                                <Download path={upload.path} fileName={upload.filename} />
-                                <hr/>
+                                <div className="uploaded-info">
+                                    <div className="uploaded__name-time">
+                                        <span>{upload.name}</span>
+                                        <span>{formatTime(upload.time)}</span>
+                                    </div>
+                                    <Download path={upload.path} fileName={upload.filename} />
+                                </div>
                                 <Comments step={upload.id} />
                             </div>
                         ))

@@ -472,3 +472,22 @@ app.post('/api/course', function (req, res) {
         });
 });
 
+app.post('/api/assignments', function(req, res) {
+    payload = [];
+    client.getEntries({
+        'fields.fileUpload': 'true',
+        'content_type': 'steps'
+    })
+        .then(function (entries) {
+            entries.items.forEach(function (entry) {
+                payload.push(entry.fields.title);
+            });
+            if (payload.length) {
+                console.log('payload', payload);
+                    res.status(200).send({
+                    "steps": payload
+                });
+            } else res.status(204);
+        });
+});
+

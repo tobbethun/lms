@@ -47,10 +47,10 @@ export class Dashboard extends React.Component {
             .then((response) => {
                 return response.json();
 
-            }).then((response) => {
-            this.getCourses(response.userCourses);
+            }).then((json) => {
+            this.getCourses(json.userCourses);
             this.setState({
-                userCourses: response.userCourses
+                userCourses: json.userCourses
             });
         }).catch(() => this.setState({errorMessage: "Problem to fetch Usercourses"}));
     }
@@ -69,12 +69,15 @@ export class Dashboard extends React.Component {
             .then((response) => {
                 return response.json();
 
-            }).then((response) => {
+            }).then((json) => {
             this.setState({
-                lessons: response.lessons,
-                course: response.course
+                lessons: json.lessons,
+                course: json.course
             });
-        }).catch(() => this.setState({errorMessage: "Problem to fetch courses"}));
+        }).catch((error) => {
+            console.log('error', error);
+            this.setState({errorMessage: "Problem to fetch courses"})
+        });
     }
     render() {
         const { lessons, course, errorMessage, hideMenu } = this.state;
@@ -87,6 +90,7 @@ export class Dashboard extends React.Component {
             </div>
         );
         const courseStyle = {color: course.colorcode};
+        const firstStep = 'dashboard/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
         return (
             <Router>
                 <div>
@@ -125,7 +129,7 @@ export class Dashboard extends React.Component {
                                 <div className="spacer" />
                             </div>
                             <Switch>
-                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation}/>} />
+                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} />} />
                             {lessons &&
                             lessons.map((lesson, index) => (
                                 <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
