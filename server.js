@@ -485,7 +485,8 @@ app.post('/api/assignments', function(req, res) {
             if (payload.length) {
                 console.log('payload', payload);
                     res.status(200).send({
-                    "steps": payload
+                    "steps": payload,
+                    "code": 200
                 });
             } else res.status(204);
         });

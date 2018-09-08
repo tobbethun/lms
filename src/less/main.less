@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+@mainColor: #2fbfc0;
+@lightGrey: #f7f9fa;
+@mediumGrey: #e5ebed;
+@grey: #d3dce0;
+
 body {
   margin: 0;
   padding: 0;
@@ -28,15 +33,12 @@ button, .button {
   padding: 10px;
   outline: none;
   cursor: pointer;
-  &:hover {
-    outline: 1px solid black;
-  }
 }
 a {
   text-decoration: none;
   color: #000;
   &:hover {
-    color: #9492aa;
+    font-weight: 700;
   }
 }
 .no-match {
@@ -62,6 +64,8 @@ a {
     margin: 0 10px;
   }
 }
+
+
 .login, .logout {
   color: #000;
   padding: 16px;
@@ -69,11 +73,6 @@ a {
   &:hover {
     color: grey;
   }
-}
-.logout {
-  position: fixed;
-  right: 0;
-  z-index: 10;
 }
 
 @import "authenticate.less";

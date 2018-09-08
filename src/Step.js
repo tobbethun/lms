@@ -11,22 +11,22 @@ export class Step extends React.Component {
         window.scrollTo(0, 0)
     }
     render() {
-        const {step, lessonTitle, lessonLength, index, nextStep, preStep} = this.props;
+        const {step, lessonTitle, lessonLength, index, nextStep, preStep, colorCode} = this.props;
         return (
             <div>
                 {step &&
                 <div>
                     <h3>{step.fields.title}</h3>
                     <Markup text={step.fields.text} />
-                    {step.fields.comments && <Comments step={step.sys.id}/> }
-                    {step.fields.fileUpload && <Attachment step={step.sys.id} /> }
+                    {step.fields.comments && <Comments step={step.sys.id} colorCode={colorCode}/> }
+                    {step.fields.fileUpload && <Attachment step={step.sys.id} colorCode={colorCode} /> }
                     <hr/>
-                    <div className="stepper">
+                    <div className="stepper-container">
                         {(index <= lessonLength && index > 1) &&
-                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper__prev">FÖREGÅENDE STEG</Link>
+                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}>FÖREGÅENDE STEG</Link>
                         }
                         {!(lessonLength === index) ?
-                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper__next">NÄSTA STEG</Link> :
+                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}>NÄSTA STEG</Link> :
                             <p>Detta var det sista steget i lektionen. I menyn till vänster kan du gå vidare till nästa lektion.</p>
                         }
                     </div>

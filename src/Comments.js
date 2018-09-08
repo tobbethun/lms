@@ -109,7 +109,7 @@ export class Comments extends React.Component {
                                required
                         />
                         <div className="comment-footer">
-                            <button className="comment-button" type="submit">Kommentera som {firstname}</button>
+                            <button className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode}}>Skicka kommentar</button>
                         </div>
                     </div>
                 </form>

@@ -27,16 +27,12 @@ button,
   outline: none;
   cursor: pointer;
 }
-button:hover,
-.button:hover {
-  outline: 1px solid black;
-}
 a {
   text-decoration: none;
   color: #000;
 }
 a:hover {
-  color: #9492aa;
+  font-weight: 700;
 }
 .no-match {
   border: 1px solid red;
@@ -75,11 +71,6 @@ a:hover {
 .login:hover,
 .logout:hover {
   color: grey;
-}
-.logout {
-  position: fixed;
-  right: 0;
-  z-index: 10;
 }
 .authenticate {
   display: -webkit-box;
@@ -162,6 +153,7 @@ a:hover {
 }
 .course-info {
   border-bottom: 1px solid #ededed;
+  color: #2fbfc0;
   position: fixed;
   top: 0;
   display: -webkit-box;
@@ -175,10 +167,13 @@ a:hover {
           justify-content: space-between;
   height: 60px;
   background-color: white;
-  width: calc(100% - 300px);
+  width: calc(100% - 250px);
   -webkit-transition: width .4s;
   transition: width .4s;
   z-index: 5;
+}
+.course-info .user-logout a {
+  color: currentColor;
 }
 .logo-link {
   height: 60px;
@@ -191,18 +186,26 @@ a:hover {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-right: 52px;
 }
 .course-logo {
   height: 90%;
   width: auto;
 }
+.user-logout {
+  z-index: 10;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
 .side-bar {
-  background-color: white;
+  background-color: #f7f9fa;
   width: 250px;
   border-right: 1px solid lightsteelblue;
   color: #000;
-  height: 100vh;
+  height: 100%;
   position: fixed;
   overflow-y: scroll;
   left: 0;
@@ -211,26 +214,31 @@ a:hover {
   display: flex;
   -webkit-transition: left .4s;
   transition: left .4s;
+  z-index: 15;
 }
 .side-bar__hidden {
   left: -250px;
 }
 .content {
-  padding: 70px 0 0 300px;
+  padding: 70px 0 0 250px;
   -webkit-transition: padding .4s;
   transition: padding .4s;
 }
-.content a {
-  color: #000;
-}
 .content--slide-left {
-  padding-left: 50px;
+  padding: 70px 25px;
 }
 .content--slide-left .course-info {
-  width: 100%;
+  width: calc(100% - 50px);
 }
 .hamburger {
-  width: 24px;
+  padding: 16px;
+  width: 20px;
+}
+.hamburger div {
+  width: 100%;
+  height: 3px;
+  background-color: #2fbfc0;
+  margin: 3px 0;
 }
 .course-menu ul {
   list-style: none;
@@ -244,22 +252,22 @@ a:hover {
   font-size: 14px;
   font-weight: 700;
   color: black;
+  padding: 8px 12px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 .course-menu--lesson li {
   font-weight: 700;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 10px 15px;
 }
 .course-menu--lesson li img {
   height: 10px;
   width: 10px;
   min-width: 10px;
   margin: 4px 20px 5px 0;
-}
-.course-menu--lesson span {
-  padding: 8px 15px 4px;
 }
 .inactive {
   color: rgba(1, 1, 1, 0.4);
@@ -268,19 +276,25 @@ a:hover {
   pointer-events: none;
 }
 .inactive span {
-  color: inherit;
+  color: currentColor;
 }
 .course-list {
   list-style: none;
   padding: 0;
 }
+.course-list li:hover {
+  background-color: #d3dce0;
+}
 .course-list a {
-  color: inherit;
+  color: currentColor ;
   font-weight: 200;
+  width: 100%;
+  padding: 8px 24px;
 }
 .course-list .is-active {
   color: black;
   font-weight: 700;
+  background-color: #e5ebed;
 }
 .comments {
   max-width: 100%  ;
@@ -314,8 +328,8 @@ a:hover {
   color: white;
   margin: 0;
   padding: 12px;
-  background: #747F86;
-  border: 1px solid #747F86;
+  background: #2fbfc0;
+  border: 1px solid #2fbfc0;
 }
 .comment-text {
   display: -webkit-box;
@@ -345,7 +359,7 @@ a:hover {
   margin-bottom: 20px;
 }
 .comment-block__author {
-  color: #37A1FC;
+  color: #2fbfc0;
   font-size: 14px;
   margin: 0;
 }
@@ -452,7 +466,7 @@ a:hover {
 .uploaded__name-time span {
   padding-right: 12px;
 }
-.stepper {
+.stepper-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -460,7 +474,23 @@ a:hover {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
+.stepper {
+  padding: 12px;
+  background-color: #2fbfc0;
+  color: white;
+  width: 200px;
+  text-align: center;
+}
+.stepper a {
+  color: white;
+}
 .lesson-container {
   padding-bottom: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
   width: 90%;
+}
+.lesson-container img {
+  width: 100%;
+  height: auto;
 }

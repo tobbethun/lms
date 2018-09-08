@@ -10,7 +10,7 @@ export class CourseStart extends React.Component {
     render() {
         const {title, text, firstStep} = this.props;
         return (
-            <div>
+            <div className="lesson-container">
                 {title}
                 <Markup text={text} />
                 <Link to={firstStep}>Klicka här för att börja!</Link>
