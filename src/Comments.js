@@ -97,12 +97,13 @@ export class Comments extends React.Component {
     }
     render() {
         const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
+        const { commentPlaceholder="Skriv din kommentar här" } = this.props;
         return (
             <div className='comments'>
                 <form className='comment-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
                         <textarea type="text"
-                               placeholder="Skriv din kommentar här"
+                               placeholder={commentPlaceholder}
                                className={`comment-field ${commentstatus}`}
                                value={comment}
                                onChange={this.handleChange('comment')}
