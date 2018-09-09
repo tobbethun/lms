@@ -164,12 +164,9 @@ app.post('/api/updatepassword', function (req, res) {
 // >>>>>>>>>>>> LOGIN SECTION <<<<<<<<<<<<<<<<
 
 app.post('/api/login', function (req, res) {
-    console.log(req.body);
     const email = req.body.email;
     const password = req.body.password;
-    console.log(email, '||||', password);
     const encryptedPassword = encrypt(password);
-    console.log('encryptedPassword', encryptedPassword);
 
     connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
         if (error) {
@@ -483,7 +480,6 @@ app.post('/api/assignments', function(req, res) {
                 payload.push(entry.fields.title);
             });
             if (payload.length) {
-                console.log('payload', payload);
                     res.status(200).send({
                     "steps": payload,
                     "code": 200

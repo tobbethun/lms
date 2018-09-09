@@ -1,7 +1,6 @@
 import React from 'react';
 import Comments from "./Comments";
 import Download from "./Download";
-import file from "./img/file-alt.svg";
 import {formatTime, handleErrors} from "./utils";
 
 export class Attachment extends React.Component {
@@ -97,7 +96,7 @@ export class Attachment extends React.Component {
                     {!uploaded ?
                         <form onSubmit={this.handleSubmit}>
                             <input type="file" required ref="form" onChange={this.handleUpload} name="file" />
-                            <button type="submit">Ladda upp din fil</button>
+                            <button type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Ladda upp din fil</button>
                         </form> :
                         <h3>{uploadsuccess}</h3>
                     }

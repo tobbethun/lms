@@ -498,16 +498,20 @@ a:hover {
 .answer-block {
   padding: 10px 30px;
 }
+.attachment {
+  padding: 16px;
+  background-color: #f7f9fa;
+  border-radius: 25px;
+}
 .attachment form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
-.attachment form input {
-  margin-left: 0;
+.attachment form button {
+  color: white;
+  font-size: 14px;
+  padding: 10px 30px;
 }
 .upload-block {
   margin: 30px 0;
@@ -548,6 +552,7 @@ img.download-icon {
 }
 .download-file {
   text-decoration: underline;
+  color: #2fbfc0;
 }
 .download-file:hover {
   cursor: pointer;
