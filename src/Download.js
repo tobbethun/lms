@@ -1,5 +1,6 @@
 import React from 'react';
 import fileDownload from 'js-file-download';
+import file from "./img/file-alt.svg";
 
 export class Download extends React.Component {
     constructor(props) {
@@ -33,7 +34,10 @@ export class Download extends React.Component {
     }
     render() {
         return (
-            <button className="download-file" onClick={this.download}>Ladda ner fil</button>
+            <div className="download">
+                <img src={file} alt="fil-ikon" className="download-icon" />
+                <span className="download-file" onClick={this.download} style={{color: this.props.colorCode}}>Ladda ner fil</span>
+            </div>
         )
     }
 }

@@ -14,7 +14,7 @@ export class Lesson extends React.Component {
             <div className="lesson-container">
                 {lesson &&
                 <div>
-                    <h2>{lesson.title}</h2>
+                    <span>{lesson.title}</span>
                 </div>
                 }
                 {steps &&

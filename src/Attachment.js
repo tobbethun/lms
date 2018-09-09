@@ -1,6 +1,7 @@
 import React from 'react';
 import Comments from "./Comments";
 import Download from "./Download";
+import file from "./img/file-alt.svg";
 import {formatTime, handleErrors} from "./utils";
 
 export class Attachment extends React.Component {
@@ -109,11 +110,11 @@ export class Attachment extends React.Component {
                                 <div className="uploaded-info">
                                     <div className="uploaded__name-time">
                                         <span>{upload.name}</span>
-                                        <span>{formatTime(upload.time)}</span>
+                                        <span className="comment-block__time">Inlämnat {formatTime(upload.time)}</span>
                                     </div>
-                                    <Download path={upload.path} fileName={upload.filename} />
+                                    <Download path={upload.path} fileName={upload.filename} colorCode={this.props.colorCode} />
                                 </div>
-                                <Comments step={upload.id} />
+                                <Comments step={upload.id} colorCode={this.props.colorCode} dontShowAnswers />
                             </div>
                         ))
                     }

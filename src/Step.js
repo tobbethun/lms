@@ -20,7 +20,6 @@ export class Step extends React.Component {
                     <Markup text={step.fields.text} />
                     {step.fields.comments && <Comments step={step.sys.id} colorCode={colorCode}/> }
                     {step.fields.fileUpload && <Attachment step={step.sys.id} colorCode={colorCode} /> }
-                    <hr/>
                     <div className="stepper-container">
                         {(index <= lessonLength && index > 1) &&
                         <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>FÖREGÅENDE SIDA</span></Link>
