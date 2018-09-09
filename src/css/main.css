@@ -215,6 +215,7 @@ a:hover {
   -webkit-transition: left .4s;
   transition: left .4s;
   z-index: 15;
+  font-size: 14px;
 }
 .side-bar__hidden {
   left: -250px;
@@ -470,19 +471,44 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 .stepper {
   padding: 12px;
   background-color: #2fbfc0;
   color: white;
+  font-size: 14px;
   width: 200px;
   text-align: center;
+  position: relative;
 }
 .stepper a {
   color: white;
+}
+.stepper__prev {
+  margin-right: auto;
+}
+.stepper__next {
+  margin-left: auto;
+}
+.arrow-left {
+  position: absolute;
+  left: 16px;
+  top: 15px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-right: 6px solid white;
+  border-bottom: 6px solid transparent;
+}
+.arrow-right {
+  position: absolute;
+  right: 16px;
+  top: 15px;
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-left: 6px solid white;
+  border-bottom: 6px solid transparent;
 }
 .lesson-container {
   padding-bottom: 30px;

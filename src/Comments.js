@@ -109,14 +109,14 @@ export class Comments extends React.Component {
                                required
                         />
                         <div className="comment-footer">
-                            <button className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode}}>Skicka kommentar</button>
+                            <button className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Skicka kommentar</button>
                         </div>
                     </div>
                 </form>
                 {commentlist &&
                 commentlist.map((comment) => (
                     <div key={comment.id} className="comment-block">
-                        <span className="comment-block__author">{comment.name}</span>
+                        <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
                         <p className="comment-block__text">{comment.comment}</p>
                         <AnswerComment commentid={comment.id} firstname={firstname} lastname={lastname} />

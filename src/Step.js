@@ -23,10 +23,10 @@ export class Step extends React.Component {
                     <hr/>
                     <div className="stepper-container">
                         {(index <= lessonLength && index > 1) &&
-                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}>FÖREGÅENDE STEG</Link>
+                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>FÖREGÅENDE SIDA</span></Link>
                         }
                         {!(lessonLength === index) ?
-                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}>NÄSTA STEG</Link> :
+                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}><div className="arrow-right"/><span>NÄSTA SIDA</span></Link> :
                             <p>Detta var det sista steget i lektionen. I menyn till vänster kan du gå vidare till nästa lektion.</p>
                         }
                     </div>
