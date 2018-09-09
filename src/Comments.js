@@ -119,7 +119,7 @@ export class Comments extends React.Component {
                         <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
                         <p className="comment-block__text">{comment.comment}</p>
-                        <AnswerComment commentid={comment.id} firstname={firstname} lastname={lastname} />
+                        <AnswerComment commentid={comment.id} commentName={comment.name} firstname={firstname} lastname={lastname} colorCode={this.props.colorCode} />
                     </div>
                 ))}
             </div>

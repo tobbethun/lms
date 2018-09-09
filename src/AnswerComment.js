@@ -97,10 +97,11 @@ export class AnswerComment extends React.Component {
         this.getAnswers();
     }
     render() {
-        const { firstname, answer, answerList, showAnswerForm, answerstatus } = this.state;
+        const { answer, answerList, showAnswerForm, answerstatus } = this.state;
+        const { commentName, colorCode } = this.props;
         return (
             <div className='answer'>
-                <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara</span>
+                <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara {commentName.split(' ', 1)}</span>
                 {showAnswerForm &&
                 <form className='comment-form answer-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
@@ -112,7 +113,7 @@ export class AnswerComment extends React.Component {
                     required
                     />
                     <div className="comment-footer">
-                    <button className="comment-button" type="submit">Svara som {firstname}</button>
+                    <button className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>
                     </div>
                     </div>
                 </form>
@@ -120,7 +121,7 @@ export class AnswerComment extends React.Component {
                 {answerList &&
                 answerList.map((answer, index) => (
                     <div key={index} className="answer-block">
-                        <span className="comment-block__author">{answer.name}</span>
+                        <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
                         <span className="comment-block__time">{formatTime(answer.time)}</span>
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
