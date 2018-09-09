@@ -96,7 +96,7 @@ export class Attachment extends React.Component {
                     {!uploaded ?
                         <form onSubmit={this.handleSubmit}>
                             <input type="file" required ref="form" onChange={this.handleUpload} name="file" />
-                            <button type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Ladda upp din fil</button>
+                            <button type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Ladda upp</button>
                         </form> :
                         <h3>{uploadsuccess}</h3>
                     }

@@ -39,28 +39,32 @@ export class UserSection extends React.Component {
             }).catch((error) =>  {
             console.log('error', error);
         })
-
     }
     render() {
         const {user, changePassword, assignments } = this.state;
         console.log('assignments', assignments);
         return (
             <div className="user-section">
-                <p>{user.firstname} {user.lastname}</p>
-                <p>{user.email}</p>
-                <p>Registrerad: {user.regdate}</p>
-                <p>Senast inloggad: {user.lastlogin}</p>
-                <p>Roll: {user.role}</p>
-                <button onClick={() => {this.setState({changePassword: !changePassword})}}>Ändra lösenord</button>
-                { changePassword &&
-                <UpdatePassword userEmail={user.email} />
-                }
-                <h3>Inlämnade uppgifter</h3>
-                {assignments &&
-                assignments.map((assignment) => (
-                    <p key={assignment  }>{assignment}</p>
+                <div className="user-section__info">
+                    <p className="user-section__name">{user.firstname} {user.lastname}</p>
+                    <p>{user.email}</p>
+                    <p>Registrerad: {user.regdate}</p>
+                    <p>Senast inloggad: {user.lastlogin}</p>
+                    <p>Roll: {user.role}</p>
+                    <button onClick={() => {this.setState({changePassword: !changePassword})}}>Ändra lösenord</button>
+                    { changePassword &&
+                    <UpdatePassword userEmail={user.email}   />
+                    }
+                </div>
+
+                <div className="user-section__assignments">
+                    <h3>Inlämnade uppgifter</h3>
+                    {assignments &&
+                    assignments.map((assignment) => (
+                        <p key={assignment.step}>{assignment.title}</p>
                     ))
-                }
+                    }
+                </div>
             </div>
         )
     }

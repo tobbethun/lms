@@ -50,7 +50,12 @@ export class UpdatePassword extends React.Component {
                 })
                 .then((json) => {
                     if (json.code === 200 || 204) {
-                        this.setState({updateMessage: json.success})
+                        this.setState({
+                            updateMessage: json.success,
+                            oldPassword: '',
+                            password: '',
+                            retypePassword: ''
+                        })
                     }
                 });
         }

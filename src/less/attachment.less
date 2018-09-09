@@ -1,13 +1,21 @@
 .attachment {
     padding: 16px;
     background-color: @lightGrey;
-    border-radius: 25px;
+    border-radius: 10px;
     form {
         display: flex;
+        flex-direction: column;
+        @media @medium {
+            flex-direction: row;
+        }
         button {
             color: white;
             font-size: 14px;
             padding: 10px 30px;
+            margin-top: 20px;
+            @media @medium {
+                margin-top: 0;
+            }
         }
     }
 }
@@ -17,7 +25,7 @@
     margin: 30px 0;
     padding: 16px;
     background-color: @lightGrey;
-    border-radius: 16px;
+    border-radius: 10px;
 }
 
 .uploaded-info {

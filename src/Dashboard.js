@@ -17,7 +17,7 @@ export const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
         ?
         <div className="user-logout">
-            <Link to="/dashboard/user" className="user-section">Min sida</Link>
+            <Link to="/dashboard/user" className="user">Min sida</Link>
             <Link to="/login" className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logga ut</Link>
         </div>
         :
@@ -106,6 +106,14 @@ export class Dashboard extends React.Component {
                     <div className="container">
                         <div className={"side-bar " + (hideMenu && 'side-bar__hidden')}>
                             <div className="course-menu">
+                                <div className="course-menu__header">
+                                    {course.title}
+                                    <div onClick={() => this.setState({hideMenu: !this.state.hideMenu})} className="hamburger hamburger--in-menu">
+                                        <div style={{backgroundColor: course.colorcode}} />
+                                        <div style={{backgroundColor: course.colorcode}} />
+                                        <div style={{backgroundColor: course.colorcode}} />
+                                    </div>
+                                </div>
                                 <ul style={courseStyle}>
                                     {lessons &&
                                     lessons.map((lesson, index) => (

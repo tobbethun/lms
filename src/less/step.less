@@ -13,10 +13,14 @@
     padding: 12px;
     background-color: @mainColor;
     color: white;
-    font-size: 14px;
-    width: 200px;
+    font-size: 10px;
+    width: 110px;
     text-align: center;
     position: relative;
+    @media @medium {
+        font-size: 14px;
+        width: 200px;
+    }
     a {
         color: white;
     }
@@ -32,22 +36,30 @@
 
 .arrow-left {
     position: absolute;
-    left: 16px;
-    top: 15px;
+    left: 6px;
+    top: 12px;
     width: 0;
     height: 0;
     border-top: 6px solid transparent;
     border-right: 6px solid white;
     border-bottom: 6px solid transparent;
+    @media @medium {
+        top: 15px;
+        left: 16px;
+    }
 }
 
 .arrow-right {
     position: absolute;
-    right: 16px;
-    top: 15px;
+    right: 6px;
+    top: 12px;
     width: 0;
     height: 0;
     border-top: 6px solid transparent;
     border-left: 6px solid white;
     border-bottom: 6px solid transparent;
+    @media @medium {
+        top: 15px;
+        right: 16px;
+    }
 }

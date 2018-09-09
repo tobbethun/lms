@@ -23,7 +23,7 @@ function encrypt(text) {
 }
 
 // function decrypt(text) {
-//     const decipher = crypto.createDecipher(algorithm, password);
+//     const decipher = crypto.createDecipheriv(algorithm, password, iv);
 //     let dec = decipher.update(text, 'hex', 'utf8');
 //     dec += decipher.final('utf8');
 //     return dec;
@@ -64,7 +64,6 @@ http.createServer(app).listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });
 
-console.log(path.join(__dirname, 'uploads'));
 
 
 
@@ -140,13 +139,13 @@ app.post('/api/updatepassword', function (req, res) {
                     connection.query('UPDATE users SET password = ? WHERE id = ?', [encryptedPassword, results[0].id]);
                     res.send({
                         "code": 200,
-                        "success": "Update sucessfull"
+                        "success": "Lösenord uppdaterat"
                     });
                 }
                 else {
                     res.send({
                         "code": 204,
-                        "success": "wrong old password"
+                        "success": "Fel lösenord"
                     });
                 }
             }
@@ -477,7 +476,7 @@ app.post('/api/assignments', function(req, res) {
     })
         .then(function (entries) {
             entries.items.forEach(function (entry) {
-                payload.push(entry.fields.title);
+                payload.push({title: entry.fields.title, step: entry.sys.id});
             });
             if (payload.length) {
                     res.status(200).send({
@@ -487,4 +486,5 @@ app.post('/api/assignments', function(req, res) {
             } else res.status(204);
         });
 });
+
 

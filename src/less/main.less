@@ -68,12 +68,18 @@ a {
 
 .login, .logout {
   color: #000;
-  padding: 16px;
+  padding: 6px;
   cursor: pointer;
+  @media @medium {
+    padding: 16px;
+  }
   &:hover {
     color: grey;
   }
 }
+
+@medium:  ~'screen and (min-width: 768px)';
+
 
 @import "authenticate.less";
 @import "register.less";
@@ -84,3 +90,4 @@ a {
 @import "comments.less";
 @import "attachment.less";
 @import "download.less";
+@import "usersection.less";

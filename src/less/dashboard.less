@@ -11,19 +11,25 @@
     justify-content: space-between;
     height: 60px;
     background-color: white;
-    width: calc(~'100% - 250px');
+    width: 100%;
     transition: width .4s;
     z-index: 5;
+    @media @medium {
+        width: calc(~'100% - 250px');
+    }
     .user-logout a {
         color: currentColor;
     }
 }
 
 .logo-link {
-    height: 60px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    @media @medium {
+        height: 60px;
+    }
 }
 
 .course-logo {
@@ -34,11 +40,20 @@
 .user-logout {
     z-index: 10;
     display: flex;
+    font-size: 12px;
+    flex-direction: column-reverse;
     align-items: center;
+    @media @medium {
+        flex-direction: row;
+        font-size: 14px;
+    }
 }
 
-.user-section {
-
+.user {
+    padding: 6px;
+    @media @medium {
+        padding: 16px;
+    }
 }
 
 .side-bar {
@@ -49,26 +64,41 @@
     height: 100%;
     position: fixed;
     overflow-y: scroll;
-    left: 0;
+    left: -250px;
     display: flex;
     transition: left .4s;
     z-index: 15;
     font-size: 14px;
+    @media @medium {
+        left: 0;
+    }
 }
 
 .side-bar__hidden {
-    left: -250px;
+    left: 0;
+    @media @medium {
+        left: -250px;
+    }
 }
 
 .content {
-    padding:70px 0 0 250px;
+    padding:70px 0 0 0;
     transition: padding .4s;
+    @media @medium {
+        padding:70px 0 0 250px;
+    }
 }
 
 .content--slide-left {
     padding: 70px 25px;
     .course-info {
         width: ~'calc(100% - 50px)';
+    }
+    @media @medium {
+        padding: 70px 25px;
+        .course-info {
+            width: ~'calc(100% - 50px)';
+        }
     }
 }
 
@@ -83,10 +113,34 @@
     }
 }
 
+.hamburger--in-menu {
+    padding: 0;
+    margin-left: 32px   ;
+    @media @medium {
+        display: none;
+    }
+}
+
+.course-menu {
+    margin-top: 60px;
+}
+
+.course-menu__header {
+    border-bottom: 1px solid @grey;
+    position: fixed;
+    top: 0;
+    width: 238px;  // 250px - 12px
+    display: flex;
+    padding-left: 12px;
+    align-items: center;
+    height: 60px;
+    background-color: white;
+}
 
 .course-menu ul {
     list-style: none;
     padding: 0;
+    margin-top: 12px;
 }
 
 .course-menu--lesson {
