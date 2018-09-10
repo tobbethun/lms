@@ -282,14 +282,11 @@ a:hover {
   padding: 70px 25px;
 }
 .content--slide-left .course-info {
-  width: calc(100% - 50px);
+  width: calc(100% - 25px);
 }
 @media screen and (min-width: 768px) {
   .content--slide-left {
     padding: 70px 25px;
-  }
-  .content--slide-left .course-info {
-    width: calc(100% - 50px);
   }
 }
 .hamburger {
@@ -385,6 +382,11 @@ a:hover {
   color: black;
   font-weight: 700;
   background-color: #e5ebed;
+}
+.course-start--button {
+  border: none;
+  color: white;
+  background-color: #2fbfc0;
 }
 .loader {
   margin: 100px auto;

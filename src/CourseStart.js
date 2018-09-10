@@ -8,12 +8,12 @@ export class CourseStart extends React.Component {
         window.scrollTo(0, 0)
     }
     render() {
-        const {title, text, firstStep} = this.props;
+        const {title, text, firstStep, colorCode} = this.props;
         return (
             <div className="lesson-container">
                 {title}
                 <Markup text={text} />
-                <Link to={firstStep}>Klicka här för att börja!</Link>
+                <Link to={firstStep} className="button course-start--button" style={{backgroundColor: colorCode}}>Klicka här för att börja!</Link>
             </div>
         )
     };

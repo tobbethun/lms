@@ -107,7 +107,7 @@ export class Dashboard extends React.Component {
                         <div className={"side-bar " + (hideMenu && 'side-bar__hidden')}>
                             <div className="course-menu">
                                 <div className="course-menu__header">
-                                    {course.title}
+                                    <Link to="/dashboard">{course.title}</Link>
                                     <div onClick={() => this.setState({hideMenu: !this.state.hideMenu})} className="hamburger hamburger--in-menu">
                                         <div style={{backgroundColor: course.colorcode}} />
                                         <div style={{backgroundColor: course.colorcode}} />
@@ -150,7 +150,7 @@ export class Dashboard extends React.Component {
                             </div>
                             <Switch>
                                 <Route exact path='/dashboard/user' component={UserSection} />
-                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} />} />
+                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} colorCode={course.colorcode} />} />
                             {lessons &&
                             lessons.map((lesson, index) => (
                                 <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}

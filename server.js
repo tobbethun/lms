@@ -487,4 +487,3 @@ app.post('/api/assignments', function(req, res) {
         });
 });
 
-
