@@ -23,7 +23,10 @@ export class UserSection extends React.Component {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({
+                    userEmail: this.state.user.email,
+                })
             })
             .then(handleErrors)
             .then((response) => {
@@ -34,7 +37,7 @@ export class UserSection extends React.Component {
                 console.log('json', json);
                 if(json.code === 200) {
                     console.log('json', json);
-                    this.setState({ assignments: json.steps});
+                    this.setState({ assignments: json.steps, uploads: json.uploads});
                 }
             }).catch((error) =>  {
             console.log('error', error);
@@ -56,12 +59,11 @@ export class UserSection extends React.Component {
                     <UpdatePassword userEmail={user.email}   />
                     }
                 </div>
-
                 <div className="user-section__assignments">
                     <h3>Inlämnade uppgifter</h3>
                     {assignments &&
                     assignments.map((assignment) => (
-                        <p key={assignment.step}>{assignment.title}</p>
+                        <p key={assignment.step}>{assignment.title} {this.state.uploads.includes(assignment.step) ? <span className="check">V</span> : <span className="cross">X</span>}</p>
                     ))
                     }
                 </div>

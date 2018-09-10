@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const slugify = require('slugify');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const helmet = require('helmet');
 
 const crypto = require('crypto');
 const algorithm = dbc.cipher.algorithm;
@@ -44,6 +45,7 @@ try {
 
 // Setup express
 const app = express();
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', process.env.PORT || 5000);
@@ -410,7 +412,6 @@ app.post('/api/getuploads', function (req, res) {
 });
 
 app.post('/api/download/', function(req, res) {
-    console.log('req.path', req.body.path);
     var file = __dirname + req.body.path;
     res.download(file);
 });
@@ -418,16 +419,6 @@ app.post('/api/download/', function(req, res) {
 // _-_-_-_-_-_-_-_-_-_-CONTENTFUL SECTION-_-_-_-_-_-_-_-_-_-_
 
 const client = contentful.createClient(dbc.contentful);
-
-// client.getEntry('PeDCMJPuMM4ssIu2uw2UU')
-//     .then(function (entry) {
-        // logs the entry metadata
-        // console.log('1', entry);
-
-        // logs the field with ID title
-        // console.log('2', entry.fields.lessons)
-    // });
-
 
 app.post('/api/course', function (req, res) {
     let lessons = [];
@@ -469,7 +460,9 @@ app.post('/api/course', function (req, res) {
 });
 
 app.post('/api/assignments', function(req, res) {
-    payload = [];
+    const userEmail = req.body.userEmail;
+    const payload = [];
+    const uploads = [];
     client.getEntries({
         'fields.fileUpload': 'true',
         'content_type': 'steps'
@@ -479,10 +472,30 @@ app.post('/api/assignments', function(req, res) {
                 payload.push({title: entry.fields.title, step: entry.sys.id});
             });
             if (payload.length) {
-                    res.status(200).send({
-                    "steps": payload,
-                    "code": 200
+                connection.query('SELECT step FROM uploads WHERE user_email = ?', [userEmail], function (error, results) {
+                    results.forEach(function (result) {
+                        uploads.push(result.step);
+                    });
+                    if (error) {
+                        console.log("error ocurred", error);
+                        res.send({
+                            "code": 400,
+                            "failed": "error ocurred"
+                        })
+                    } else {
+                        // results.forEach(function (res) {
+                        //     const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path, time: res.time};
+                        //     payLoad.push(upload);
+                        // });
+                        res.status(200).send({
+                            "steps": payload,
+                            "uploads": uploads,
+                            "code": 200
+                        });
+                        // console.log('payLoad', payLoad);
+                    }
                 });
+
             } else res.status(204);
         });
 });
