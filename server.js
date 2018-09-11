@@ -465,10 +465,12 @@ app.post('/api/assignments', function(req, res) {
     const uploads = [];
     client.getEntries({
         'fields.fileUpload': 'true',
-        'content_type': 'steps'
+        'content_type': 'steps',
+        'order': 'sys.updatedAt'
     })
         .then(function (entries) {
             entries.items.forEach(function (entry) {
+                console.log('entry', entry.sys);
                 payload.push({title: entry.fields.title, step: entry.sys.id});
             });
             if (payload.length) {

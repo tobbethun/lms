@@ -280,15 +280,10 @@ a:hover {
   }
 }
 .content--slide-left {
-  padding: 70px 25px;
+  padding: 70px 0px;
 }
 .content--slide-left .course-info {
-  width: calc(100% - 25px);
-}
-@media screen and (min-width: 768px) {
-  .content--slide-left {
-    padding: 70px 25px;
-  }
+  width: 100%;
 }
 .hamburger {
   padding: 16px;
@@ -709,4 +704,41 @@ img.download-icon {
         -ms-flex-direction: row;
             flex-direction: row;
   }
+}
+.user-section__info {
+  margin-right: 50px;
+  min-width: 225px;
+}
+.assignments-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.assignments-row div {
+  padding: 12px;
+  border: 1px solid black;
+  width: 100%;
+}
+.assignments-row div + div {
+  border-left: none;
+  width: 50px;
+}
+.cross,
+.check {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.cross img,
+.check img {
+  width: 25px;
+}
+.cross img {
+  width: 15px;
 }

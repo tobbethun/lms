@@ -1,6 +1,8 @@
 import React from 'react';
 import {getUser, handleErrors} from "./utils";
 import UpdatePassword from "./UpdatePassword";
+import check from "./img/check.svg";
+import cross from "./img/times.svg";
 
 
 export class UserSection extends React.Component {
@@ -43,9 +45,9 @@ export class UserSection extends React.Component {
             console.log('error', error);
         })
     }
+
     render() {
-        const {user, changePassword, assignments } = this.state;
-        console.log('assignments', assignments);
+        const {user, changePassword, assignments, uploads} = this.state;
         return (
             <div className="user-section">
                 <div className="user-section__info">
@@ -61,11 +63,23 @@ export class UserSection extends React.Component {
                 </div>
                 <div className="user-section__assignments">
                     <h3>Inlämnade uppgifter</h3>
+
                     {assignments &&
                     assignments.map((assignment) => (
-                        <p key={assignment.step}>{assignment.title} {this.state.uploads.includes(assignment.step) ? <span className="check">V</span> : <span className="cross">X</span>}</p>
+                        <div key={assignment.step} className="assignments-row">
+                            <div>{assignment.title}</div>
+                            {uploads.includes(assignment.step) ?
+                                <div className="check">
+                                    <img src={check} alt="check-mark"/>
+                                </div> :
+                                <div className="cross">
+                                    <img src={cross} alt="cross-mark"/>
+                                </div>
+                            }
+                        </div>
                     ))
                     }
+
                 </div>
             </div>
         )
