@@ -1,13 +1,45 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@font-face {
+  font-family: "Avenir Next W01 Light";
+  src: url("../Fonts/0ecef829-586e-426d-a633-4c8a8c926769.eot?#iefix");
+  src: url("../Fonts/0ecef829-586e-426d-a633-4c8a8c926769.eot?#iefix") format("eot"), url("../Fonts/49c5f3e1-5867-4b1d-a843-2d07fa60d85d.woff2") format("woff2"), url("../Fonts/f401df6f-54eb-406c-b46a-90b9451c598d.woff") format("woff"), url("../Fonts/276fe25e-e430-4376-b33c-705dd77b3dba.ttf") format("truetype");
+}
+@font-face {
+  font-family: "AvenirNextW01-LightItal";
+  src: url("../Fonts/440b64c9-a97b-4a0c-a6af-a6bb6d49c252.eot?#iefix");
+  src: url("../Fonts/440b64c9-a97b-4a0c-a6af-a6bb6d49c252.eot?#iefix") format("eot"), url("../Fonts/62e28d52-436d-40b8-a5f0-00479f3f44ed.woff2") format("woff2"), url("../Fonts/5b8c6fdc-0ba4-4b65-87e4-d5ae51245ea5.woff") format("woff"), url("../Fonts/c677d79d-442e-4c76-8db1-c29ac7788039.ttf") format("truetype");
+}
+@font-face {
+  font-family: "AvenirNextLTW01-Regular";
+  src: url("../Fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix");
+  src: url("../Fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot"), url("../Fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2") format("woff2"), url("../Fonts/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"), url("../Fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype");
+}
+@font-face {
+  font-family: "AvenirNextLTW01-Italic";
+  src: url("../Fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot?#iefix");
+  src: url("../Fonts/d1fddef1-d940-4904-8f6c-17e809462301.eot?#iefix") format("eot"), url("../Fonts/7377dbe6-f11a-4a05-b33c-bc8ce1f60f84.woff2") format("woff2"), url("../Fonts/92b66dbd-4201-4ac2-a605-4d4ffc8705cc.woff") format("woff"), url("../Fonts/18839597-afa8-4f0b-9abb-4a30262d0da8.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Avenir Next LT W01 Bold";
+  src: url("../Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix");
+  src: url("../Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix") format("eot"), url("../Fonts/14c73713-e4df-4dba-933b-057feeac8dd1.woff2") format("woff2"), url("../Fonts/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"), url("../Fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf") format("truetype");
+}
+@font-face {
+  font-family: "AvenirNextLTW01-BoldIta";
+  src: url("../Fonts/ac2d4349-4327-448f-9887-083a6a227a52.eot?#iefix");
+  src: url("../Fonts/ac2d4349-4327-448f-9887-083a6a227a52.eot?#iefix") format("eot"), url("../Fonts/eaafcb26-9296-4a57-83e4-4243abc03db7.woff2") format("woff2"), url("../Fonts/25e83bf5-47e3-4da7-98b1-755efffb0089.woff") format("woff"), url("../Fonts/4112ec87-6ded-438b-83cf-aaff98f7e987.ttf") format("truetype");
+}
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'AvenirNextLTW01-Regular', sans-serif;
   font-size: 16px;
 }
+h2 {
+  margin-top: 38px;
+}
 p {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 20px;
+  line-height: 30px;
 }
 input {
   background-color: transparent;
@@ -17,9 +49,15 @@ input {
   margin: 10px;
   padding: 3px;
   outline: none;
+  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+}
+input:required {
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 button,
 .button {
+  font-family: 'AvenirNextLTW01-Regular', sans-serif;
   background: transparent;
   border: 1px solid #000;
   color: #000;
@@ -28,11 +66,9 @@ button,
   cursor: pointer;
 }
 a {
+  font-family: 'AvenirNextLTW01-Regular', sans-serif;
   text-decoration: none;
   color: #000;
-}
-a:hover {
-  font-weight: 700;
 }
 .no-match {
   border: 1px solid red;
@@ -180,7 +216,7 @@ a:hover {
 }
 @media screen and (min-width: 768px) {
   .course-info {
-    width: calc(100% - 250px);
+    width: calc(100% - 290px);
   }
 }
 .course-info .user-logout a {
@@ -228,7 +264,7 @@ a:hover {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 .user {
@@ -241,20 +277,21 @@ a:hover {
 }
 .side-bar {
   background-color: #f7f9fa;
-  width: 250px;
+  width: 290px;
   border-right: 1px solid #d3dce0;
   color: #000;
   height: 100%;
   position: fixed;
   overflow-y: scroll;
-  left: -250px;
+  left: -290px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-transition: left .4s;
   transition: left .4s;
   z-index: 15;
-  font-size: 14px;
+  font-size: 15px;
+  line-height: 20px;
 }
 @media screen and (min-width: 768px) {
   .side-bar {
@@ -266,21 +303,21 @@ a:hover {
 }
 @media screen and (min-width: 768px) {
   .side-bar__hidden {
-    left: -250px;
+    left: -290px;
   }
 }
 .content {
-  padding: 70px 0 0 0;
+  padding: 85px 0 0 0;
   -webkit-transition: padding .4s;
   transition: padding .4s;
 }
 @media screen and (min-width: 768px) {
   .content {
-    padding: 70px 0 0 250px;
+    padding: 85px 0 0 290px;
   }
 }
 .content--slide-left {
-  padding: 70px 0px;
+  padding: 85px 0px;
 }
 .content--slide-left .course-info {
   width: 100%;
@@ -297,7 +334,7 @@ a:hover {
 }
 .hamburger--in-menu {
   padding: 0;
-  margin-left: 32px   ;
+  margin-left: 80px   ;
 }
 @media screen and (min-width: 768px) {
   .hamburger--in-menu {
@@ -311,7 +348,7 @@ a:hover {
   border-bottom: 1px solid #d3dce0;
   position: fixed;
   top: 0;
-  width: 238px;
+  width: 278px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -325,20 +362,22 @@ a:hover {
 .course-menu ul {
   list-style: none;
   padding: 0;
-  margin-top: 12px;
 }
 .course-menu--lesson {
   border-bottom: 1px solid #ededed;
-  margin-bottom: 6px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
 }
 .course-menu--lesson span {
-  font-size: 14px;
   font-weight: 700;
   color: black;
   padding: 8px 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+.course-menu--lesson span.lesson-title {
+  color: #5e5c5c;
 }
 .course-menu--lesson li {
   font-weight: 700;
@@ -351,6 +390,11 @@ a:hover {
   width: 10px;
   min-width: 10px;
   margin: 4px 20px 5px 0;
+}
+.lesson-title {
+  font-family: "Avenir Next LT W01 Bold", sans-serif;
+  font-weight: 700;
+  color: #5e5c5c;
 }
 .inactive {
   color: rgba(1, 1, 1, 0.4);
@@ -380,6 +424,11 @@ a:hover {
   background-color: #e5ebed;
 }
 .course-start--button {
+  -ms-flex-item-align: center;
+      align-self: center;
+  font-size: 16px;
+  padding: 16px 60px;
+  margin: 50px 0;
   border: none;
   color: white;
   background-color: #2fbfc0;
@@ -439,14 +488,28 @@ a:hover {
   }
 }
 .lesson-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding-bottom: 30px;
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
   width: 90%;
 }
 .lesson-container img {
   width: 100%;
   height: auto;
+  margin-top: 40px;
+}
+.lesson-container .embedly-card {
+  margin-top: 60px;
+}
+.lesson-container .breadcrumb {
+  margin-bottom: 30px;
 }
 .stepper-container {
   display: -webkit-box;
@@ -460,16 +523,11 @@ a:hover {
   padding: 12px;
   background-color: #2fbfc0;
   color: white;
-  font-size: 10px;
+  font-size: 15px;
   width: 110px;
+  max-height: 42px;
   text-align: center;
   position: relative;
-}
-@media screen and (min-width: 768px) {
-  .stepper {
-    font-size: 14px;
-    width: 200px;
-  }
 }
 .stepper a {
   color: white;
@@ -513,7 +571,8 @@ a:hover {
   }
 }
 .comments {
-  max-width: 100%  ;
+  margin-top: 100px;
+  max-width: 100%;
 }
 .comments .comment-block:first-of-type {
   border: none;
@@ -546,6 +605,7 @@ a:hover {
 .comment-button {
   color: white;
   margin: 0;
+  font-size: 15px;
   padding: 12px;
   background: #2fbfc0;
   border: 1px solid #2fbfc0;
@@ -561,11 +621,12 @@ a:hover {
   width: 100%;
 }
 .comment-field {
+  font-family: "AvenirNextLTW01-Regular";
   border-top: 1px solid #E6E8EC;
   border-left: 1px solid #E6E8EC;
   border-right: 1px solid #E6E8EC;
   border-bottom: none;
-  font-size: 14px;
+  font-size: 15px;
   padding: 6px;
   min-height: 80px;
   width: calc(100% - 12px);
@@ -642,6 +703,9 @@ a:hover {
   background-color: #f7f9fa;
   border-radius: 10px;
 }
+.upload-block .comments {
+  margin-top: 50px;
+}
 .uploaded-info {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -690,23 +754,15 @@ img.download-icon {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
-@media screen and (min-width: 768px) {
-  .user-section {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-  }
-}
 .user-section__info {
-  margin-right: 50px;
+  margin-top: 50px;
   min-width: 225px;
 }
 .assignments-row {

@@ -64,7 +64,7 @@ class Login extends React.Component {
                 <Router>
                     <div>
                         <div className="top-bar">
-                            <Link to="/" className="logo">LMS</Link>
+                            <Link to="/login" className="logo">ELD Studio</Link>
                         </div>
 
                         <Switch>
@@ -109,10 +109,10 @@ export default function App() {
                 <Switch>
                     <Redirect exact from='/' to='/login'/>
                     <Route path='/login' component={Login} />
+                    <Route path="/register" component={Register} />
                 </Switch>
                 </div>
                 <Route path="/public" component={Public}/>
-                <Route path="/register" component={Register} />
                 <PrivateRoute path='/dashboard' component={Dashboard} />
                 {/*<PrivateRoute path='/user' component={UserSection} />*/}
             </div>

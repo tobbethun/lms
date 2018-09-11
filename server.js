@@ -112,7 +112,7 @@ app.post('/api/register', function (req, res) {
                 } else {
                     res.send({
                         "code": 200,
-                        "success": "Registration sucessfull"
+                        "success": "Du är nu registrerad"
                     });
                 }
             });

@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './img/gearGreen.svg';
 import {Link} from 'react-router-dom';
 
 
@@ -84,30 +83,31 @@ export class Register extends React.Component {
         const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid } = this.state;
         return (
             <div className='register'>
-                <img src={logo} className="register-logo" alt="logo" />
                 <h3>{registerMessage}</h3>
                 { showRegistrationForm &&
                     <form className='register-form' onSubmit={this.handleSubmit}>
-                        <input type="courseid" placeholder="CourseID" value={courseid}
+                        <input type="courseid" placeholder="Kurs-ID" value={courseid}
                                onChange={this.handleChange('courseid')} required disabled={hascourseid} />
-                        <input type="firstname" placeholder="Firstname" value={firstname}
+                        <input type="firstname" placeholder="Förnamn" value={firstname}
                                onChange={this.handleChange('firstname')} required/>
-                        <input type="lastname" placeholder="lastname" value={lastname}
+                        <input type="lastname" placeholder="Efternamn" value={lastname}
                                onChange={this.handleChange('lastname')} required/>
-                        <input type="email" placeholder="email" value={email}
+                        <input type="email" placeholder="E-postadress" value={email}
                                onChange={this.handleChange('email')} required/>
-                        <input type="password" placeholder="password" value={password}
+                        <input type="password" placeholder="Välj lösenord" value={password}
                                onChange={this.handleChange('password')} required/>
                         <input className={`${noMatch && 'no-match'}`} type="password"
-                               placeholder="retypePassword" value={retypePassword}
+                               placeholder="Repetera lösenord" value={retypePassword}
                                onChange={this.handleChange('retypePassword')} required/>
-                        <input className='button' type="submit" value="Register"/>
+                        <input className='button' type="submit" value="Slutför registrering"/>
                     </form>
                 }
                 {noMatch &&
-                <h3>Type the same password twice</h3>
+                <h3>Skriv ditt lösenord igen</h3>
                 }
-                <Link to="/login">Back to login</Link>
+                {!showRegistrationForm &&
+                    <Link to="/login">Klicka här för att logga in på kursen</Link>
+                }
             </div>
         )
     }

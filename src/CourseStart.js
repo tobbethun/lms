@@ -11,9 +11,9 @@ export class CourseStart extends React.Component {
         const {title, text, firstStep, colorCode} = this.props;
         return (
             <div className="lesson-container">
-                {title}
+                Startsida för kursen: {title}
                 <Markup text={text} />
-                <Link to={firstStep} className="button course-start--button" style={{backgroundColor: colorCode}}>Klicka här för att börja!</Link>
+                <Link to={firstStep} className="button course-start--button" style={{backgroundColor: colorCode}}>Starta kursen</Link>
             </div>
         )
     };
