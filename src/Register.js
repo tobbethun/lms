@@ -99,8 +99,8 @@ export class Register extends React.Component {
                         <input className={`${noMatch && 'no-match'}`} type="password"
                                placeholder="Repetera lösenord" value={retypePassword}
                                onChange={this.handleChange('retypePassword')} required/>
-                        <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med ELD Studios integritetspolicy.</label>
                         <input className="aprove" type="checkbox" required/>
+                        <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <Link to="/integritetspolicy">ELD Studios integritetspolicy.</Link></label>
                         <input className="button" type="submit" value="Slutför registrering"/>
                     </form>
                 }
@@ -108,7 +108,7 @@ export class Register extends React.Component {
                 <h3>Skriv ditt lösenord igen</h3>
                 }
                 {!showRegistrationForm &&
-                    <Link to="/login">Klicka här för att logga in på kursen</Link>
+                    <Link to="/login" className="login-after-register">Logga in på kursen</Link>
                 }
             </div>
         )

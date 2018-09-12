@@ -47,6 +47,7 @@ export class UserSection extends React.Component {
         return (
             <div className="user-section">
                 <div className="user-section__info">
+                    <h3>Användare</h3>
                     <p>Användarnamn: {user.email}</p>
                     <button onClick={() => {this.setState({changePassword: !changePassword})}}>Ändra lösenord</button>
                     { changePassword &&

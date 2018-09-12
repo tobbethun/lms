@@ -29,7 +29,7 @@ export const Auth = {
     }
 };
 
-const Public = () => <h3>Om LMS</h3>;
+const Policy = () => <div>Vår Policy</div>;
 
 
 class Login extends React.Component {
@@ -110,9 +110,9 @@ export default function App() {
                     <Redirect exact from='/' to='/login'/>
                     <Route path='/login' component={Login} />
                     <Route path="/register" component={Register} />
+                    <Route path="/integritetspolicy" component={Policy} />
                 </Switch>
                 </div>
-                <Route path="/public" component={Public}/>
                 <PrivateRoute path='/kurs' component={Dashboard} />
                 {/*<PrivateRoute path='/user' component={UserSection} />*/}
             </div>

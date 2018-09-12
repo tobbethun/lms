@@ -37,6 +37,9 @@ body {
 h2 {
   margin-top: 38px;
 }
+h3 {
+  font-size: 22px;
+}
 p {
   font-size: 20px;
   line-height: 30px;
@@ -169,32 +172,32 @@ a {
   max-width: 310px;
   width: 100%;
 }
+.register-form label {
+  margin-bottom: 20px;
+  padding: 0 0 0 10px;
+}
 .register-logo {
   -webkit-animation: register-logo-spin infinite 20s linear;
           animation: register-logo-spin infinite 20s linear;
 }
+.aprove {
+  margin-top: 20px;
+}
 .no-match {
   border: 1px solid red;
 }
-@-webkit-keyframes register-logo-spin {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
-}
-@keyframes register-logo-spin {
-  from {
-    -webkit-transform: rotate(0deg);
-            transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-            transform: rotate(360deg);
-  }
+.login-after-register {
+  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  background: transparent;
+  border: 1px solid #000;
+  color: #000;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  font-size: 15px;
+  width: 290px;
+  font-size: 16px;
+  padding: 16px 60px;
 }
 .course-info {
   border-bottom: 1px solid #ededed;
@@ -520,16 +523,26 @@ a {
   margin: 0 auto;
   width: 90%;
 }
+.lesson-container a {
+  text-decoration: underline;
+}
 .lesson-container img {
   width: 100%;
   height: auto;
   margin-top: 40px;
 }
+.lesson-container ul,
+.lesson-container li,
+.lesson-container ol {
+  font-size: 20px;
+  line-height: 30px;
+}
 .lesson-container .embedly-card {
   margin-top: 60px;
 }
 .lesson-container .breadcrumb {
-  margin-bottom: 30px;
+  color: #5e5c5c;
+  margin-bottom: 20px;
 }
 .stepper-container {
   display: -webkit-box;
@@ -835,4 +848,13 @@ img.download-icon {
 }
 .cross img {
   width: 15px;
+}
+.user-section button,
+.button {
+  font-size: 15px;
+  padding: 16px 60px;
+  width: 290px;
+}
+.update-password {
+  margin-top: 26px;
 }
