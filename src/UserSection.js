@@ -32,13 +32,10 @@ export class UserSection extends React.Component {
             })
             .then(handleErrors)
             .then((response) => {
-                console.log('response', response);
                 return response.json()
             })
             .then((json) => {
-                console.log('json', json);
                 if(json.code === 200) {
-                    console.log('json', json);
                     this.setState({ assignments: json.steps, uploads: json.uploads});
                 }
             }).catch((error) =>  {

@@ -76,7 +76,6 @@ export class Attachment extends React.Component {
                 return response.json();
             })
             .then((json) => {
-                console.log('json', json);
                 if (json.code === 200) {
                     this.setState({registerMessage: json.success, uploadsuccess: 'Din fil har blivit uppladdad', uploaded: true, uploaderror: ''})
                 } else {
@@ -85,7 +84,7 @@ export class Attachment extends React.Component {
             }).then(() => this.getUploads())
             .catch((error) =>  {
                 console.log('error', error);
-                this.setState({uploaderror: 'Oj nåt gick knas. Vänligen försök igen!'})
+                this.setState({uploaderror: 'Oj något gick fel. Vänligen försök igen!'})
         })
     }
     render() {
