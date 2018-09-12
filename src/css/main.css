@@ -125,7 +125,7 @@ a {
 .authenticate-container {
   text-align: center;
   width: 50%;
-  max-width: 400px;
+  max-width: 310px;
 }
 .authenticate-form {
   display: -webkit-box;
@@ -141,6 +141,7 @@ a {
 }
 .register {
   margin-top: 16px;
+  padding: 0 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -165,6 +166,8 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  max-width: 310px;
+  width: 100%;
 }
 .register-logo {
   -webkit-animation: register-logo-spin infinite 20s linear;
@@ -283,6 +286,7 @@ a {
   height: 100%;
   position: fixed;
   overflow-y: scroll;
+  top: 60px;
   left: -290px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -341,11 +345,9 @@ a {
     display: none;
   }
 }
-.course-menu {
-  margin-top: 60px;
-}
 .course-menu__header {
   border-bottom: 1px solid #d3dce0;
+  border-right: 1px solid #d3dce0;
   position: fixed;
   top: 0;
   width: 278px;
@@ -600,6 +602,7 @@ a {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  height: 46px;
   width: 100%;
 }
 .comment-button {
@@ -607,6 +610,9 @@ a {
   margin: 0;
   font-size: 15px;
   padding: 12px;
+  margin-top: -1px;
+  margin-right: -1px;
+  height: 48px;
   background: #2fbfc0;
   border: 1px solid #2fbfc0;
 }

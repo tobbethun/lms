@@ -99,7 +99,9 @@ export class Register extends React.Component {
                         <input className={`${noMatch && 'no-match'}`} type="password"
                                placeholder="Repetera lösenord" value={retypePassword}
                                onChange={this.handleChange('retypePassword')} required/>
-                        <input className='button' type="submit" value="Slutför registrering"/>
+                        <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med ELD Studios integritetspolicy.</label>
+                        <input className="aprove" type="checkbox" required/>
+                        <input className="button" type="submit" value="Slutför registrering"/>
                     </form>
                 }
                 {noMatch &&
