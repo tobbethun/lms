@@ -21,11 +21,15 @@ export class Step extends React.Component {
                     {step.fields.comments && <Comments step={step.sys.id} colorCode={colorCode}/> }
                     {step.fields.fileUpload && <Attachment step={step.sys.id} colorCode={colorCode} /> }
                     <div className="stepper-container">
-                        {(index <= lessonLength && index > 1) &&
-                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>Tillbaka</span></Link>
+                        {(index <= lessonLength && index > 1) ?
+                        <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>Tillbaka</span></Link> : <div className="stepper__prev"/>
                         }
-                        {!(lessonLength === index) &&
-                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}><div className="arrow-right"/><span>Nästa</span></Link>
+                        <div className="current-step">
+                            {index}/{lessonLength}
+                        </div>
+
+                        {!(lessonLength === index) ?
+                            <Link to={`/dashboard/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}><div className="arrow-right"/><span>Nästa</span></Link> :  <div className="stepper__next"/>
                         }
                     </div>
                 </div>
