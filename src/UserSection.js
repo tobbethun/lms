@@ -2,7 +2,6 @@ import React from 'react';
 import {getUser, handleErrors} from "./utils";
 import UpdatePassword from "./UpdatePassword";
 import check from "./img/check.svg";
-import cross from "./img/times.svg";
 
 
 export class UserSection extends React.Component {
@@ -65,9 +64,7 @@ export class UserSection extends React.Component {
                                 <div className="check">
                                     <img src={check} alt="check-mark"/>
                                 </div> :
-                                <div className="cross">
-                                    <img src={cross} alt="cross-mark"/>
-                                </div>
+                                <div className="cross"/>
                             }
                         </div>
                     ))

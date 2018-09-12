@@ -778,12 +778,17 @@ img.download-icon {
 }
 .assignments-row div {
   padding: 12px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
   width: 100%;
 }
 .assignments-row div + div {
   border-left: none;
   width: 50px;
+}
+.assignments-row:first-of-type {
+  border-top: 1px solid black;
 }
 .cross,
 .check {
