@@ -60,7 +60,7 @@ export class UserSection extends React.Component {
                     assignments.map((assignment) => (
                         <div key={assignment.step} className="assignments-row">
                             <div>{assignment.title}</div>
-                            {uploads.includes(assignment.step) ?
+                            {uploads.indexOf(assignment.step) > -1 ?
                                 <div className="check">
                                     <img src={check} alt="check-mark"/>
                                 </div> :
