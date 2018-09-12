@@ -17,7 +17,7 @@ export const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
         ?
         <div className="user-logout">
-            <Link to="/dashboard/user" className="user">Min sida</Link>
+            <Link to="/kurs/user" className="user">Min sida</Link>
             <Link to="/login" className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logga ut</Link>
         </div>
         :
@@ -100,38 +100,41 @@ export class Dashboard extends React.Component {
             </div>
         );
         const courseStyle = {color: course.colorcode};
-        const firstStep = 'dashboard/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
+        const firstStep = 'kurs/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
         return (
                 <div>
                     <div className="container">
                         <div className={"side-bar " + (hideMenu && 'side-bar__hidden')}>
-                            <div className="course-menu">
-                                <div className="course-menu__header">
-                                    <Link to="/dashboard">{course.title}</Link>
-                                    <div onClick={() => this.setState({hideMenu: !this.state.hideMenu})} className="hamburger hamburger--in-menu">
-                                        <div style={{backgroundColor: course.colorcode}} />
-                                        <div style={{backgroundColor: course.colorcode}} />
-                                        <div style={{backgroundColor: course.colorcode}} />
-                                    </div>
+                            <div className="course-menu__header">
+                                <Link to="/kurs">{course.title}</Link>
+                                <div onClick={() => this.setState({hideMenu: !this.state.hideMenu})} className="hamburger hamburger--in-menu">
+                                    <div style={{backgroundColor: course.colorcode}} />
+                                    <div style={{backgroundColor: course.colorcode}} />
+                                    <div style={{backgroundColor: course.colorcode}} />
                                 </div>
-                                <ul style={courseStyle}>
-                                    {lessons &&
-                                    lessons.map((lesson, index) => (
-                                        <li key={index} className={"course-menu--lesson " + (lesson.inactive ? 'inactive' : '')}>
-                                            <span className="lesson-title">{lesson.title}</span>
-                                            {lesson.steps &&
-                                            <ul className="course-list">
-                                                {lesson.steps.map((step, index) => (
-                                                    <li key={index}>
-                                                        <NavLink exact to={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`} activeClassName='is-active'>{step.fields.title}</NavLink>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            }
-                                        </li>
-                                    ))
-                                    }
-                                </ul>
+                            </div>
+                            <div className="course-menu">
+
+                                <div>
+                                    <ul style={courseStyle}>
+                                        {lessons &&
+                                        lessons.map((lesson, index) => (
+                                            <li key={index} className={"course-menu--lesson " + (lesson.inactive ? 'inactive' : '')}>
+                                                <span className="lesson-title">{lesson.title}</span>
+                                                {lesson.steps &&
+                                                <ul className="course-list">
+                                                    {lesson.steps.map((step, index) => (
+                                                        <li key={index}>
+                                                            <NavLink exact to={`/kurs/${slugify(lesson.title)}/${slugify(step.fields.title)}`} activeClassName='is-active'>{step.fields.title}</NavLink>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                                }
+                                            </li>
+                                        ))
+                                        }
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <div className={"content " + (hideMenu && 'content--slide-left')}>
@@ -142,18 +145,18 @@ export class Dashboard extends React.Component {
                                     <div style={{backgroundColor: course.colorcode}} />
                                 </div>
                                 {course.organizationImage &&
-                                    <Link to="/dashboard" className="logo-link">
+                                    <Link to="/kurs" className="logo-link">
                                         <img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo" />
                                     </Link>
                                 }
                                 <AuthButton />
                             </div>
                             <Switch>
-                                <Route exact path='/dashboard/user' component={UserSection} />
-                                <Route exact path="/dashboard" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} colorCode={course.colorcode} />} />
+                                <Route exact path='/kurs/user' component={UserSection} />
+                                <Route exact path="/kurs" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} colorCode={course.colorcode} />} />
                             {lessons &&
                             lessons.map((lesson, index) => (
-                                <Route key={index} path={`/dashboard/${slugify(lesson.title)}`}
+                                <Route key={index} path={`/kurs/${slugify(lesson.title)}`}
                                        component={() => <Lesson lesson={lesson} steps={lesson.steps} colorCode={course.colorcode}/>}/>
                             ))
                             }

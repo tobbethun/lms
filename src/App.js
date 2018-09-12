@@ -46,7 +46,7 @@ class Login extends React.Component {
         })
     };
     render() {
-        const {from} = this.props.location.state || {from: {pathname: '/dashboard'}};
+        const {from} = this.props.location.state || {from: {pathname: '/kurs'}};
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer === true) {
@@ -93,7 +93,7 @@ export const AuthButton = withRouter(({history}) => (
     Auth.isAuthenticated || localStorage.loggedIn
         ?
         <div className="user-logout">
-            <Link to="/dashboard/user" className="user-section">Min sida</Link>
+            <Link to="/kurs/user" className="user-section">Min sida</Link>
             <div className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logga ut</div>
         </div>
         :
@@ -113,7 +113,7 @@ export default function App() {
                 </Switch>
                 </div>
                 <Route path="/public" component={Public}/>
-                <PrivateRoute path='/dashboard' component={Dashboard} />
+                <PrivateRoute path='/kurs' component={Dashboard} />
                 {/*<PrivateRoute path='/user' component={UserSection} />*/}
             </div>
         </Router>

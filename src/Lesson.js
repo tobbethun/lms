@@ -18,7 +18,7 @@ export class Lesson extends React.Component {
                 {steps &&
                 <div>
                     {steps.map((step, index) => (
-                        <Route key={index} path={`/dashboard/${slugify(lesson.title)}/${slugify(step.fields.title)}`}
+                        <Route key={index} path={`/kurs/${slugify(lesson.title)}/${slugify(step.fields.title)}`}
                                component={() => <Step step={step} lessonLength={lessonLength} index={index+1} lessonTitle={lesson.title} nextStep={titleList[index+1]} preStep={titleList[index-1]} colorCode={colorCode} />}/>
                     ))
                     }
