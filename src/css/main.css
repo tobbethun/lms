@@ -215,7 +215,6 @@ a {
   width: 100%;
   -webkit-transition: width .4s;
   transition: width .4s;
-  z-index: 5;
 }
 @media screen and (min-width: 768px) {
   .course-info {
@@ -356,7 +355,7 @@ a {
   z-index: 50;
   top: 0;
   width: calc(100% - 12px);
-  position: fixed;
+  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -378,6 +377,7 @@ a {
 .course-menu {
   overflow-y: scroll;
   padding-top: 60px;
+  z-index: -1;
 }
 .course-menu ul {
   list-style: none;

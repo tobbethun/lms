@@ -13,7 +13,6 @@
     background-color: white;
     width: 100%;
     transition: width .4s;
-    z-index: 5;
     @media @medium {
         width: calc(~'100% - 290px');
     }
@@ -126,7 +125,7 @@
     z-index: 50;
     top: 0;
     width: calc(~'100% - 12px');
-    position: fixed;
+    position: absolute;
     display: flex;
     justify-content: space-between;
     padding-left: 12px;
@@ -141,6 +140,7 @@
 .course-menu {
     overflow-y: scroll;
     padding-top: 60px;
+    z-index: -1;
 }
 
 .course-menu ul {
