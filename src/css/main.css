@@ -460,6 +460,15 @@ a {
   color: white;
   background-color: #2fbfc0;
 }
+.no-courses .lesson-container {
+  margin-top: 100px;
+}
+.no-courses .user {
+  display: none;
+}
+.no-courses .logo {
+  pointer-events: none;
+}
 .loader {
   margin: 100px auto;
   width: 100px;

@@ -98,7 +98,17 @@ export class Dashboard extends React.Component {
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
-                    (<h3>Du har har inga aktiva kurser för tillfället. Om detta inte stämmer kontakta din kursledare.</h3>) :
+                    (
+                        <div className="no-courses">
+                            <div className="top-bar">
+                                <Link to="/login" className="logo">ELD Studio</Link>
+                                <AuthButton />
+                            </div>
+                            <div className="lesson-container">
+                                <h3>Du har har inga aktiva kurser för tillfället. Om detta inte stämmer kontakta din kursledare.</h3>
+                            </div>
+                        </div>
+                        ) :
                     (<Loader />)
                 }
             </div>
@@ -110,7 +120,7 @@ export class Dashboard extends React.Component {
                     <div className="container">
                         <div className={"side-bar " + (hideMenu && 'side-bar__hidden')}>
                             <div className="course-menu__header">
-                                <Link to="/kurs">{course.title}</Link>
+                                <Link to="/kurs" onClick={this.toggleMenu}>{course.title}</Link>
                                 <div onClick={() => this.setState({hideMenu: !this.state.hideMenu})} className="hamburger hamburger--in-menu">
                                     <div style={{backgroundColor: course.colorcode}} />
                                     <div style={{backgroundColor: course.colorcode}} />
