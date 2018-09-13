@@ -127,7 +127,7 @@ a {
 }
 .authenticate-container {
   text-align: center;
-  width: 50%;
+  width: 100%;
   max-width: 310px;
 }
 .authenticate-form {
@@ -195,7 +195,6 @@ a {
   outline: none;
   cursor: pointer;
   font-size: 15px;
-  width: 290px;
   font-size: 16px;
   padding: 16px 60px;
 }
@@ -526,6 +525,9 @@ a {
 .lesson-container a {
   text-decoration: underline;
 }
+.lesson-container .stepper-container a {
+  text-decoration: none;
+}
 .lesson-container img {
   width: 100%;
   height: auto;
@@ -566,10 +568,15 @@ a {
   background-color: #2fbfc0;
   color: white;
   font-size: 15px;
-  width: 110px;
+  width: 80px;
   max-height: 42px;
   text-align: center;
   position: relative;
+}
+@media screen and (min-width: 450px) {
+  .stepper {
+    width: 110px;
+  }
 }
 .stepper a {
   color: white;
@@ -853,7 +860,10 @@ img.download-icon {
 .button {
   font-size: 15px;
   padding: 16px 60px;
-  width: 290px;
+}
+.change-password {
+  width: 100%;
+  max-width: 300px;
 }
 .update-password {
   margin-top: 26px;
