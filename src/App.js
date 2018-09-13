@@ -58,14 +58,16 @@ class Login extends React.Component {
                 <Authenticate loginFunction={this.login} />
             );
         };
-        return (
+        if (getUser()) {
+            return (
+                <Redirect exact from='/login' to='/kurs'/>
+        )
+        } else return (
             <div>
-                    <div>
-                        <div className="top-bar">
-                            <Link to="/login" className="logo">ELD Studio</Link>
-                        </div>
-                        <Route path='/login' component={AuthenticateComponent} />
-                    </div>
+                <div className="top-bar">
+                    <Link to="/login" className="logo">ELD Studio</Link>
+                </div>
+                <Route path='/login' component={AuthenticateComponent} />
             </div>
         )
     }
