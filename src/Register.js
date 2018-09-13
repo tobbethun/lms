@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Integritetspolicy from './Doc/Integritetspolicy_ELD_Studio.pdf';
 
 
 export class Register extends React.Component {
@@ -77,39 +78,47 @@ export class Register extends React.Component {
         }
 
     }
-
-
+    openInNewTab = () => {
+        var win = window.open(Integritetspolicy, '_blank');
+        win.focus();
+    };
     render() {
         const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid } = this.state;
         return (
-            <div className='register'>
-                <h3>{registerMessage}</h3>
-                { showRegistrationForm &&
-                    <form className='register-form' onSubmit={this.handleSubmit}>
-                        <input type="courseid" placeholder="Kurs-ID" value={courseid}
-                               onChange={this.handleChange('courseid')} required disabled={hascourseid} />
-                        <input type="firstname" placeholder="Förnamn" value={firstname}
-                               onChange={this.handleChange('firstname')} required/>
-                        <input type="lastname" placeholder="Efternamn" value={lastname}
-                               onChange={this.handleChange('lastname')} required/>
-                        <input type="email" placeholder="E-postadress" value={email}
-                               onChange={this.handleChange('email')} required/>
-                        <input type="password" placeholder="Välj lösenord" value={password}
-                               onChange={this.handleChange('password')} required/>
-                        <input className={`${noMatch && 'no-match'}`} type="password"
-                               placeholder="Repetera lösenord" value={retypePassword}
-                               onChange={this.handleChange('retypePassword')} required/>
-                        <input className="aprove" type="checkbox" required/>
-                        <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <Link to="/integritetspolicy">ELD Studios integritetspolicy.</Link></label>
-                        <input className="button" type="submit" value="Slutför registrering"/>
-                    </form>
-                }
-                {noMatch &&
-                <h3>Skriv ditt lösenord igen</h3>
-                }
-                {!showRegistrationForm &&
-                    <Link to="/login" className="login-after-register">Logga in på kursen</Link>
-                }
+            <div>
+                <div className="top-bar">
+                    <Link to="/login" className="logo">ELD Studio</Link>
+                </div>
+                <div className='register'>
+                    <h3>{registerMessage}</h3>
+                    { showRegistrationForm &&
+                        <form className='register-form' onSubmit={this.handleSubmit}>
+                            <input type="courseid" placeholder="Kurs-ID" value={courseid}
+                                   onChange={this.handleChange('courseid')} required disabled={hascourseid} />
+                            <input type="firstname" placeholder="Förnamn" value={firstname}
+                                   onChange={this.handleChange('firstname')} required/>
+                            <input type="lastname" placeholder="Efternamn" value={lastname}
+                                   onChange={this.handleChange('lastname')} required/>
+                            <input type="email" placeholder="E-postadress" value={email}
+                                   onChange={this.handleChange('email')} required/>
+                            <input type="password" placeholder="Välj lösenord" value={password}
+                                   onChange={this.handleChange('password')} required/>
+                            <input className={`${noMatch && 'no-match'}`} type="password"
+                                   placeholder="Repetera lösenord" value={retypePassword}
+                                   onChange={this.handleChange('retypePassword')} required/>
+                            <input className="aprove" type="checkbox" required/>
+                            <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <span className="policy-link" onClick={this.openInNewTab}>ELD Studios integritetspolicy.</span>
+                            </label>
+                            <input className="button" type="submit" value="Slutför registrering"/>
+                        </form>
+                    }
+                    {noMatch &&
+                    <h3>Skriv ditt lösenord igen</h3>
+                    }
+                    {!showRegistrationForm &&
+                        <Link to="/login" className="login-after-register">Logga in på kursen</Link>
+                    }
+                </div>
             </div>
         )
     }

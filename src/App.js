@@ -29,7 +29,6 @@ export const Auth = {
     }
 };
 
-const Policy = () => <div>Vår Policy</div>;
 
 
 class Login extends React.Component {
@@ -61,18 +60,12 @@ class Login extends React.Component {
         };
         return (
             <div>
-                <Router>
                     <div>
                         <div className="top-bar">
                             <Link to="/login" className="logo">ELD Studio</Link>
                         </div>
-
-                        <Switch>
-                            <Route path='/login' component={AuthenticateComponent} />
-                            <Route path='/register' component={Register} />
-                        </Switch>
+                        <Route path='/login' component={AuthenticateComponent} />
                     </div>
-                </Router>
             </div>
         )
     }
@@ -105,16 +98,13 @@ export default function App() {
         <Router>
             <div className="main-wrapper">
                 <div className="start-page">
-                {/*<AuthButton />*/}
                 <Switch>
                     <Redirect exact from='/' to='/login'/>
                     <Route path='/login' component={Login} />
                     <Route path="/register" component={Register} />
-                    <Route path="/integritetspolicy" component={Policy} />
                 </Switch>
                 </div>
                 <PrivateRoute path='/kurs' component={Dashboard} />
-                {/*<PrivateRoute path='/user' component={UserSection} />*/}
             </div>
         </Router>
     )
