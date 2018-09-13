@@ -78,9 +78,9 @@ export class Authenticate extends React.Component {
                     <h3 className="authenticate-title">{loginMessage}</h3>
                     <form className="authenticate-form" onSubmit={this.handleSubmit}>
                         <input type="email" placeholder="e-post" value={email}
-                               onChange={this.handleChange('email')} required/>
+                               onChange={this.handleChange('email')} required autoComplete=""/>
                         <input type="password" placeholder="lösenord" value={password}
-                               onChange={this.handleChange('password')} required/>
+                               onChange={this.handleChange('password')} required autoComplete=""/>
                         <input className='button' type="submit" value="Logga in"/>
                     </form>
                     <Link to="/register">Registrera dig</Link>

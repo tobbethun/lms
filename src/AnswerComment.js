@@ -105,12 +105,14 @@ export class AnswerComment extends React.Component {
                 {showAnswerForm &&
                 <form className='comment-form answer-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
-                    <textarea type="text"
-                    placeholder="Delta i diskussionen..."
-                    className={`comment-field ${answerstatus}`}
-                    value={answer}
-                    onChange={this.handleChange('answer')}
-                    required
+                    <textarea
+                        type="text"
+                        placeholder="Delta i diskussionen..."
+                        className={`comment-field ${answerstatus}`}
+                        value={answer}
+                        onChange={this.handleChange('answer')}
+                        required
+                        autoComplete=""
                     />
                     <div className="comment-footer">
                     <button className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>

@@ -94,19 +94,19 @@ export class Register extends React.Component {
                     { showRegistrationForm &&
                         <form className='register-form' onSubmit={this.handleSubmit}>
                             <input type="courseid" placeholder="Kurs-ID" value={courseid}
-                                   onChange={this.handleChange('courseid')} required disabled={hascourseid} />
+                                   onChange={this.handleChange('courseid')} required autoComplete="" disabled={hascourseid} />
                             <input type="firstname" placeholder="Förnamn" value={firstname}
-                                   onChange={this.handleChange('firstname')} required/>
+                                   onChange={this.handleChange('firstname')} required autoComplete=""/>
                             <input type="lastname" placeholder="Efternamn" value={lastname}
-                                   onChange={this.handleChange('lastname')} required/>
+                                   onChange={this.handleChange('lastname')} required autoComplete=""/>
                             <input type="email" placeholder="E-postadress" value={email}
-                                   onChange={this.handleChange('email')} required/>
+                                   onChange={this.handleChange('email')} required autoComplete=""/>
                             <input type="password" placeholder="Välj lösenord" value={password}
-                                   onChange={this.handleChange('password')} required/>
+                                   onChange={this.handleChange('password')} required autoComplete=""/>
                             <input className={`${noMatch && 'no-match'}`} type="password"
                                    placeholder="Repetera lösenord" value={retypePassword}
-                                   onChange={this.handleChange('retypePassword')} required/>
-                            <input className="aprove" type="checkbox" required/>
+                                   onChange={this.handleChange('retypePassword')} required autoComplete=""/>
+                            <input className="aprove" type="checkbox" required autoComplete=""/>
                             <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <span className="policy-link" onClick={this.openInNewTab}>ELD Studios integritetspolicy.</span>
                             </label>
                             <input className="button" type="submit" value="Slutför registrering"/>

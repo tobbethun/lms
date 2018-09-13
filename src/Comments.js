@@ -103,11 +103,12 @@ export class Comments extends React.Component {
                 <form className='comment-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
                         <textarea type="text"
-                               placeholder={commentPlaceholder}
-                               className={`comment-field ${commentstatus}`}
-                               value={comment}
-                               onChange={this.handleChange('comment')}
-                               required
+                                  placeholder={commentPlaceholder}
+                                  className={`comment-field ${commentstatus}`}
+                                  value={comment}
+                                  onChange={this.handleChange('comment')}
+                                  required
+                                  autoComplete=""
                         />
                         <div className="comment-footer">
                             <button className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Skicka kommentar</button>
