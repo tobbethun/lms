@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Integritetspolicy from './Doc/Integritetspolicy_ELD_Studio.pdf';
+import {formatTime} from "./utils";
 
 
 export class Register extends React.Component {
@@ -15,6 +16,7 @@ export class Register extends React.Component {
             firstname: '',
             lastname: '',
             courseid: '',
+            currentTime: formatTime(new Date().toLocaleString()),
             registerMessage: 'Fyll i uppgifterna för att registrera dig!',
             noMatch: false,
             showRegistrationForm: true,
@@ -61,7 +63,8 @@ export class Register extends React.Component {
                     lastname: data.lastname,
                     email: data.email,
                     password: data.password,
-                    courseid: data.courseid
+                    courseid: data.courseid,
+                    currentTime: this.state.currentTime
                 })
             })
                 .then((response) => {

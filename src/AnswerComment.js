@@ -10,6 +10,7 @@ export class AnswerComment extends React.Component {
         this.state = {
             firstname: this.props.firstname,
             lastname: this.props.lastname,
+            role: this.props.role,
             answerstatus: '',
             answerList: [],
             answer: '',
@@ -65,6 +66,7 @@ export class AnswerComment extends React.Component {
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            role: this.state.role,
             answer: this.state.answer,
             commentid: this.state.commentid,
         };
@@ -79,6 +81,7 @@ export class AnswerComment extends React.Component {
             body: JSON.stringify({
                 firstname: data.firstname,
                 lastname: data.lastname,
+                role: data.role,
                 answer: data.answer,
                 commentid: data.commentid
             })
@@ -121,10 +124,11 @@ export class AnswerComment extends React.Component {
                 </form>
                 }
                 {answerList &&
-                answerList.map((answer, index) => (
-                    <div key={index} className="answer-block">
+                answerList.map((answer) => (
+                    <div key={answer.id} className="answer-block">
                         <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
                         <span className="comment-block__time">{formatTime(answer.time)}</span>
+                        {answer.role === "admin" && <span className="comment-block__is-admin" style={{backgroundColor: this.props.colorCode}}>Kursledare</span>}
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
                 ))}

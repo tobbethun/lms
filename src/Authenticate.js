@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {formatTime} from "./utils";
 
 
 export class Authenticate extends React.Component {
@@ -16,7 +17,8 @@ export class Authenticate extends React.Component {
             email: '',
             password: '',
             loginMessage: 'Logga in på din webbkurs här',
-            verified: false
+            verified: false,
+            currentTime: formatTime(new Date().toLocaleString())
         };
     }
 
@@ -54,7 +56,8 @@ export class Authenticate extends React.Component {
             },
             body: JSON.stringify({
                 email: data.email,
-                password: data.password
+                password: data.password,
+                currentTime: this.state.currentTime
             })
         }).then(handleErrors)
             .then((response) => {

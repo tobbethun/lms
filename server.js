@@ -54,7 +54,6 @@ app.use(express.static(path.join(__dirname, 'build/static')));
 app.use(express.static(path.join(__dirname, 'build')));
 app.use(fileUpload());
 
-const now = new Date().toISOString().substring(0, 10);
 
 // Set default route
 app.get('*', function (req, res) {
@@ -95,7 +94,7 @@ app.post('/api/register', function (req, res) {
         last_name: req.body.lastname,
         email: req.body.email,
         password: encryptedPassword,
-        reg_date: now,
+        reg_date: req.body.currentTime,
         role: 'student'
     };
     connection.query('INSERT INTO users SET ?', post, function (error) {
@@ -167,6 +166,7 @@ app.post('/api/updatepassword', function (req, res) {
 app.post('/api/login', function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
+    const currentTime = req.body.currentTime;
     const encryptedPassword = encrypt(password);
 
     connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
@@ -192,7 +192,7 @@ app.post('/api/login', function (req, res) {
                         "success": "Lyckad inloggning",
                         "user": user
                     });
-                    connection.query('UPDATE users SET last_login = ? WHERE id = ?', [now, results[0].id]);
+                    connection.query('UPDATE users SET last_login = ? WHERE id = ?', [currentTime, results[0].id]);
                 }
                 else {
                     console.log("Email and password does not match");
@@ -242,6 +242,7 @@ app.post('/api/comment', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
+        role: req.body.role,
         comment: req.body.comment,
         step: req.body.step
     };
@@ -266,6 +267,7 @@ app.post('/api/answers', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
+        role: req.body.role,
         answer: req.body.answer,
         comment_id: req.body.commentid
     };
@@ -299,7 +301,7 @@ app.post('/api/getcomments', function (req, res) {
             // console.log('results', results);
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment, time: res.time};
+                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment, time: res.time, role: res.role};
                 payLoad.push(comment);
                 // console.log('comment', comment);
             });
@@ -326,7 +328,7 @@ app.post('/api/getanswers', function (req, res) {
         } else {
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer, time: res.time};
+                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer, time: res.time, role: res.role};
                 payLoad.push(answer);
                 });
             res.send({
@@ -470,7 +472,6 @@ app.post('/api/assignments', function(req, res) {
     })
         .then(function (entries) {
             entries.items.forEach(function (entry) {
-                console.log('entry', entry.sys);
                 payload.push({title: entry.fields.title, step: entry.sys.id});
             });
             if (payload.length) {

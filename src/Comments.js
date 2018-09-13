@@ -12,6 +12,7 @@ export class Comments extends React.Component {
         this.state = {
             firstname: object.user.firstname,
             lastname: object.user.lastname,
+            role: object.user.role,
             commentlist: [],
             step: this.props.step,
             commentstatus: '',
@@ -67,6 +68,7 @@ export class Comments extends React.Component {
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            role: this.state.role,
             comment: this.state.comment,
             step: this.state.step,
         };
@@ -81,6 +83,7 @@ export class Comments extends React.Component {
             body: JSON.stringify({
                 firstname: data.firstname,
                 lastname: data.lastname,
+                role: data.role,
                 comment: data.comment,
                 step: data.step
             })
@@ -96,7 +99,7 @@ export class Comments extends React.Component {
             .then(this.getComments())
     }
     render() {
-        const { firstname, lastname, comment, commentstatus, commentlist } = this.state;
+        const { firstname, lastname, comment, commentstatus, commentlist, role } = this.state;
         const { commentPlaceholder="Skriv din kommentar här" } = this.props;
         return (
             <div className='comments'>
@@ -120,12 +123,14 @@ export class Comments extends React.Component {
                     <div key={comment.id} className="comment-block">
                         <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
+                        {comment.role === "admin" && <span className="comment-block__is-admin" style={{backgroundColor: this.props.colorCode}}>Kursledare</span>}
                         <p className="comment-block__text">{comment.comment}</p>
                         {!this.props.dontShowAnswers &&
                             <AnswerComment commentid={comment.id}
                                            commentName={comment.name}
                                            firstname={firstname}
                                            lastname={lastname}
+                                           role={role}
                                            colorCode={this.props.colorCode}
                             />
                         }

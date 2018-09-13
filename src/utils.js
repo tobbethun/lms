@@ -40,3 +40,4 @@ export const formatTime = (timeStamp) => {
     const time = timeStamp.split(' ')[1].split('.')[0];
     return date + ' - ' + time.substring(0,5);
 }
+
