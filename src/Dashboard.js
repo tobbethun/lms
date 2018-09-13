@@ -89,6 +89,10 @@ export class Dashboard extends React.Component {
             this.setState({errorMessage: "Problem to fetch courses"})
         });
     }
+    toggleMenu = () => {
+        if(window.innerWidth < 768) this.setState({hideMenu: !this.state.hideMenu});
+    };
+
     render() {
         const { lessons, course, errorMessage, hideMenu } = this.state;
         if (!this.state.lessons.length) return (
@@ -125,7 +129,7 @@ export class Dashboard extends React.Component {
                                                 <ul className="course-list">
                                                     {lesson.steps.map((step, index) => (
                                                         <li key={index}>
-                                                            <NavLink exact to={`/kurs/${slugify(lesson.title)}/${slugify(step.fields.title)}`} activeClassName='is-active'>{step.fields.title}</NavLink>
+                                                            <NavLink exact to={`/kurs/${slugify(lesson.title)}/${slugify(step.fields.title)}`} activeClassName='is-active' onClick={this.toggleMenu}>{step.fields.title}</NavLink>
                                                         </li>
                                                     ))}
                                                 </ul>
