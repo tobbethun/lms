@@ -61,6 +61,7 @@ export class Attachment extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.btn.setAttribute("disabled", "disabled");
         let formData  = new FormData();
         formData.append('file', this.state.attachment);
         formData.append('user', this.state.firstname + ' ' + this.state.lastname);
@@ -77,8 +78,9 @@ export class Attachment extends React.Component {
             })
             .then((json) => {
                 if (json.code === 200) {
-                    this.setState({registerMessage: json.success, uploadsuccess: 'Din fil har blivit uppladdad', uploaded: true, uploaderror: ''})
-                } else {
+                    this.setState({registerMessage: json.success, uploadsuccess: 'Din fil har blivit uppladdad', uploaded: true, uploaderror: ''});
+                }
+                if (json.code === 400 || json.code === 500) {
                         this.setState({registerMessage: json.success, uploaderror: 'Oj nåt gick fel. Vänligen försök igen!'});
                 }
             }).then(() => this.getUploads())
@@ -95,7 +97,7 @@ export class Attachment extends React.Component {
                     {!uploaded ?
                         <form onSubmit={this.handleSubmit}>
                             <input type="file" required ref="form" onChange={this.handleUpload} name="file" />
-                            <button type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Ladda upp</button>
+                            <button ref={btn => { this.btn = btn; }} type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Ladda upp</button>
                         </form> :
                         <h3>{uploadsuccess}</h3>
                     }

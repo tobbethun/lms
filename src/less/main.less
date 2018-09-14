@@ -77,6 +77,13 @@ button, .button {
   outline: none;
   cursor: pointer;
 }
+button:disabled {
+  filter: grayscale(2);
+  cursor: not-allowed;
+}
+input:disabled {
+  cursor: not-allowed;
+}
 a {
   font-family: 'AvenirNextLTW01-Regular', sans-serif;
   text-decoration: none;

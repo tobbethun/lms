@@ -38,6 +38,7 @@ export class Register extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.btn.setAttribute("disabled", "disabled");
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
@@ -112,7 +113,7 @@ export class Register extends React.Component {
                             <input className="aprove" type="checkbox" required autoComplete=""/>
                             <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <span className="policy-link" onClick={this.openInNewTab}>ELD Studios integritetspolicy.</span>
                             </label>
-                            <input className="button" type="submit" value="Slutför registrering"/>
+                            <input ref={btn => { this.btn = btn; }} className="button" type="submit" value="Slutför registrering"/>
                         </form>
                     }
                     {noMatch &&

@@ -69,6 +69,14 @@ button,
   outline: none;
   cursor: pointer;
 }
+button:disabled {
+  -webkit-filter: grayscale(2);
+          filter: grayscale(2);
+  cursor: not-allowed;
+}
+input:disabled {
+  cursor: not-allowed;
+}
 a {
   font-family: 'AvenirNextLTW01-Regular', sans-serif;
   text-decoration: none;
@@ -708,7 +716,7 @@ a {
 }
 .comment-block__author {
   color: #2fbfc0;
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
 }
 .comment-block__time {
@@ -717,10 +725,8 @@ a {
   margin-left: 12px;
 }
 .comment-block__is-admin {
-  background-color: #2fbfc0;
-  color: white;
-  border-radius: 3px;
-  font-size: 12px;
+  color: #2fbfc0;
+  font-size: 16px;
   margin-left: 12px;
   padding: 2px;
 }
@@ -731,8 +737,10 @@ a {
   line-height: 28px;
 }
 .show-answer-form {
-  font-size: 14px;
-  padding: 6px 12px 6px 0;
+  display: block;
+  font-size: 16px;
+  text-decoration: underline;
+  padding: 12px 12px 12px 0;
   color: grey;
 }
 .show-answer-form:hover {

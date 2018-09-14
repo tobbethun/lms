@@ -63,6 +63,7 @@ export class AnswerComment extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.btn.setAttribute("disabled", "disabled");
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
@@ -118,7 +119,7 @@ export class AnswerComment extends React.Component {
                         autoComplete=""
                     />
                     <div className="comment-footer">
-                    <button className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>
+                    <button ref={btn => { this.btn = btn; }} className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>
                     </div>
                     </div>
                 </form>
@@ -128,7 +129,7 @@ export class AnswerComment extends React.Component {
                     <div key={answer.id} className="answer-block">
                         <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
                         <span className="comment-block__time">{formatTime(answer.time)}</span>
-                        {answer.role === "admin" && <span className="comment-block__is-admin" style={{backgroundColor: this.props.colorCode}}>Kursledare</span>}
+                        {answer.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
                 ))}

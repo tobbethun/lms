@@ -65,6 +65,7 @@ export class Comments extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.btn.setAttribute("disabled", "disabled");
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
@@ -94,6 +95,7 @@ export class Comments extends React.Component {
             .then((json) => {
                 if (json.code === 200) {
                     this.setState({registerMessage: json.success, commentstatus: 'success', comment: ''});
+                    this.btn.removeAttribute("disabled");
                 }
             })
             .then(this.getComments())
@@ -114,7 +116,7 @@ export class Comments extends React.Component {
                                   autoComplete=""
                         />
                         <div className="comment-footer">
-                            <button className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Skicka kommentar</button>
+                            <button ref={btn => { this.btn = btn; }} className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Skicka kommentar</button>
                         </div>
                     </div>
                 </form>
@@ -123,7 +125,7 @@ export class Comments extends React.Component {
                     <div key={comment.id} className="comment-block">
                         <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
-                        {comment.role === "admin" && <span className="comment-block__is-admin" style={{backgroundColor: this.props.colorCode}}>Kursledare</span>}
+                        {comment.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
                         <p className="comment-block__text">{comment.comment}</p>
                         {!this.props.dontShowAnswers &&
                             <AnswerComment commentid={comment.id}

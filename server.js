@@ -334,7 +334,7 @@ app.post('/api/getanswers', function (req, res) {
             res.send({
                 "code": 200,
                 "success": "Fetch answers sucessfull",
-                "answers": payLoad.reverse()
+                "answers": payLoad
             });
         }
     });

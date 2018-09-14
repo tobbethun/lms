@@ -36,6 +36,7 @@ export class Authenticate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.btn.setAttribute("disabled", "disabled");
         const data = {
             email: this.state.email,
             password: this.state.password
@@ -84,7 +85,7 @@ export class Authenticate extends React.Component {
                                onChange={this.handleChange('email')} required autoComplete=""/>
                         <input type="password" placeholder="lösenord" value={password}
                                onChange={this.handleChange('password')} required autoComplete=""/>
-                        <input className='button' type="submit" value="Logga in"/>
+                        <input ref={btn => { this.btn = btn; }} className='button' type="submit" value="Logga in"/>
                     </form>
                     <Link to="/register">Registrera dig</Link>
                 </div>
