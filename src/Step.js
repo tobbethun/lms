@@ -11,15 +11,15 @@ export class Step extends React.Component {
         window.scrollTo(0, 0)
     }
     render() {
-        const {step, lessonTitle, lessonLength, index, nextStep, preStep, colorCode} = this.props;
+        const {courseID, step, lessonTitle, lessonLength, index, nextStep, preStep, colorCode} = this.props;
         return (
             <div>
                 {step &&
                 <div>
                     <h1>{step.fields.title}</h1>
                     <Markup text={step.fields.text} />
-                    {step.fields.comments && <Comments step={step.sys.id} colorCode={colorCode}/> }
-                    {step.fields.fileUpload && <Attachment step={step.sys.id} colorCode={colorCode} /> }
+                    {step.fields.comments && <Comments courseID={courseID} step={step.sys.id} colorCode={colorCode} /> }
+                    {step.fields.fileUpload && <Attachment courseID={courseID} step={step.sys.id} colorCode={colorCode} /> }
                     <div className="stepper-container">
                         {(index <= lessonLength && index > 1) ?
                         <Link to={`/kurs/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>Tillbaka</span></Link> : <div className="stepper__prev"/>

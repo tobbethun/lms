@@ -49,6 +49,7 @@ export class Comments extends React.Component {
             },
             body: JSON.stringify({
                 step: this.state.step,
+                course: this.props.courseID,
             })
         }).then(handleErrors)
             .then((response) => {
@@ -71,6 +72,7 @@ export class Comments extends React.Component {
             lastname: this.state.lastname,
             role: this.state.role,
             comment: this.state.comment,
+            course: this.props.courseID,
             step: this.state.step,
         };
         fetch("/api/comment/", {
@@ -85,6 +87,7 @@ export class Comments extends React.Component {
                 firstname: data.firstname,
                 lastname: data.lastname,
                 role: data.role,
+                course: data.course,
                 comment: data.comment,
                 step: data.step
             })
@@ -97,11 +100,12 @@ export class Comments extends React.Component {
                     this.setState({registerMessage: json.success, commentstatus: 'success', comment: ''});
                     this.btn.removeAttribute("disabled");
                 }
+                if (json.code === 400) this.setState({errorMessage: "Något gick fel, försök igen"}); this.btn.removeAttribute("disabled");
             })
             .then(this.getComments())
     }
     render() {
-        const { firstname, lastname, comment, commentstatus, commentlist, role } = this.state;
+        const { firstname, lastname, comment, commentstatus, commentlist, role, errorMessage } = this.state;
         const { commentPlaceholder="Skriv din kommentar här" } = this.props;
         return (
             <div className='comments'>
@@ -116,6 +120,7 @@ export class Comments extends React.Component {
                                   autoComplete=""
                         />
                         <div className="comment-footer">
+                            <span className="comment--error-message">{errorMessage}</span>
                             <button ref={btn => { this.btn = btn; }} className="comment-button" type="submit" style={{backgroundColor: this.props.colorCode, borderColor: this.props.colorCode}}>Skicka kommentar</button>
                         </div>
                     </div>

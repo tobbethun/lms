@@ -46,6 +46,7 @@ export class Attachment extends React.Component {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                course: this.props.courseID,
                 step: this.props.step,
             })
         }).then(handleErrors)
@@ -67,6 +68,7 @@ export class Attachment extends React.Component {
         formData.append('user', this.state.firstname + ' ' + this.state.lastname);
         formData.append('useremail', this.state.email);
         formData.append('ref', this.state.attachmentRef);
+        formData.append('course', this.props.courseID);
         formData.append('step', this.props.step);
 
         fetch("/api/fileupload/", {
@@ -114,7 +116,7 @@ export class Attachment extends React.Component {
                                     </div>
                                     <Download path={upload.path} fileName={upload.filename} colorCode={this.props.colorCode} />
                                 </div>
-                                <Comments step={upload.id} colorCode={this.props.colorCode} dontShowAnswers commentPlaceholder="Ge din feedback här" />
+                                <Comments courseID={this.props.courseID} step={upload.id} colorCode={this.props.colorCode} dontShowAnswers commentPlaceholder="Ge din feedback här" />
                             </div>
                         ))
                     }

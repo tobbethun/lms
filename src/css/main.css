@@ -737,7 +737,7 @@ a {
   line-height: 28px;
 }
 .show-answer-form {
-  display: block;
+  display: inline-block;
   font-size: 16px;
   text-decoration: underline;
   padding: 12px 12px 12px 0;
@@ -749,6 +749,12 @@ a {
 }
 .answer-block {
   padding: 10px 30px;
+}
+.comment--error-message {
+  color: red;
+  -ms-flex-item-align: center;
+      align-self: center;
+  margin-right: 50px;
 }
 .attachment {
   padding: 16px;

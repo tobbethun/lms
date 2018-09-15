@@ -82,7 +82,7 @@ export class Dashboard extends React.Component {
             }).then((json) => {
             this.setState({
                 lessons: json.lessons,
-                course: json.course
+                course: json.course[0]
             });
         }).catch((error) => {
             console.log('error', error);
@@ -171,7 +171,7 @@ export class Dashboard extends React.Component {
                             {lessons &&
                             lessons.map((lesson, index) => (
                                 <Route key={index} path={`/kurs/${slugify(lesson.title)}`}
-                                       component={() => <Lesson lesson={lesson} steps={lesson.steps} colorCode={course.colorcode}/>}/>
+                                       component={() => <Lesson courseID={course.id} lesson={lesson} steps={lesson.steps} colorCode={course.colorcode}/>}/>
                             ))
                             }
                             </Switch>

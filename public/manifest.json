@@ -1,9 +1,9 @@
 {
-  "short_name": "L.M.S.",
-  "name": "Learning Management System",
+  "short_name": "ELDStudio",
+  "name": "ELDStudio",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }

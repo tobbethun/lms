@@ -244,6 +244,7 @@ app.post('/api/comment', function (req, res) {
         last_name: req.body.lastname,
         role: req.body.role,
         comment: req.body.comment,
+        course: req.body.course,
         step: req.body.step
     };
     connection.query('INSERT INTO comments SET ?', post, function (error) {
@@ -289,8 +290,9 @@ app.post('/api/answers', function (req, res) {
 
 app.post('/api/getcomments', function (req, res) {
     let payLoad = [];
+    const course = req.body.course;
     const step = req.body.step;
-    connection.query('SELECT * FROM comments WHERE step = ?', [step], function (error, results) {
+    connection.query('SELECT * FROM comments WHERE course = ? AND step = ?', [course, step], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
             res.send({
@@ -351,6 +353,7 @@ app.post('/api/fileupload', function (req, res) {
         user: req.body.user,
         user_email: req.body.useremail,
         ref: req.body.ref,
+        course: req.body.course,
         step: req.body.step,
         filename: filename,
         path: '/uploads/' + req.body.step + '/' + filename
@@ -389,8 +392,9 @@ app.post('/api/fileupload', function (req, res) {
 
 app.post('/api/getuploads', function (req, res) {
     let payLoad = [];
+    const course = req.body.course;
     const step = req.body.step;
-    connection.query('SELECT * FROM uploads WHERE step = ?', [step], function (error, results) {
+    connection.query('SELECT * FROM uploads WHERE course = ? AND step = ?', [course, step], function (error, results) {
         if (error) {
             console.log("error ocurred", error);
             res.send({
@@ -424,7 +428,7 @@ const client = contentful.createClient(dbc.contentful);
 
 app.post('/api/course', function (req, res) {
     let lessons = [];
-    let course = {};
+    let course = [];
     res.setHeader('Content-Type', 'application/json');
     client.getEntries({
         'content_type': 'course',
@@ -440,13 +444,15 @@ app.post('/api/course', function (req, res) {
             //         ))
             // ));
             entries.items.forEach(function (entry) {
-                if(req.body.userCourses.indexOf(entry.sys.id) >= 0) {
-                    course = entry.fields;
+                if(req.body.userCourses.indexOf(entry.sys.id) > -1) {
+                    const payload = entry.fields;
+                    payload.id = entry.sys.id;
+                    course.push(payload);
+                    courseID = entry.sys.id;
                     entry.fields.lessons.map((lesson) => (
                         lessons.push(lesson.fields)
                     ))
                 }
-
             });
             if (lessons.length) {
                 res.status(200).send({
@@ -467,7 +473,6 @@ app.post('/api/assignments', function(req, res) {
     const uploads = [];
     client.getEntries({
         'fields.fileUpload': 'true',
-        'content_type': 'steps',
         'order': 'sys.updatedAt'
     })
         .then(function (entries) {
