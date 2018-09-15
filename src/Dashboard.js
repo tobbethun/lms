@@ -58,7 +58,7 @@ export class Dashboard extends React.Component {
                 return response.json();
 
             }).then((json) => {
-            this.getCourses(json.userCourses);
+            this.getCourses(json.userCourses[0]); // only takes the first course. Later when we have support for multiple courses this value should be set by user.
             this.setState({
                 userCourses: json.userCourses
             });
