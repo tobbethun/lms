@@ -473,6 +473,7 @@ app.post('/api/assignments', function(req, res) {
     const uploads = [];
     client.getEntries({
         'fields.fileUpload': 'true',
+        'content_type': 'steps',
         'order': 'sys.updatedAt'
     })
         .then(function (entries) {
