@@ -69,8 +69,14 @@ export class Authenticate extends React.Component {
                 if (json.code === 200) {
                     this.test(json.user);
                 }
+                if (json.code === 204) {
+                    this.btn.removeAttribute("disabled", "disabled");
+                }
             })
-            .catch(() => this.setState({loginMessage: "Något gick fel vid inloggningen. Var god försök igen."}));
+            .catch(() => {
+                this.setState({loginMessage: "Något gick fel vid inloggningen. Var god försök igen."});
+
+            });
 
     }
 
