@@ -113,7 +113,6 @@ export class Dashboard extends React.Component {
                 }
             </div>
         );
-        const courseStyle = {color: course.colorcode};
         const firstStep = 'kurs/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
         return (
                 <div>
@@ -130,7 +129,7 @@ export class Dashboard extends React.Component {
                             <div className="course-menu">
 
                                 <div>
-                                    <ul style={courseStyle}>
+                                    <ul style={{color: course.colorcode}}>
                                         {lessons &&
                                         lessons.map((lesson, index) => (
                                             <li key={index} className={"course-menu--lesson " + (lesson.inactive ? 'inactive' : '')}>

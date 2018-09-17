@@ -12,7 +12,7 @@ export class CourseStart extends React.Component {
         return (
             <div className="lesson-container">
                 <span className="breadcrumb">Startsida för kursen</span>
-                <Markup text={text} />
+                {text && <Markup text={text} />}
                 <Link to={firstStep} className="button course-start--button" style={{backgroundColor: colorCode}}>Starta kursen</Link>
             </div>
         )

@@ -17,7 +17,7 @@ export class Step extends React.Component {
                 {step &&
                 <div>
                     <h1>{step.fields.title}</h1>
-                    <Markup text={step.fields.text} />
+                    {step.fields.text && <Markup text={step.fields.text} />}
                     {step.fields.comments && <Comments courseID={courseID} step={step.sys.id} colorCode={colorCode} /> }
                     {step.fields.fileUpload && <Attachment courseID={courseID} step={step.sys.id} colorCode={colorCode} /> }
                     <div className="stepper-container">
