@@ -100,9 +100,10 @@ app.post('/api/register', function (req, res) {
     connection.query('INSERT INTO users SET ?', post, function (error) {
         if (error) {
             console.log("error ocurred", error);
+            console.log('register error', post);
             res.send({
                 "code": 400,
-                "failed": "error ocurred"
+                "message": "Något gick fel. Vänligen försök igen"
             })
         } else {
             connection.query('INSERT INTO courses SET ?', courseData, function (error) {
@@ -111,7 +112,7 @@ app.post('/api/register', function (req, res) {
                 } else {
                     res.send({
                         "code": 200,
-                        "success": "Du är nu registrerad"
+                        "message": "Du är nu registrerad"
                     });
                 }
             });
@@ -195,7 +196,7 @@ app.post('/api/login', function (req, res) {
                     connection.query('UPDATE users SET last_login = ? WHERE id = ?', [currentTime, results[0].id]);
                 }
                 else {
-                    console.log("Email and password does not match");
+                    console.log("Email and password does not match", email, "--", encryptedPassword);
                     res.send({
                         "code": 204,
                         "success": "Fel e-post eller lösenord"
@@ -203,7 +204,7 @@ app.post('/api/login', function (req, res) {
                 }
             }
             else {
-                console.log("Email does not exits");
+                console.log("Email does not exits", email);
                 res.send({
                     "code": 204,
                     "success": "Den angivna e-postadressen finns tyvärr inte registrerad."

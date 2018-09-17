@@ -72,10 +72,10 @@ export class Register extends React.Component {
                 })
                 .then((json) => {
                     if (json.code === 200) {
-                        this.setState({registerMessage: json.success, showRegistrationForm: false});
+                        this.setState({registerMessage: json.message, showRegistrationForm: false});
                     }
-                    if (json.code === 204) {
-                        this.setState({registerMessage: json.success});
+                    if (json.code === 400) {
+                        this.setState({registerMessage: json.message});
                     }
                 });
         }
