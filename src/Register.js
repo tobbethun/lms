@@ -31,7 +31,6 @@ export class Register extends React.Component {
 
     checkEmail() {
         if (this.state.email) {
-            console.log('ho');
             fetch("/api/checkemail/", {
                 method: "post",
                 headers: {

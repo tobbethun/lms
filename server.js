@@ -96,6 +96,11 @@ app.post('/api/checkemail', function(req, res) {
                     "code": 200,
                     "emailexist": true,
                 });
+            } else {
+                res.send({
+                    "code": 200,
+                    "emailexist": false,
+                });
             }
         }
 
