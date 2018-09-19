@@ -171,6 +171,9 @@ a {
           filter: grayscale(1);
   height: 2.5em;
 }
+.email-check {
+  text-decoration: underline;
+}
 .register-form {
   display: -webkit-box;
   display: -ms-flexbox;

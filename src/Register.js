@@ -8,6 +8,7 @@ export class Register extends React.Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.checkEmail = this.checkEmail.bind(this);
         this.state = {
             email: '',
             password: '',
@@ -19,12 +20,39 @@ export class Register extends React.Component {
             registerMessage: 'Fyll i uppgifterna för att registrera dig!',
             noMatch: false,
             showRegistrationForm: true,
+            emailExist: false,
             hascourseid: false
         };
     }
     componentDidMount() {
         const courseID = window.location.href.split('?')[1];
         courseID && this.setState({courseid: courseID, hascourseid: true});
+    }
+
+    checkEmail() {
+        if (this.state.email) {
+            console.log('ho');
+            fetch("/api/checkemail/", {
+                method: "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: this.state.email,
+                })
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((json) => {
+                    if (json.code === 200) {
+                        this.setState({emailExist: json.emailexist});
+                        this.state.emailExist ? this.btn.setAttribute("disabled", "disabled") :
+                        this.btn.removeAttribute("disabled", "disabled");
+                    }
+                });
+        }
     }
 
     handleChange(key) {
@@ -86,7 +114,7 @@ export class Register extends React.Component {
         win.focus();
     };
     render() {
-        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid } = this.state;
+        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid, emailExist } = this.state;
         return (
             <div>
                 <div className="top-bar">
@@ -103,7 +131,8 @@ export class Register extends React.Component {
                             <input type="lastname" placeholder="Efternamn" value={lastname}
                                    onChange={this.handleChange('lastname')} required autoComplete=""/>
                             <input type="email" placeholder="E-postadress" value={email}
-                                   onChange={this.handleChange('email')} required autoComplete=""/>
+                                   onChange={this.handleChange('email')} required autoComplete="" onBlur={this.checkEmail}/>
+                            {emailExist && <label>Din e-postadress finns redan registrerad. <Link to="/" className="email-check">Logga in.</Link></label>}
                             <input type="password" placeholder="Välj lösenord" value={password}
                                    onChange={this.handleChange('password')} required autoComplete=""/>
                             <input className={`${noMatch && 'no-match'}`} type="password"

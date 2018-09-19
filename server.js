@@ -85,6 +85,24 @@ app.get('/api/users', function (req, res) {
 
 // REGISTER NEW USER
 
+app.post('/api/checkemail', function(req, res) {
+    const email = req.body.email;
+    connection.query('SELECT * from users WHERE email = ?', [email], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+        } else {
+            if (results.length >= 1) {
+                res.send({
+                    "code": 200,
+                    "emailexist": true,
+                });
+            }
+        }
+
+    });
+});
+
+
 app.post('/api/register', function (req, res) {
     const password = req.body.password;
     const encryptedPassword = encrypt(password);
