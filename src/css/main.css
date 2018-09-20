@@ -127,6 +127,13 @@ a {
 .logout:hover {
   color: grey;
 }
+.info-box {
+  padding: 10px;
+  color: black;
+  background-color: #ffc863;
+  margin: 10px 0;
+  text-align: center;
+}
 .authenticate {
   display: -webkit-box;
   display: -ms-flexbox;

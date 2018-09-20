@@ -55,8 +55,11 @@ export class Attachment extends React.Component {
             })
             .then((json) => {
                 if (json.code === 200) {
-                    this.setState({uploadlist: json.uploads})
+                    this.setState({uploadlist: json.uploads});
                 }
+            })
+            .catch(() =>  {
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'});
             })
     }
 
@@ -86,15 +89,15 @@ export class Attachment extends React.Component {
                         this.setState({registerMessage: json.success, uploaderror: 'Oj nåt gick fel. Vänligen försök igen!'});
                 }
             }).then(() => this.getUploads())
-            .catch((error) =>  {
-                console.log('error', error);
-                this.setState({uploaderror: 'Oj något gick fel. Vänligen försök igen!'})
+            .catch(() =>  {
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'})
         })
     }
     render() {
-        const { uploadsuccess, uploadlist, uploaderror, uploaded } = this.state;
+        const { uploadsuccess, uploadlist, uploaderror, uploaded, noNetworkMessage } = this.state;
         return (
             <div>
+                {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
                 <div className="attachment">
                     {!uploaded ?
                         <form onSubmit={this.handleSubmit}>

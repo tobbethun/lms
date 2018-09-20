@@ -37,13 +37,14 @@ export class UserSection extends React.Component {
                 if(json.code === 200) {
                     this.setState({ assignments: json.steps, uploads: json.uploads});
                 }
-            }).catch((error) =>  {
-            console.log('error', error);
-        })
+            })
+            .catch(() =>  {
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'});
+            })
     }
 
     render() {
-        const {user, changePassword, assignments, uploads} = this.state;
+        const {user, changePassword, assignments, uploads, noNetworkMessage} = this.state;
         return (
             <div className="user-section">
                 <div className="user-section__info">
@@ -55,6 +56,7 @@ export class UserSection extends React.Component {
                     }
                 </div>
                 <div className="user-section__assignments">
+                    {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
                     <h3>Inlämnade uppgifter</h3>
 
                     {assignments &&

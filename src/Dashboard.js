@@ -58,11 +58,12 @@ export class Dashboard extends React.Component {
                 return response.json();
 
             }).then((json) => {
-            this.getCourses(json.userCourses[0]); // only takes the first course. Later when we have support for multiple courses this value should be set by user.
-            this.setState({
-                userCourses: json.userCourses
+                this.getCourses(json.userCourses[0]); // only takes the first course. Later when we have support for multiple courses this value should be set by user.
+                this.setState({
+                    userCourses: json.userCourses
             });
-        }).catch(() => this.setState({errorMessage: "Problem to fetch Usercourses"}));
+        })
+            .catch(() => this.setState({errorMessage: true}));
     }
 
     getCourses(usercourses) {
@@ -80,13 +81,22 @@ export class Dashboard extends React.Component {
                 return response.json();
 
             }).then((json) => {
-            this.setState({
-                lessons: json.lessons,
-                course: json.course[0]
-            });
+                if (json.code === 200) {
+                    this.setState({
+                        lessons: json.lessons,
+                        course: json.course[0]
+                    });
+                }
+                if (json.code === 204) {
+                    this.setState({
+                        errorMessage: true,
+                        message: json.message
+                    });
+                }
+
         }).catch((error) => {
             console.log('error', error);
-            this.setState({errorMessage: "Problem to fetch courses"})
+            this.setState({errorMessage: true, message: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."})
         });
     }
     toggleMenu = () => {
@@ -94,7 +104,7 @@ export class Dashboard extends React.Component {
     };
 
     render() {
-        const { lessons, course, errorMessage, hideMenu } = this.state;
+        const { lessons, course, errorMessage, message, hideMenu } = this.state;
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
@@ -105,7 +115,7 @@ export class Dashboard extends React.Component {
                                 <AuthButton />
                             </div>
                             <div className="lesson-container">
-                                <h3>Du har har inga aktiva kurser för tillfället. Om detta inte stämmer kontakta din kursledare.</h3>
+                                <h3>{message}</h3>
                             </div>
                         </div>
                         ) :

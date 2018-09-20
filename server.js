@@ -336,7 +336,6 @@ app.post('/api/getcomments', function (req, res) {
                 "success": "Fetch comments sucessfull",
                 "comments": payLoad.reverse()
             });
-            // console.log('payLoad', payLoad);
         }
     });
 });
@@ -479,13 +478,15 @@ app.post('/api/course', function (req, res) {
                 }
             });
             if (lessons.length) {
-                res.status(200).send({
+                res.send({
+                    "code": 200,
                     "lessons": lessons,
                     "course": course
                 });
             } else {
-                res.status(204).send({
-                    "code": 204
+                res.send({
+                    "code": 204,
+                    "message": "Du har har inga aktiva kurser för tillfället. Om detta inte stämmer kontakta din kursledare."
                 })
             }
         });

@@ -62,6 +62,9 @@ export class Comments extends React.Component {
                     this.setState({registerMessage: json.success, uploadstatus: 'error'});
                 }
             })
+            .catch(() => {
+                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."});
+            });
     }
 
     handleSubmit(e) {
@@ -103,12 +106,16 @@ export class Comments extends React.Component {
                 if (json.code === 400) this.setState({errorMessage: "Något gick fel, försök igen"}); this.btn.removeAttribute("disabled");
             })
             .then(this.getComments())
+            .catch(() => {
+                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."});
+            });
     }
     render() {
-        const { firstname, lastname, comment, commentstatus, commentlist, role, errorMessage } = this.state;
+        const { firstname, lastname, comment, commentstatus, commentlist, role, errorMessage, noNetworkMessage } = this.state;
         const { commentPlaceholder="Skriv din kommentar här" } = this.props;
         return (
             <div className='comments'>
+                {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
                 <form className='comment-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
                         <textarea type="text"

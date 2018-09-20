@@ -57,11 +57,14 @@ export class UpdatePassword extends React.Component {
                             retypePassword: ''
                         })
                     }
-                });
+                })
+                .catch(() =>  {
+                    this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'})
+                })
         }
     }
     render() {
-        const { oldPassword, password, retypePassword, noMatch, updateMessage } = this.state;
+        const { oldPassword, password, retypePassword, noMatch, updateMessage, noNetworkMessage } = this.state;
         return (
             <div>
                 <h3>{updateMessage}</h3>
@@ -75,9 +78,8 @@ export class UpdatePassword extends React.Component {
                            onChange={this.handleChange('retypePassword')} required/>
                     <input className='button update-password' type="submit" value="Updatera lösenord"/>
                 </form>
-                {noMatch &&
-                <h3>Type the same password twice</h3>
-                }
+                {noMatch && <h3>Type the same password twice</h3>}
+                {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
             </div>
         )
     }

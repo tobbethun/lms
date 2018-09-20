@@ -73,7 +73,7 @@ export class Authenticate extends React.Component {
                 }
             })
             .catch(() => {
-                this.setState({loginMessage: "Något gick fel vid inloggningen. Var god försök igen."});
+                this.setState({loginMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling och försök igen."});
                 this.btn.removeAttribute("disabled", "disabled");
             });
 
