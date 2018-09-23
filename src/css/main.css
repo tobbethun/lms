@@ -624,7 +624,7 @@ a {
 .arrow-left {
   position: absolute;
   left: 6px;
-  top: 12px;
+  top: 15px;
   width: 0;
   height: 0;
   border-top: 6px solid transparent;
@@ -633,7 +633,6 @@ a {
 }
 @media screen and (min-width: 768px) {
   .arrow-left {
-    top: 15px;
     left: 16px;
   }
 }
@@ -837,6 +836,7 @@ a {
 }
 img.download-icon {
   margin-right: 12px;
+  margin-top: 0;
   height: 20px;
   width: 20px;
 }

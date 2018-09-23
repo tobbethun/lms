@@ -41,3 +41,5 @@ export const formatTime = (timeStamp) => {
     return date + ' - ' + time.substring(0,5);
 }
 
+export const delay = t => new Promise(resolve => setTimeout(resolve, t));
+

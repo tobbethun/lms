@@ -1,6 +1,6 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
-import {formatTime} from "./utils";
+import {formatTime, delay} from "./utils";
 
 
 export class Comments extends React.Component {
@@ -105,7 +105,7 @@ export class Comments extends React.Component {
                 }
                 if (json.code === 400) this.setState({errorMessage: "Något gick fel, försök igen"}); this.btn.removeAttribute("disabled");
             })
-            .then(this.getComments())
+            delay(250).then(() => this.getComments())
             .catch(() => {
                 this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."});
             });

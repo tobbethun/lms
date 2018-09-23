@@ -120,7 +120,7 @@ export class Attachment extends React.Component {
                                     </div>
                                     <Download path={upload.path} fileName={upload.filename} colorCode={this.props.colorCode} />
                                 </div>
-                                <Comments courseID={this.props.courseID} step={upload.id} colorCode={this.props.colorCode} dontShowAnswers commentPlaceholder="Ge din feedback här" />
+                                <Comments courseID={this.props.courseID} step={upload.filename} colorCode={this.props.colorCode} dontShowAnswers commentPlaceholder="Ge din feedback här" />
                             </div>
                         ))
                     }
