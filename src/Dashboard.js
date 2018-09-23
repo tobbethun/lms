@@ -96,7 +96,7 @@ export class Dashboard extends React.Component {
 
         }).catch((error) => {
             console.log('error', error);
-            this.setState({errorMessage: true, message: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."})
+            this.setState({errorMessage: true, message: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."})
         });
     }
     toggleMenu = () => {

@@ -59,7 +59,7 @@ export class Attachment extends React.Component {
                 }
             })
             .catch(() =>  {
-                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'});
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.'});
             })
     }
 
@@ -90,7 +90,8 @@ export class Attachment extends React.Component {
                 }
             }).then(() => this.getUploads())
             .catch(() =>  {
-                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling.'})
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.'});
+                this.btn.removeAttribute("disabled", "disabled");
         })
     }
     render() {

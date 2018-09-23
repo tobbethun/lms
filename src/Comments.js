@@ -63,7 +63,7 @@ export class Comments extends React.Component {
                 }
             })
             .catch(() => {
-                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."});
+                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."});
             });
     }
 
@@ -107,7 +107,7 @@ export class Comments extends React.Component {
             })
             .then(this.getComments())
             .catch(() => {
-                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling."});
+                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."});
             });
     }
     render() {
