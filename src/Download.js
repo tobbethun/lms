@@ -29,7 +29,12 @@ export class Download extends React.Component {
             .then((response) => {
                 return response.blob();
             }).then((blob) => {
-            fileDownload(blob, this.props.fileName);
+                console.log('blob', blob.type);
+                if (blob.type === 'application/pdf') {
+                    var file = new Blob([blob], {type: 'application/pdf'});
+                    var fileURL = URL.createObjectURL(file);
+                    window.open(fileURL);
+                } else fileDownload(blob, this.props.fileName);
         });
     }
     render() {
