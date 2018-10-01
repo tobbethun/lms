@@ -1,21 +1,17 @@
 import React from 'react';
 import fileDownload from 'js-file-download';
 import file from "./img/file-alt.svg";
+import {handleErrors} from "./utils";
 
 export class Download extends React.Component {
     constructor(props) {
         super(props);
         this.download = this.download.bind(this);
+        this.openInTab = this.openInTab.bind(this);
     }
 
-    download() {
-        function handleErrors(response){
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
 
+    download() {
         fetch("/api/download/", {
             method: "post",
             headers: {
@@ -29,19 +25,36 @@ export class Download extends React.Component {
             .then((response) => {
                 return response.blob();
             }).then((blob) => {
-                console.log('blob', blob.type);
-                if (blob.type === 'application/pdf') {
-                    var file = new Blob([blob], {type: 'application/pdf'});
-                    var fileURL = URL.createObjectURL(file);
-                    window.open(fileURL);
-                } else fileDownload(blob, this.props.fileName);
+                fileDownload(blob, this.props.fileName);
+        });
+    }
+    openInTab() {
+        const windowReference = window.open();
+        fetch("/api/download/", {
+            method: "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                path: this.props.path,
+            })
+        }).then(handleErrors)
+            .then((response) => {
+                return response.blob();
+            }).then((blob) => {
+                const file = new Blob([blob], {type: 'application/pdf'});
+                windowReference.location = URL.createObjectURL(file);
         });
     }
     render() {
         return (
             <div className="download">
                 <img src={file} alt="fil-ikon" className="download-icon" />
-                <span className="download-file" onClick={this.download} style={{color: this.props.colorCode}}>Ladda ner fil</span>
+                {this.props.fileName.endsWith("pdf") ?
+                    <span className="download-file" onClick={this.openInTab} style={{color: this.props.colorCode}}>Öppnas i ny flik {this.props.fileName}</span> :
+                    <span className="download-file" onClick={this.download} style={{color: this.props.colorCode}}>Ladda ner fil {this.props.fileName}</span>
+                }
             </div>
         )
     }
