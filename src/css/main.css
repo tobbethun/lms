@@ -848,6 +848,18 @@ img.download-icon {
   cursor: pointer;
   font-weight: 700;
 }
+.download-and-open {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.open-in-tab {
+  margin-top: 10px;
+}
 .user-section {
   padding: 30px 0px;
   max-width: 1200px;
