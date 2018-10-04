@@ -51,7 +51,7 @@ export class Download extends React.Component {
         return (
             <div className="download">
                 <img src={file} alt="fil-ikon" className="download-icon" />
-                {this.props.fileName.endsWith("pdf") ?
+                {this.props.fileName.match('pdf$') ?
                     <div className="download-and-open">
                         <span className="download-file" onClick={this.download} style={{color: this.props.colorCode}}>Ladda ner fil</span>
                         <span className="download-file open-in-tab" onClick={this.openInTab} style={{color: this.props.colorCode}}>Öppna PDF i ny flik</span>
