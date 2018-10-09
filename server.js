@@ -494,43 +494,29 @@ app.post('/api/course', function (req, res) {
 
 app.post('/api/assignments', function(req, res) {
     const userEmail = req.body.userEmail;
-    const payload = [];
     const uploads = [];
-    client.getEntries({
-        'fields.fileUpload': 'true',
-        'content_type': 'steps',
-        'order': 'sys.updatedAt'
-    })
-        .then(function (entries) {
-            entries.items.forEach(function (entry) {
-                payload.push({title: entry.fields.title, step: entry.sys.id});
+        connection.query('SELECT step FROM uploads WHERE user_email = ?', [userEmail], function (error, results) {
+            results.forEach(function (result) {
+                uploads.push(result.step);
             });
-            if (payload.length) {
-                connection.query('SELECT step FROM uploads WHERE user_email = ?', [userEmail], function (error, results) {
-                    results.forEach(function (result) {
-                        uploads.push(result.step);
-                    });
-                    if (error) {
-                        console.log("error ocurred", error);
-                        res.send({
-                            "code": 400,
-                            "failed": "error ocurred"
-                        })
-                    } else {
-                        // results.forEach(function (res) {
-                        //     const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path, time: res.time};
-                        //     payLoad.push(upload);
-                        // });
-                        res.status(200).send({
-                            "steps": payload,
-                            "uploads": uploads,
-                            "code": 200
-                        });
-                        // console.log('payLoad', payLoad);
-                    }
+            if (error) {
+                console.log("error ocurred", error);
+                res.send({
+                    "code": 400,
+                    "failed": "error ocurred"
+                })
+            } else {
+                // results.forEach(function (res) {
+                //     const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path, time: res.time};
+                //     payLoad.push(upload);
+                // });
+                res.status(200).send({
+                    "uploads": uploads,
+                    "code": 200
                 });
-
-            } else res.status(204);
+                // console.log('payLoad', payLoad);
+            }
         });
+
 });
 

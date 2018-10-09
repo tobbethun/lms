@@ -14,7 +14,7 @@ export class UserSection extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.progress();
     }
 
@@ -26,7 +26,7 @@ export class UserSection extends React.Component {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userEmail: this.state.user.email,
+                    userEmail: this.state.user.email
                 })
             })
             .then(handleErrors)
@@ -35,7 +35,7 @@ export class UserSection extends React.Component {
             })
             .then((json) => {
                 if(json.code === 200) {
-                    this.setState({ assignments: json.steps, uploads: json.uploads});
+                    this.setState({ uploads: json.uploads});
                 }
             })
             .catch(() =>  {
@@ -44,7 +44,15 @@ export class UserSection extends React.Component {
     }
 
     render() {
-        const {user, changePassword, assignments, uploads, noNetworkMessage} = this.state;
+        const assignments = [];
+        this.props.lessons.map((lesson) => (
+           lesson.steps.map((step) => (
+               step.fields.fileUpload &&
+                   assignments.push({fields: step.fields, id: step.sys.id})
+           ))
+
+        ));
+        const {user, changePassword, uploads, noNetworkMessage} = this.state;
         return (
             <div className="user-section">
                 <div className="user-section__info">
@@ -57,22 +65,22 @@ export class UserSection extends React.Component {
                 </div>
                 <div className="user-section__assignments">
                     {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
-                    <h3>Inlämnade uppgifter</h3>
-
-                    {assignments &&
-                    assignments.map((assignment) => (
-                        <div key={assignment.step} className="assignments-row">
-                            <div>{assignment.title}</div>
-                            {uploads.indexOf(assignment.step) > -1 ?
-                                <div className="check">
-                                    <img src={check} alt="check-mark"/>
-                                </div> :
-                                <div className="cross"/>
-                            }
+                    {assignments.length > 0 &&
+                        <div>
+                            <h3>Inlämnade uppgifter</h3>
+                            {assignments.map((assignment) => (
+                            <div key={assignment.fields.title} className="assignments-row">
+                                <div>{assignment.fields.title}</div>
+                                {uploads && uploads.indexOf(assignment.id) > -1 ?
+                                    <div className="check">
+                                        <img src={check} alt="check-mark"/>
+                                    </div> :
+                                    <div className="cross"/>
+                                }
+                            </div>
+                            ))}
                         </div>
-                    ))
                     }
-
                 </div>
             </div>
         )

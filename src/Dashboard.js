@@ -175,7 +175,7 @@ export class Dashboard extends React.Component {
                                 <AuthButton />
                             </div>
                             <Switch>
-                                <Route exact path='/kurs/user' component={UserSection} />
+                                <Route exact path='/kurs/user' render={()=><UserSection lessons={lessons} />} />
                                 <Route exact path="/kurs" render={()=><CourseStart title={course.title} text={course.courseInformation} firstStep={firstStep} colorCode={course.colorcode} />} />
                             {lessons &&
                             lessons.map((lesson, index) => (
