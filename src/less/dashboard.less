@@ -23,19 +23,26 @@
 }
 
 .logo-link {
-    height: 40px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 160px;
     @media @medium {
-        height: 60px;
         margin-left: 130px;
+        max-width: 120px;
+    }
+    @media @large {
+        max-width: 200px;
     }
 }
 
 .course-logo {
-    height: 90%;
     width: auto;
+    height : auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .user-logout {

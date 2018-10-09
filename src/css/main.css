@@ -252,7 +252,7 @@ a {
   color: currentColor;
 }
 .logo-link {
-  height: 40px;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -262,16 +262,25 @@ a {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  width: 100%;
+  max-width: 160px;
 }
 @media screen and (min-width: 768px) {
   .logo-link {
-    height: 60px;
     margin-left: 130px;
+    max-width: 120px;
+  }
+}
+@media screen and (min-width: 1023px) {
+  .logo-link {
+    max-width: 200px;
   }
 }
 .course-logo {
-  height: 90%;
   width: auto;
+  height: auto;
+  max-height: 100%;
+  max-width: 100%;
 }
 .user-logout {
   z-index: 10;
