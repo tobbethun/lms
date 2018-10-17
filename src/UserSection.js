@@ -2,6 +2,7 @@ import React from 'react';
 import {getUser, handleErrors} from "./utils";
 import UpdatePassword from "./UpdatePassword";
 import check from "./img/check.svg";
+import Admin from "./Admin";
 
 
 export class UserSection extends React.Component {
@@ -10,6 +11,7 @@ export class UserSection extends React.Component {
         this.state = {
             changePassword: false,
             user: getUser(),
+            adminPass: "",
             assignments: []
         };
     }
@@ -17,6 +19,7 @@ export class UserSection extends React.Component {
     componentWillMount() {
         this.progress();
     }
+
 
     progress() {
         fetch('/api/assignments', {
@@ -82,6 +85,11 @@ export class UserSection extends React.Component {
                         </div>
                     }
                 </div>
+                {user.role === "admin" &&
+                <div>
+                    <Admin />
+                </div>
+                }
             </div>
         )
     }

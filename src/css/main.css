@@ -939,3 +939,22 @@ img.download-icon {
 .update-password {
   margin-top: 26px;
 }
+.admin-user {
+  background-color: #f7f9fa;
+  margin: 10px 0;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  row-gap: 20px;
+}
+.admin-update-password {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 2;
+}
+.admin-update-password input {
+  margin: 0 10px;
+}
+.admin-update-password .admin-update-button {
+  padding: 5px;
+}

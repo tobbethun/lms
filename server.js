@@ -30,6 +30,7 @@ function encrypt(text) {
 //     return dec;
 // }
 
+
 // Database Connection
 const connection = mysql.createConnection(dbc.connection);
 
@@ -66,22 +67,45 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 
+// ADMIN SECTION
 
-
-app.get('/api/users', function (req, res) {
-    // const id = req.params.id;
-    connection.query('SELECT * FROM users', function (err, results) {
-        if (err) throw err;
-        if (!err) {
-            const response = [];
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).send(results);
+app.post('/api/users', function(req, res) {
+    connection.query('SELECT * FROM users', function (error, results1) {
+        if (error) {
+            console.log("error ocurred", error);
         } else {
-            console.log('error 400');
-            res.status(400).send(err);
+            const users = results1;
+            connection.query('SELECT * FROM courses', function (error, results2){
+                if (error) {
+                    console.log("error occured", error)
+                } else {
+                    res.send({
+                        "code": 200,
+                        "users": users,
+                        "usercourses": results2
+                    });
+                }
+            });
         }
-    })
+
+    });
 });
+
+
+// app.get('/api/users', function (req, res) {
+//     // const id = req.params.id;
+//     connection.query('SELECT * FROM users', function (err, results) {
+//         if (err) throw err;
+//         if (!err) {
+//             const response = [];
+//             res.setHeader('Content-Type', 'application/json');
+//             res.status(200).send(results);
+//         } else {
+//             console.log('error 400');
+//             res.status(400).send(err);
+//         }
+//     })
+// });
 
 // REGISTER NEW USER
 
