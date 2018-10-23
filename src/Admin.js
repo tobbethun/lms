@@ -1,5 +1,6 @@
 import React from'react';
 import {Toast} from "./Toast";
+import Delete from "./Delete";
 
 export class Admin extends React.Component {
     constructor(props) {
@@ -92,11 +93,11 @@ export class Admin extends React.Component {
                 if (json.code === 200) {
                     this.password.setAttribute("readonly", "readonly");
                     this.setState({ message: json.success });
-                    setTimeout(() => this.setState({ message: null }), 3500);
+                    setTimeout(() => this.setState({ message: null }), 2500);
                 }
                 if (json.code === 204) {
                     this.setState({ message: json.success });
-                    setTimeout(() => this.setState({ message: null }), 3500);
+                    setTimeout(() => this.setState({ message: null }), 2500);
                 }
             })
             .catch((e) =>  {
@@ -106,6 +107,7 @@ export class Admin extends React.Component {
     }
     render() {
         const { filtered, message } = this.state;
+        const adminDelete = this.props.role;
         return (
             <div className="admin-users">
                 {message && <Toast message={message} />}
@@ -123,6 +125,7 @@ export class Admin extends React.Component {
                             <input type="text" name="password" data={user.email} placeholder="Nytt lösenord" required ref={password => { this.password = password; }} />
                             <button className="admin-update-button">Uppdatera lösenord</button>
                         </form>
+                        {adminDelete && <Delete id={user.id} table="users" />}
                     </div>
                     ))
                 }

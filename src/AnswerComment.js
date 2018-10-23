@@ -1,5 +1,6 @@
 import React from'react';
 import {formatTime} from './utils.js'
+import Delete from "./Delete";
 
 
 export class AnswerComment extends React.Component {
@@ -102,7 +103,7 @@ export class AnswerComment extends React.Component {
     }
     render() {
         const { answer, answerList, showAnswerForm, answerstatus } = this.state;
-        const { commentName, colorCode } = this.props;
+        const { commentName, colorCode, adminDelete } = this.props;
         return (
             <div className='answer'>
                 <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara {commentName.split(' ', 1)}</span>
@@ -130,6 +131,7 @@ export class AnswerComment extends React.Component {
                         <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
                         <span className="comment-block__time">{formatTime(answer.time)}</span>
                         {answer.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
+                        {adminDelete && <Delete id={answer.id} table="answers" />}
                         <p className="comment-block__text">{answer.answer}</p>
                     </div>
                 ))}

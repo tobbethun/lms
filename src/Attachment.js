@@ -2,6 +2,7 @@ import React from 'react';
 import Comments from "./Comments";
 import Download from "./Download";
 import {formatTime, handleErrors} from "./utils";
+import Delete from "./Delete";
 
 export class Attachment extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ export class Attachment extends React.Component {
             firstname: object.user.firstname,
             lastname: object.user.lastname,
             email: object.user.email,
+            role: object.user.role,
             uploadlist: [],
             attachment: '',
             attachmentRef: ref,
@@ -95,7 +97,8 @@ export class Attachment extends React.Component {
         })
     }
     render() {
-        const { uploadsuccess, uploadlist, uploaderror, uploaded, noNetworkMessage } = this.state;
+        const { uploadsuccess, uploadlist, uploaderror, uploaded, noNetworkMessage, role } = this.state;
+        const adminDelete = role === "admin";
         return (
             <div>
                 {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
@@ -117,6 +120,7 @@ export class Attachment extends React.Component {
                                     <div className="uploaded__name-time">
                                         <span>{upload.name}</span>
                                         <span className="comment-block__time">Inlämnat {formatTime(upload.time)}</span>
+                                        {adminDelete && <Delete id={upload.id} table="uploads" />}
                                     </div>
                                     <Download path={upload.path} fileName={upload.filename} colorCode={this.props.colorCode} />
                                 </div>

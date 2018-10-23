@@ -140,18 +140,19 @@ a {
   top: 61px;
   padding: 10px;
   background: @mainColor;
-  animation: vanish 1s;
-  animation-delay: 2s;
-  animation-fill-mode: forwards;
 }
 
-@keyframes vanish {
-  from {
-    opacity: 1;
+.delete {
+  margin-left: 12px;
+  color: grey;
+  cursor: pointer;
+  &:hover {
+    color: black;
   }
-  to {
-    opacity: 0;
-  }
+}
+
+.delete-message {
+  color: red;
 }
 
 @small:  ~'screen and (min-width: 450px)';

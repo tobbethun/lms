@@ -87,7 +87,7 @@ export class UserSection extends React.Component {
                 </div>
                 {user.role === "admin" &&
                 <div>
-                    <Admin />
+                    <Admin role={user.role} />
                 </div>
                 }
             </div>

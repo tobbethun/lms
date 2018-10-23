@@ -3,8 +3,13 @@ import { handleErrors } from "./utils";
 
 
 export class Delete extends React.Component {
+    componentWillMount() {
+        this.setState({message: null})
+    }
+
     removeFromDB() {
-        fetch("/api/delete/", {
+        const pin = prompt('Verifiera med Pin kod');
+        fetch("/api/admin/delete/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -13,6 +18,7 @@ export class Delete extends React.Component {
             body: JSON.stringify({
                 id: this.props.id,
                 table: this.props.table,
+                pin: pin,
             })
         }).then(handleErrors)
             .then((response) => {
@@ -20,9 +26,9 @@ export class Delete extends React.Component {
             })
             .then((json) => {
                 if (json.code === 200) {
-                    this.setState({commentlist: json.comments});
+                    this.setState({message: json.success});
                 } else {
-                    this.setState({registerMessage: json.success, uploadstatus: 'error'});
+                    this.setState({message: json.success});
                 }
             })
             .catch(() => {
@@ -31,10 +37,11 @@ export class Delete extends React.Component {
     }
 
     render() {
-
-        const {id, table} = this.props;
         return (
-            <span className="delete" onClick={() => this.removeFromDB()}>Ta bort</span>
+            <React.Fragment>
+                <span className="delete" onClick={() => this.removeFromDB()}>Ta bort</span>
+                {this.state.message && <span className="delete-message"> {this.state.message}</span>}
+            </React.Fragment>
         )
     };
 }

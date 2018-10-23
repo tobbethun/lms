@@ -139,28 +139,17 @@ a {
   top: 61px;
   padding: 10px;
   background: #2fbfc0;
-  -webkit-animation: vanish 1s;
-          animation: vanish 1s;
-  -webkit-animation-delay: 2s;
-          animation-delay: 2s;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
 }
-@-webkit-keyframes vanish {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+.delete {
+  margin-left: 12px;
+  color: grey;
+  cursor: pointer;
 }
-@keyframes vanish {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+.delete:hover {
+  color: black;
+}
+.delete-message {
+  color: red;
 }
 .authenticate {
   display: -webkit-box;

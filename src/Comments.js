@@ -148,6 +148,7 @@ export class Comments extends React.Component {
                                 commentName={comment.name}
                                 firstname={firstname}
                                 lastname={lastname}
+                                adminDelete={adminDelete}
                                 role={role}
                                 colorCode={this.props.colorCode}
                             />
