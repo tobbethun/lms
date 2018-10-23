@@ -1,5 +1,6 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
+import Delete from "./Delete";
 import {formatTime, delay} from "./utils";
 
 
@@ -113,6 +114,7 @@ export class Comments extends React.Component {
     render() {
         const { firstname, lastname, comment, commentstatus, commentlist, role, errorMessage, noNetworkMessage } = this.state;
         const { commentPlaceholder="Skriv din kommentar här" } = this.props;
+        const adminDelete = role === "admin";
         return (
             <div className='comments'>
                 {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
@@ -138,6 +140,7 @@ export class Comments extends React.Component {
                         <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
                         {comment.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
+                        {adminDelete && <Delete id={comment.id} table="comments" />}
                         <p className="comment-block__text">{comment.comment}</p>
                         {!this.props.dontShowAnswers &&
                             <AnswerComment
