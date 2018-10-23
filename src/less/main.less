@@ -135,6 +135,25 @@ a {
   text-align: center;
 }
 
+.toast {
+  position: fixed;
+  top: 61px;
+  padding: 10px;
+  background: @mainColor;
+  animation: vanish 1s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes vanish {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @small:  ~'screen and (min-width: 450px)';
 @medium:  ~'screen and (min-width: 768px)';
 @large:  ~'screen and (min-width: 1023px)';

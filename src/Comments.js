@@ -140,12 +140,13 @@ export class Comments extends React.Component {
                         {comment.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
                         <p className="comment-block__text">{comment.comment}</p>
                         {!this.props.dontShowAnswers &&
-                            <AnswerComment commentid={comment.id}
-                                           commentName={comment.name}
-                                           firstname={firstname}
-                                           lastname={lastname}
-                                           role={role}
-                                           colorCode={this.props.colorCode}
+                            <AnswerComment
+                                commentid={comment.id}
+                                commentName={comment.name}
+                                firstname={firstname}
+                                lastname={lastname}
+                                role={role}
+                                colorCode={this.props.colorCode}
                             />
                         }
                     </div>

@@ -201,11 +201,49 @@ app.post('/api/updatepassword', function (req, res) {
             else {
                 res.send({
                     "code": 204,
-                    "success": "Email does not exits"
+                    "success": "E-post existerar inte"
                 });
             }
         }
     });
+});
+
+app.post('/api/admin/updatepassword', function (req, res) {
+    const email = req.body.email;
+    const newpassword = req.body.newpassword;
+    const pin = req.body.pin;
+    const encryptedPassword = encrypt(newpassword);
+    if (pin !== dbc.pin) {
+        res.send({
+            "code": 204,
+            "success": "Fel pin"
+        });
+    }
+    else {
+        connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
+            if (error) {
+                console.log("error ocurred", error);
+                res.send({
+                    "code": 400,
+                    "failed": "error ocurred"
+                })
+            } else {
+                if (results.length > 0) {
+                    connection.query('UPDATE users SET password = ? WHERE id = ?', [encryptedPassword, results[0].id]);
+                    res.send({
+                        "code": 200,
+                        "success": "Lösenord uppdaterat"
+                    });
+                }
+                else {
+                    res.send({
+                        "code": 204,
+                        "success": "E-post existerar inte"
+                    });
+                }
+            }
+        });
+    }
 });
 
 

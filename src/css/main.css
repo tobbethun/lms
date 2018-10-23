@@ -134,6 +134,34 @@ a {
   margin: 10px 0;
   text-align: center;
 }
+.toast {
+  position: fixed;
+  top: 61px;
+  padding: 10px;
+  background: #2fbfc0;
+  -webkit-animation: vanish 1s;
+          animation: vanish 1s;
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes vanish {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vanish {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .authenticate {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -1,4 +1,5 @@
 import React from'react';
+import {Toast} from "./Toast";
 
 export class Admin extends React.Component {
     constructor(props) {
@@ -69,15 +70,8 @@ export class Admin extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        const data = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            role: this.state.role,
-            comment: this.state.comment,
-            course: this.props.courseID,
-            step: this.state.step,
-        };
-        fetch("/api/comment/", {
+        const pin = prompt('Verifiera med Pin kod');
+        fetch("/api/admin/updatePassword/", {
             method: "post",
             headers: {
                 'Accept': 'application/json',
@@ -86,12 +80,9 @@ export class Admin extends React.Component {
 
             //make sure to serialize your JSON body
             body: JSON.stringify({
-                firstname: data.firstname,
-                lastname: data.lastname,
-                role: data.role,
-                course: data.course,
-                comment: data.comment,
-                step: data.step
+                email: e.target.password.getAttribute('data'),
+                newpassword: e.target.password.value,
+                pin: pin,
             })
         })
             .then((response) => {
@@ -99,17 +90,25 @@ export class Admin extends React.Component {
             })
             .then((json) => {
                 if (json.code === 200) {
-                    this.setState({registerMessage: json.success, commentstatus: 'success', comment: ''});
-                    this.btn.removeAttribute("disabled");
+                    this.password.setAttribute("readonly", "readonly");
+                    this.setState({ message: json.success });
+                    setTimeout(() => this.setState({ message: null }), 3500);
                 }
-                if (json.code === 400) this.setState({errorMessage: "Något gick fel, försök igen"}); this.btn.removeAttribute("disabled");
+                if (json.code === 204) {
+                    this.setState({ message: json.success });
+                    setTimeout(() => this.setState({ message: null }), 3500);
+                }
             })
-            .then(this.getComments())
+            .catch((e) =>  {
+                console.log('error', e);
+                this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.'})
+            })
     }
     render() {
-        const { filtered } = this.state;
+        const { filtered, message } = this.state;
         return (
             <div className="admin-users">
+                {message && <Toast message={message} />}
                 <input onChange={this.handleChange} placeholder="Filtrera" />
                 Antal resultat: {filtered.length}
                     {filtered.map((user, index) => (
@@ -120,12 +119,10 @@ export class Admin extends React.Component {
                         <div>
                             Kurser: {user.courses}
                         </div>
-                        <form className="admin-update-password">
-                            <input type="text" placeholder="Nytt lösenord"/>
-                            <input type="password" placeholder="Pinkod" />
+                        <form className="admin-update-password" onSubmit={this.handleSubmit}>
+                            <input type="text" name="password" data={user.email} placeholder="Nytt lösenord" required ref={password => { this.password = password; }} />
                             <button className="admin-update-button">Uppdatera lösenord</button>
                         </form>
-
                     </div>
                     ))
                 }
