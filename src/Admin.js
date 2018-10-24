@@ -1,6 +1,7 @@
 import React from'react';
 import {Toast} from "./Toast";
 import Delete from "./Delete";
+import {handleErrors} from "./utils";
 
 export class Admin extends React.Component {
     constructor(props) {
@@ -28,13 +29,6 @@ export class Admin extends React.Component {
     }
 
     getUsers() {
-        function handleErrors(response){
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
-
         fetch("/api/users/", {
             method: "post",
             headers: {

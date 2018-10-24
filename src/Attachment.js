@@ -34,13 +34,6 @@ export class Attachment extends React.Component {
     };
 
     getUploads() {
-        function handleErrors(response){
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
-
         fetch("/api/getuploads/", {
             method: "post",
             headers: {

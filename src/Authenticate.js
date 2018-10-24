@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {handleErrors} from "./utils";
 
 
 export class Authenticate extends React.Component {
@@ -40,14 +41,6 @@ export class Authenticate extends React.Component {
             email: this.state.email,
             password: this.state.password
         };
-
-        function handleErrors(response) {
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
-
         fetch("/api/login/", {
             method: "post",
             headers: {

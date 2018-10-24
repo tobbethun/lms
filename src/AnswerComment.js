@@ -1,6 +1,7 @@
 import React from'react';
 import {formatTime} from './utils.js'
 import Delete from "./Delete";
+import {handleErrors} from "./utils";
 
 
 export class AnswerComment extends React.Component {
@@ -34,13 +35,6 @@ export class AnswerComment extends React.Component {
     }
 
     getAnswers() {
-        function handleErrors(response){
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
-
         fetch("/api/getanswers/", {
             method: "post",
             headers: {

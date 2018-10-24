@@ -1,7 +1,7 @@
 import React from'react';
 import AnswerComment from "./AnswerComment";
 import Delete from "./Delete";
-import {formatTime, delay} from "./utils";
+import {formatTime, delay, handleErrors} from "./utils";
 
 
 export class Comments extends React.Component {
@@ -35,13 +35,6 @@ export class Comments extends React.Component {
     }
 
     getComments() {
-        function handleErrors(response){
-            if (!response.ok) {
-                throw Error(response.statusText);
-            }
-            return response;
-        }
-
         fetch("/api/getcomments/", {
             method: "post",
             headers: {

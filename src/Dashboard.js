@@ -38,12 +38,6 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        function handleErrors(response) {
-            if (!response.ok) {
-                    throw Error(response.statusText);
-            }
-            return response;
-        }
         fetch('/api/usercourses/', {
             method: 'post',
             headers: {

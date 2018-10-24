@@ -1,7 +1,7 @@
 // Basic Setup
 const http = require('http');
 const express = require('express');
-const dbc = require('./config.js');
+const dbc = require('./dbc.js');
 const mysql = require('mysql');
 const contentful = require('contentful');
 const bodyParser = require('body-parser');
