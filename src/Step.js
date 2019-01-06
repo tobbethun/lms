@@ -11,7 +11,7 @@ export class Step extends React.Component {
         window.scrollTo(0, 0)
     }
     render() {
-        const {courseID, step, lessonTitle, lessonLength, index, nextStep, preStep, colorCode} = this.props;
+        const {courseID, courseTitle, step, lessonTitle, lessonLength, index, nextStep, preStep, colorCode} = this.props;
         return (
             <div>
                 {step &&
@@ -22,14 +22,14 @@ export class Step extends React.Component {
                     {step.fields.fileUpload && <Attachment courseID={courseID} step={step.sys.id} colorCode={colorCode} /> }
                     <div className="stepper-container">
                         {(index <= lessonLength && index > 1) ?
-                        <Link to={`/kurs/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>Tillbaka</span></Link> : <div className="stepper__prev"/>
+                        <Link to={`/kurs/${slugify(courseTitle)}/${slugify(lessonTitle)}/${slugify(preStep)}`} className="stepper stepper__prev" style={{backgroundColor: colorCode}}><div className="arrow-left"/><span>Tillbaka</span></Link> : <div className="stepper__prev"/>
                         }
                         <div className="current-step">
                             {index}/{lessonLength}
                         </div>
 
                         {!(lessonLength === index) ?
-                            <Link to={`/kurs/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}><div className="arrow-right"/><span>Nästa</span></Link> :  <div className="stepper__next"/>
+                            <Link to={`/kurs/${slugify(courseTitle)}/${slugify(lessonTitle)}/${slugify(nextStep)}`} className="stepper stepper__next" style={{backgroundColor: colorCode}}><div className="arrow-right"/><span>Nästa</span></Link> :  <div className="stepper__next"/>
                         }
                     </div>
                 </div>
