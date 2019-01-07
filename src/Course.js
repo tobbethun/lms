@@ -17,7 +17,7 @@ export class Course extends Component {
     render() {
         const {course, lessons} = this.props;
         const {hideMenu} = this.state;
-        const firstStep = lessons && 'kurs/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
+        const firstStep = lessons && slugify(course.title) + '/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
         return (
             <div>
                 <div className="container">
