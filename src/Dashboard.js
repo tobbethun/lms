@@ -10,17 +10,26 @@ import Loader from "./Loader";
 import {Auth} from "./App";
 import {Course} from "./Course";
 
-export const AuthButton = withRouter(({history}) => (
-    Auth.isAuthenticated || localStorage.loggedIn
-        ?
-        <div className="user-logout">
-            <Link to="/kurs/user" className="user">Min sida </Link>
-            <Link to="/login" className="logout" onClick={() => {Auth.signout(() => history.push('/'))}}>Logga ut</Link>
-        </div>
-        :
-        <div />
-));
 
+export class AuthButton extends React.Component {
+    render() {
+        const { history, courseTitle } = this.props;
+        const isLoggedIn = Auth.isAuthenticated || localStorage.loggedIn;
+        if (!isLoggedIn) return null;
+        else {
+            return (
+                <div className="user-logout">
+                    <Link to={`/kurs/${slugify(courseTitle)}/user`} className="user">Min sida</Link>
+                    <Link to="/kurs" className="user">Mina kurser</Link>
+                    <Link to="/login" className="logout" onClick={() => {
+                        Auth.signout(() => history.push('/'))
+                    }}>Logga ut</Link>
+                </div>
+            )
+        }
+    }
+}
+export const AuthButtonWithRouter = withRouter(AuthButton);
 
 export class Dashboard extends React.Component {
     constructor() {
@@ -28,6 +37,7 @@ export class Dashboard extends React.Component {
         this.state = {
             lessons: [],
             course: [],
+            userCourses: [],
             changePassword: false,
             hideMenu: false,
             user: getUser()
@@ -95,7 +105,7 @@ export class Dashboard extends React.Component {
     };
 
     render() {
-        const { lessons, course, errorMessage, message } = this.state;
+        const { lessons, course, userCourses, errorMessage, message } = this.state;
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
@@ -114,14 +124,15 @@ export class Dashboard extends React.Component {
                 }
             </div>
         );
-        return (
+        if (userCourses.length > 1) {
+            return (
                 <div>
                     <ul>
-                    {course.map((course, index) =>
-                        <li key={index}>
-                            <Link to={`/kurs/${slugify(course.title)}`}>{course.title}</Link>
-                        </li>
-                    )}
+                        {course.map((course, index) =>
+                            <li key={index}>
+                                <Link to={`/kurs/${slugify(course.title)}`}>{course.title}</Link>
+                            </li>
+                        )}
                     </ul>
                     <Switch>
                         {course &&
@@ -132,6 +143,14 @@ export class Dashboard extends React.Component {
                         }
                     </Switch>
                 </div>
-        )
+            )
+        }
+        else {
+            return (
+                <div>
+                    <Course course={course[0]} lessons={lessons[0]} />
+                </div>
+            )
+        }
     }
 }

@@ -4,7 +4,7 @@ import slugify from "slugify";
 import {UserSection} from "./UserSection";
 import {CourseStart} from "./CourseStart";
 import Lesson from "./Lesson";
-import {AuthButton} from "./Dashboard";
+import {AuthButtonWithRouter} from "./Dashboard";
 
 export class Course extends Component {
     constructor() {
@@ -72,10 +72,10 @@ export class Course extends Component {
                                 <img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo"/>
                             </Link>
                             }
-                            <AuthButton courseTitle={course.title}/>
+                            <AuthButtonWithRouter courseTitle={course.title}/>
                         </div>
                         <Switch>
-                            <Route exact path="/kurs/user" render={() => <UserSection lessons={lessons}/>}/>
+                            <Route path={`/kurs/${slugify(course.title)}/user`} render={() => <UserSection lessons={lessons}/>}/>
                             <Route exact path={`/kurs/${slugify(course.title)}`}
                                    render={() => <CourseStart title={course.title} text={course.courseInformation}
                                                               firstStep={firstStep} colorCode={course.colorcode}/>}/>
