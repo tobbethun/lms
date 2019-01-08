@@ -4,7 +4,8 @@ import {getUser, handleErrors} from "./utils";
 import {
     Route,
     Link,
-    Switch, withRouter,
+    Switch,
+    withRouter
 } from 'react-router-dom';
 import Loader from "./Loader";
 import {Auth} from "./App";
@@ -13,14 +14,14 @@ import {Course} from "./Course";
 
 export class AuthButton extends React.Component {
     render() {
-        const { history, courseTitle } = this.props;
+        const { history, courseTitle, onlyOneCourse } = this.props;
         const isLoggedIn = Auth.isAuthenticated || localStorage.loggedIn;
         if (!isLoggedIn) return null;
         else {
             return (
                 <div className="user-logout">
                     <Link to={`/kurs/${slugify(courseTitle)}/user`} className="user">Min sida</Link>
-                    <Link to="/kurs" className="user">Mina kurser</Link>
+                    {!onlyOneCourse && <Link to="/kurs" className="user">Mina kurser</Link>}
                     <Link to="/login" className="logout" onClick={() => {
                         Auth.signout(() => history.push('/'))
                     }}>Logga ut</Link>
@@ -40,31 +41,34 @@ export class Dashboard extends React.Component {
             userCourses: [],
             changePassword: false,
             hideMenu: false,
+            showBadges: true,
             user: getUser()
         };
     }
 
     componentWillMount() {
-        fetch('/api/usercourses/', {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: this.state.user.email,
-            })
-        }).then(handleErrors)
-            .then((response) => {
-                return response.json();
+        if(this.state.userCourses) {
+            fetch('/api/usercourses/', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: this.state.user.email,
+                })
+            }).then(handleErrors)
+                .then((response) => {
+                    return response.json();
 
-            }).then((json) => {
+                }).then((json) => {
                 this.setState({userCourses: json.userCourses});
-            json.userCourses.map((item) => (
-                this.getCourses(item)
-         ))
-        })
-            .catch(() => this.setState({errorMessage: true}));
+                json.userCourses.map((item) => (
+                    this.getCourses(item)
+                ))
+            })
+                .catch(() => this.setState({errorMessage: true}));
+        }
     }
 
     getCourses(usercourses) {
@@ -105,7 +109,7 @@ export class Dashboard extends React.Component {
     };
 
     render() {
-        const { lessons, course, userCourses, errorMessage, message } = this.state;
+        const { lessons, course, userCourses, errorMessage, message, showBadges } = this.state;
         if (!this.state.lessons.length) return (
             <div>
                 { errorMessage ?
@@ -124,16 +128,17 @@ export class Dashboard extends React.Component {
                 }
             </div>
         );
-        if (userCourses.length > 1) {
+        if (userCourses.length > 1 && showBadges) {
             return (
                 <div>
-                    <ul>
+                    <div className="course-badges">
+                        <h1>Välj kurs</h1>
                         {course.map((course, index) =>
-                            <li key={index}>
-                                <Link to={`/kurs/${slugify(course.title)}`}>{course.title}</Link>
-                            </li>
+                            <Link to={`/kurs/${slugify(course.title)}`} key={index} className="course-badge">
+                                <h4>{course.title}</h4>
+                            </Link>
                         )}
-                    </ul>
+                    </div>
                     <Switch>
                         {course &&
                         course.map((course, index) => (
@@ -148,7 +153,7 @@ export class Dashboard extends React.Component {
         else {
             return (
                 <div>
-                    <Course course={course[0]} lessons={lessons[0]} />
+                    <Course course={course[0]} lessons={lessons[0]} history={this.props.history} location={this.props.location} onlyOneCourse />
                 </div>
             )
         }

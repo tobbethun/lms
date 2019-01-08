@@ -14,8 +14,11 @@ export class Course extends Component {
             hideMenu: false,
         };
     }
+    componentWillMount() {
+        this.props.history && this.props.location.pathname === "/kurs" && this.props.history.push(`/kurs/${slugify(this.props.course.title)}`);
+    }
     render() {
-        const {course, lessons} = this.props;
+        const {course, lessons, onlyOneCourse} = this.props;
         const {hideMenu} = this.state;
         const firstStep = lessons && slugify(course.title) + '/' + slugify(lessons[0].title) + '/' + slugify(lessons[0].steps[0].fields.title);
         return (
@@ -72,7 +75,7 @@ export class Course extends Component {
                                 <img className="course-logo" src={course.organizationImage.fields.file.url} alt="logo"/>
                             </Link>
                             }
-                            <AuthButtonWithRouter courseTitle={course.title}/>
+                            <AuthButtonWithRouter courseTitle={course.title} onlyOneCourse={onlyOneCourse} />
                         </div>
                         <Switch>
                             <Route path={`/kurs/${slugify(course.title)}/user`} render={() => <UserSection lessons={lessons}/>}/>

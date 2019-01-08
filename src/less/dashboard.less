@@ -96,8 +96,11 @@
 }
 
 .content {
+    position: relative;
+    background-color: white;
     padding:85px 0 0 0;
     transition: padding .4s;
+    z-index: 2;
     @media @medium {
         padding: 85px 0 0 290px;
     }
@@ -237,4 +240,33 @@
     .logo {
         pointer-events: none;
     }
+}
+
+.course-badges {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.course-badge {
+    border: 1px solid @darkGrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    width: 300px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.badge-logo {
+    height: 80px;
+    width: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
