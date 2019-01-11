@@ -137,6 +137,7 @@ export class Register extends React.Component {
     };
     render() {
         const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid, noCourse, emailExist } = this.state;
+        const okToRegister = !noCourse && !emailExist;
         return (
             <div>
                 <div className="top-bar">
@@ -210,6 +211,7 @@ export class Register extends React.Component {
                             <input
                                 ref={btn => { this.btn = btn; }}
                                 className="button"
+                                disabled={okToRegister}
                                 type="submit"
                                 value="Slutför registrering"
                             />
