@@ -170,6 +170,30 @@ app.post('/api/admin/delete', function(req, res) {
 
 // REGISTER NEW USER
 
+app.post('/api/checkcourseid', function(req, res) {
+    const courseId = req.body.courseId;
+    client.getEntries({
+        content_type: 'course',
+        'sys.id': courseId,
+    })
+        .then((response) => {
+            console.log('response', response.items.length);
+            if (response.items.length < 1) {
+                res.send({
+                    "code": 200,
+                    "noCourse": true,
+                });
+            } else {
+                res.send({
+                    "code": 200,
+                    "noCourse": false,
+                });
+            }
+        })
+        .catch(console.error)
+});
+
+
 app.post('/api/checkemail', function(req, res) {
     const email = req.body.email;
     connection.query('SELECT * from users WHERE email = ?', [email], function (error, results) {

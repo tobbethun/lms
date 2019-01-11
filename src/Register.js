@@ -6,9 +6,6 @@ import Integritetspolicy from './Doc/Integritetspolicy_ELD_Studio.pdf';
 export class Register extends React.Component {
     constructor() {
         super();
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.checkEmail = this.checkEmail.bind(this);
         this.state = {
             email: '',
             password: '',
@@ -28,8 +25,33 @@ export class Register extends React.Component {
         const courseID = window.location.href.split('?')[1];
         courseID && this.setState({courseid: courseID, hascourseid: true});
     }
+    checkCourseId = () => {
+        if (this.state.courseid) {
+            fetch("/api/checkcourseid/", {
+                method: "post",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    courseId: this.state.courseid,
+                })
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((json) => {
+                    if (json.code === 200) {
+                        this.setState({noCourse: json.noCourse});
+                        this.state.noCourse ?
+                            this.btn.setAttribute("disabled", "disabled") :
+                            this.btn.removeAttribute("disabled", "disabled");
+                    }
+                });
+        }
+    };
 
-    checkEmail() {
+    checkEmail = () => {
         if (this.state.email) {
             fetch("/api/checkemail/", {
                 method: "post",
@@ -47,14 +69,15 @@ export class Register extends React.Component {
                 .then((json) => {
                     if (json.code === 200) {
                         this.setState({emailExist: json.emailexist});
-                        this.state.emailExist ? this.btn.setAttribute("disabled", "disabled") :
-                        this.btn.removeAttribute("disabled", "disabled");
+                        this.state.emailExist ?
+                            this.btn.setAttribute("disabled", "disabled") :
+                            this.btn.removeAttribute("disabled", "disabled");
                     }
                 });
         }
-    }
+    };
 
-    handleChange(key) {
+    handleChange = (key) => {
         return (e => {
             const state = {};
             state[key] = e.target.value;
@@ -62,7 +85,7 @@ export class Register extends React.Component {
         });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
         const data = {
@@ -107,13 +130,13 @@ export class Register extends React.Component {
                 });
         }
 
-    }
+    };
     openInNewTab = () => {
         var win = window.open(Integritetspolicy, '_blank');
         win.focus();
     };
     render() {
-        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid, emailExist } = this.state;
+        const { registerMessage, showRegistrationForm, courseid, firstname, lastname, email, password, noMatch, retypePassword, hascourseid, noCourse, emailExist } = this.state;
         return (
             <div>
                 <div className="top-bar">
@@ -123,24 +146,73 @@ export class Register extends React.Component {
                     <h3>{registerMessage}</h3>
                     { showRegistrationForm &&
                         <form className='register-form' onSubmit={this.handleSubmit}>
-                            <input type="courseid" placeholder="Kurs-ID" value={courseid}
-                                   onChange={this.handleChange('courseid')} required autoComplete="" disabled={hascourseid} />
-                            <input type="firstname" placeholder="Förnamn" value={firstname}
-                                   onChange={this.handleChange('firstname')} required autoComplete=""/>
-                            <input type="lastname" placeholder="Efternamn" value={lastname}
-                                   onChange={this.handleChange('lastname')} required autoComplete=""/>
-                            <input type="email" placeholder="E-postadress" value={email}
-                                   onChange={this.handleChange('email')} required autoComplete="" onBlur={this.checkEmail}/>
+                            <input
+                                type="courseid"
+                                placeholder="Kurs-ID"
+                                value={courseid}
+                                onChange={this.handleChange('courseid')}
+                                required
+                                autoComplete=""
+                                onBlur={this.checkCourseId}
+                                disabled={hascourseid}
+                            />
+                            {noCourse && <label>Felaktigt kurs-ID.</label>}
+                            <input
+                                type="firstname"
+                                placeholder="Förnamn"
+                                value={firstname}
+                                onChange={this.handleChange('firstname')}
+                                required
+                                autoComplete=""
+                            />
+                            <input
+                                type="lastname"
+                                placeholder="Efternamn"
+                                value={lastname}
+                                onChange={this.handleChange('lastname')}
+                                required
+                                autoComplete=""
+                            />
+                            <input
+                                type="email"
+                                placeholder="E-postadress"
+                                value={email}
+                                onChange={this.handleChange('email')}
+                                required
+                                autoComplete=""
+                                onBlur={this.checkEmail}
+                            />
                             {emailExist && <label>Din e-postadress finns redan registrerad. <Link to="/" className="email-check">Logga in.</Link></label>}
-                            <input type="password" placeholder="Välj lösenord" value={password}
-                                   onChange={this.handleChange('password')} required autoComplete=""/>
-                            <input className={`${noMatch && 'no-match'}`} type="password"
-                                   placeholder="Repetera lösenord" value={retypePassword}
-                                   onChange={this.handleChange('retypePassword')} required autoComplete=""/>
-                            <input className="aprove" type="checkbox" required autoComplete=""/>
-                            <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <span className="policy-link" onClick={this.openInNewTab}>ELD Studios integritetspolicy.</span>
-                            </label>
-                            <input ref={btn => { this.btn = btn; }} className="button" type="submit" value="Slutför registrering"/>
+                            <input
+                                type="password"
+                                placeholder="Välj lösenord"
+                                value={password}
+                                onChange={this.handleChange('password')}
+                                required
+                                autoComplete=""
+                            />
+                            <input
+                                className={`${noMatch && 'no-match'}`}
+                                type="password"
+                                placeholder="Repetera lösenord"
+                                value={retypePassword}
+                                onChange={this.handleChange('retypePassword')}
+                                required
+                                autoComplete=""
+                            />
+                            <input
+                                className="aprove"
+                                type="checkbox"
+                                required
+                                autoComplete=""
+                            />
+                            <label>Jag godkänner att ELD Studio behandlar mina personuppgifter i enlighet med <span className="policy-link" onClick={this.openInNewTab}>ELD Studios integritetspolicy.</span></label>
+                            <input
+                                ref={btn => { this.btn = btn; }}
+                                className="button"
+                                type="submit"
+                                value="Slutför registrering"
+                            />
                         </form>
                     }
                     {noMatch &&
