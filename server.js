@@ -10,6 +10,7 @@ const slugify = require('slugify');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const helmet = require('helmet');
+const nodemailer = require('nodemailer');
 
 const crypto = require('crypto');
 const algorithm = dbc.cipher.algorithm;
@@ -177,7 +178,6 @@ app.post('/api/checkcourseid', function(req, res) {
         'sys.id': courseId,
     })
         .then((response) => {
-            console.log('response', response.items.length);
             if (response.items.length < 1) {
                 res.send({
                     "code": 200,
@@ -294,6 +294,77 @@ app.post('/api/updatepassword', function (req, res) {
 });
 
 
+function generatePassword() {
+    var length = 8,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+}
+
+app.post('/api/resetPassword', function (req, res) {
+    console.log('req.body.email-- ', req.body.email );
+    const email = req.body.email;
+    const time = req.body.currentTime;
+    const generatedPassword = generatePassword();
+    const encryptedPassword = encrypt(generatedPassword);
+    connection.query('SELECT * FROM users WHERE email = ?', [email], function (error, results) {
+        if (error) {
+            console.log("error ocurred", error);
+            res.send({
+                "code": 400,
+                "message": "error"
+            })
+        } else {
+            connection.query('UPDATE users SET password = ? WHERE email = ?', [encryptedPassword, email], function (error) {
+                if (error) {
+                    console.log("error ocurred when try to reset password", error);
+                    res.send({
+                        "code": 400,
+                        "message": "error"
+                    })
+                } else {
+                    if (results.length > 0) {
+                        const transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            auth: {
+                                user: dbc.email.user,
+                                pass: dbc.email.password
+                            }
+                        });
+
+                        const mailOptions = {
+                            from: 'babarbix@gmail.com',
+                            to: email,
+                            subject: 'Här kommer ditt nya lösenord',
+                            text: 'Gå till eldstudio.se och logga in med ' + generatedPassword + ' gå därefter in på mina sidor och välj ett nytt lösenord genom att klicka på knappen "Uppdatera lösenord".'
+                        };
+
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log(time + ' Email sent to: ' + email + ' ' + info.response);
+
+                                res.send({
+                                    "code": 200,
+                                    "message": "Du får strax ett mail med ett nytt tillfälligt lösenord."
+                                })
+                            }
+                        });
+                    } else {
+                        res.send({
+                            "code": 404,
+                            "message": "Kan inte hitta e-post adress."
+                        })
+                    }
+                }
+            });
+        }
+    })
+});
 
 
 // >>>>>>>>>>>> LOGIN SECTION <<<<<<<<<<<<<<<<
