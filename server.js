@@ -611,7 +611,7 @@ app.post('/api/getuploads', function (req, res) {
         } else {
             // console.log('results', results);
             results.forEach(function (res) {
-                const upload = {id: res.id, name: res.user, filename: res.filename, file: res.file, path: res.path, time: res.time};
+                const upload = {id: res.id, name: res.user, email: res.user_email, filename: res.filename, file: res.file, path: res.path, time: res.time};
                 payLoad.push(upload);
             });
             res.send({

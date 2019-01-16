@@ -7,8 +7,6 @@ import Delete from "./Delete";
 export class Attachment extends React.Component {
     constructor(props) {
         super(props);
-        this.handleUpload = this.handleUpload.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         const object = JSON.parse(localStorage.getItem("loggedIn"));
         const ref = Math.random().toString(36).substr(2, 16);
         this.state = {
@@ -33,7 +31,7 @@ export class Attachment extends React.Component {
         this.setState({ attachment: e.target.files[0] });
     };
 
-    getUploads() {
+    getUploads = () => {
         fetch("/api/getuploads/", {
             method: "post",
             headers: {
@@ -58,7 +56,7 @@ export class Attachment extends React.Component {
             })
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
         let formData  = new FormData();
@@ -88,9 +86,9 @@ export class Attachment extends React.Component {
                 this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.'});
                 this.btn.removeAttribute("disabled", "disabled");
         })
-    }
+    };
     render() {
-        const { uploadsuccess, uploadlist, uploaderror, uploaded, noNetworkMessage, role } = this.state;
+        const { uploadsuccess, uploadlist, uploaderror, uploaded, noNetworkMessage, role, email } = this.state;
         const adminDelete = role === "admin";
         return (
             <div>
@@ -113,7 +111,7 @@ export class Attachment extends React.Component {
                                     <div className="uploaded__name-time">
                                         <span>{upload.name}</span>
                                         <span className="comment-block__time">Inlämnat {formatTime(upload.time)}</span>
-                                        {adminDelete && <Delete id={upload.id} table="uploads" />}
+                                        {adminDelete ? <Delete id={upload.id} table="uploads" updateList={this.getUploads.bind(this)} /> : email === upload.email && <Delete id={upload.id} table="uploads" user updateList={this.getUploads.bind(this)} />}
                                     </div>
                                     <Download path={upload.path} fileName={upload.filename} colorCode={this.props.colorCode} />
                                 </div>
