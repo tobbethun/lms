@@ -3,12 +3,24 @@ import { handleErrors } from "./utils";
 
 
 export class Delete extends React.Component {
-    componentWillMount() {
-        this.setState({message: null})
+    constructor(props) {
+        super(props);
+        this.state = {message: null}
     }
 
-    removeFromDB() {
-        const pin = prompt('Verifiera med Pin kod');
+    checkTypeOfUser() {
+        if (this.props.user) {
+            const confirm = window.confirm("Är du säker på att du vill ta bort inlägget?");
+            if(confirm) {
+                this.removeFromDB()
+            }
+        } else {
+            const pin = prompt('Verifiera med Pin kod');
+            this.removeFromDB(pin);
+        }
+    }
+
+    removeFromDB(pin) {
         fetch("/api/admin/delete/", {
             method: "post",
             headers: {
@@ -27,6 +39,7 @@ export class Delete extends React.Component {
             .then((json) => {
                 if (json.code === 200) {
                     this.setState({message: json.success});
+                    this.props.updateList();
                 } else {
                     this.setState({message: json.success});
                 }
@@ -39,8 +52,7 @@ export class Delete extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <span className="delete" onClick={() => this.removeFromDB()}>Ta bort</span>
-                {this.state.message && <span className="delete-message"> {this.state.message}</span>}
+                <span className="delete" onClick={() => this.checkTypeOfUser()}>Ta bort</span>
             </React.Fragment>
         )
     };

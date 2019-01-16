@@ -7,12 +7,11 @@ import {formatTime, delay, handleErrors} from "./utils";
 export class Comments extends React.Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         const object = JSON.parse(localStorage.getItem("loggedIn"));
         this.state = {
             firstname: object.user.firstname,
             lastname: object.user.lastname,
+            email: object.user.email,
             role: object.user.role,
             commentlist: [],
             step: this.props.step,
@@ -26,7 +25,7 @@ export class Comments extends React.Component {
         this.getComments();
     }
 
-    handleChange(key) {
+    handleChange = (key) => {
         return (e => {
             const state = {};
             state[key] = e.target.value;
@@ -34,7 +33,7 @@ export class Comments extends React.Component {
         });
     }
 
-    getComments() {
+    getComments = () => {
         fetch("/api/getcomments/", {
             method: "post",
             headers: {
@@ -61,12 +60,13 @@ export class Comments extends React.Component {
             });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            email: this.state.email,
             role: this.state.role,
             comment: this.state.comment,
             course: this.props.courseID,
@@ -83,6 +83,7 @@ export class Comments extends React.Component {
             body: JSON.stringify({
                 firstname: data.firstname,
                 lastname: data.lastname,
+                email: data.email,
                 role: data.role,
                 course: data.course,
                 comment: data.comment,
@@ -103,9 +104,9 @@ export class Comments extends React.Component {
             .catch(() => {
                 this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."});
             });
-    }
+    };
     render() {
-        const { firstname, lastname, comment, commentstatus, commentlist, role, errorMessage, noNetworkMessage } = this.state;
+        const { firstname, lastname, email, comment, commentstatus, commentlist, role, errorMessage, noNetworkMessage } = this.state;
         const { commentPlaceholder="Skriv din kommentar här" } = this.props;
         const adminDelete = role === "admin";
         return (
@@ -113,13 +114,14 @@ export class Comments extends React.Component {
                 {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
                 <form className='comment-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
-                        <textarea type="text"
-                                  placeholder={commentPlaceholder}
-                                  className={`comment-field ${commentstatus}`}
-                                  value={comment}
-                                  onChange={this.handleChange('comment')}
-                                  required
-                                  autoComplete=""
+                        <textarea
+                            type="text"
+                            placeholder={commentPlaceholder}
+                            className={`comment-field ${commentstatus}`}
+                            value={comment}
+                            onChange={this.handleChange('comment')}
+                            required
+                            autoComplete=""
                         />
                         <div className="comment-footer">
                             <span className="comment--error-message">{errorMessage}</span>
@@ -133,7 +135,10 @@ export class Comments extends React.Component {
                         <span className="comment-block__author" style={{color: this.props.colorCode}}>{comment.name}</span>
                         <span className="comment-block__time">{formatTime(comment.time)}</span>
                         {comment.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
-                        {adminDelete && <Delete id={comment.id} table="comments" />}
+                        {adminDelete ?
+                            <Delete id={comment.id} table="comments" updateList={this.getComments.bind(this)} /> :
+                            email === comment.email && <Delete id={comment.id} table="comments" user updateList={this.getComments.bind(this)} />
+                        }
                         <p className="comment-block__text">{comment.comment}</p>
                         {!this.props.dontShowAnswers &&
                             <AnswerComment
@@ -141,6 +146,7 @@ export class Comments extends React.Component {
                                 commentName={comment.name}
                                 firstname={firstname}
                                 lastname={lastname}
+                                email={email}
                                 adminDelete={adminDelete}
                                 role={role}
                                 colorCode={this.props.colorCode}

@@ -7,11 +7,10 @@ import {handleErrors} from "./utils";
 export class AnswerComment extends React.Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             firstname: this.props.firstname,
             lastname: this.props.lastname,
+            email: this.props.email,
             role: this.props.role,
             answerstatus: '',
             answerList: [],
@@ -26,7 +25,7 @@ export class AnswerComment extends React.Component {
         this.getAnswers();
     }
 
-    handleChange(key) {
+    handleChange = (key) => {
         return (e => {
             const state = {};
             state[key] = e.target.value;
@@ -34,7 +33,7 @@ export class AnswerComment extends React.Component {
         });
     }
 
-    getAnswers() {
+    getAnswers = () => {
         fetch("/api/getanswers/", {
             method: "post",
             headers: {
@@ -56,12 +55,13 @@ export class AnswerComment extends React.Component {
             })
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
         const data = {
             firstname: this.state.firstname,
             lastname: this.state.lastname,
+            email: this.state.email,
             role: this.state.role,
             answer: this.state.answer,
             commentid: this.state.commentid,
@@ -77,6 +77,7 @@ export class AnswerComment extends React.Component {
             body: JSON.stringify({
                 firstname: data.firstname,
                 lastname: data.lastname,
+                email: data.email,
                 role: data.role,
                 answer: data.answer,
                 commentid: data.commentid
@@ -96,11 +97,25 @@ export class AnswerComment extends React.Component {
         this.getAnswers();
     }
     render() {
-        const { answer, answerList, showAnswerForm, answerstatus } = this.state;
+        const { answer, answerList, showAnswerForm, answerstatus, email } = this.state;
         const { commentName, colorCode, adminDelete } = this.props;
+        const hasAnswers = answerList.length > 0;
         return (
             <div className='answer'>
-                <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className="show-answer-form">Svara {commentName.split(' ', 1)}</span>
+                {answerList &&
+                answerList.map((answer) => (
+                    <div key={answer.id} className="answer-block">
+                        <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
+                        <span className="comment-block__time">{formatTime(answer.time)}</span>
+                        {answer.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
+                        {adminDelete ?
+                            <Delete id={answer.id} table="answers" updateList={this.getAnswers.bind(this)} /> :
+                            email === answer.email && <Delete id={answer.id} table="answers" user updateList={this.getAnswers.bind(this)} />
+                        }
+                        <p className="comment-block__text">{answer.answer}</p>
+                    </div>
+                ))}
+                <span onClick={() => {this.setState({showAnswerForm: !showAnswerForm, answerstatus: ''})}} className={`show-answer-form ${hasAnswers ? "show-answer-form__hasAnswers" : ""}`}>Svara {commentName.split(' ', 1)}</span>
                 {showAnswerForm &&
                 <form className='comment-form answer-form' onSubmit={this.handleSubmit}>
                     <div className="comment-text">
@@ -113,22 +128,12 @@ export class AnswerComment extends React.Component {
                         required
                         autoComplete=""
                     />
-                    <div className="comment-footer">
-                    <button ref={btn => { this.btn = btn; }} className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>
-                    </div>
+                        <div className="comment-footer">
+                            <button ref={btn => { this.btn = btn; }} className="comment-button" type="submit" style={{backgroundColor: colorCode, borderColor: colorCode}}>Skicka svar</button>
+                        </div>
                     </div>
                 </form>
                 }
-                {answerList &&
-                answerList.map((answer) => (
-                    <div key={answer.id} className="answer-block">
-                        <span className="comment-block__author" style={{color: colorCode}}>{answer.name}</span>
-                        <span className="comment-block__time">{formatTime(answer.time)}</span>
-                        {answer.role === "admin" && <span className="comment-block__is-admin" style={{color: this.props.colorCode}}>Kursledare</span>}
-                        {adminDelete && <Delete id={answer.id} table="answers" />}
-                        <p className="comment-block__text">{answer.answer}</p>
-                    </div>
-                ))}
             </div>
         )
     }
