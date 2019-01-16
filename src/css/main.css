@@ -176,6 +176,15 @@ a {
 .authenticate-intro {
   font-size: large;
 }
+.authenticate-links {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0 16px;
+}
 .register {
   margin-top: 16px;
   padding: 0 20px;

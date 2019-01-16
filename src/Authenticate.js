@@ -85,11 +85,14 @@ export class Authenticate extends React.Component {
                                onChange={this.handleChange('password')} required autoComplete=""/>
                         <input ref={btn => { this.btn = btn; }} className='button' type="submit" value="Logga in"/>
                     </form>
-                    <Link to="/register">Registrera dig</Link>
+                    <div className="authenticate-links">
+                        <Link to="/register">Registrera dig</Link>
+                        <Link to="/reset-password">Glömt lösenord</Link>
+                    </div>
                 </div>
                 {verified &&
                 <div className="authenticate-intro">
-                    <h1>HELLO!</h1>
+                    <h1>Välkommen</h1>
                 </div>
                 }
             </div>

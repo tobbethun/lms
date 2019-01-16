@@ -11,6 +11,7 @@ import {
     Switch,
     withRouter
 } from 'react-router-dom'
+import ResetPassword from "./ResetPassword";
 
 
 
@@ -104,6 +105,7 @@ export default function App() {
                     <Redirect exact from='/' to='/login'/>
                     <Route path='/login' component={Login} />
                     <Route path="/register" component={Register} />
+                    <Route path="/reset-password" component={ResetPassword} />
                 </Switch>
                 </div>
                 <PrivateRoute path='/kurs' component={Dashboard} />
