@@ -134,7 +134,7 @@ app.post('/api/admin/delete', function(req, res) {
     const table = req.body.table;
     const id = req.body.id;
     const pin = req.body.pin;
-    if (pin !== dbc.pin) {
+    if (pin !== dbc.pin && pin !== undefined) {
         res.send({
             "code": 204,
             "success": "Fel pin ej raderad"
@@ -146,7 +146,7 @@ app.post('/api/admin/delete', function(req, res) {
             } else {
                 res.send({
                     "code": 200,
-                    "success": "Raderat id " + id + " från tabell " + table
+                    "success": pin === undefined ? "Raderat" : "Raderat id " + id + " från tabell " + table
                 });
             }
         });
@@ -448,6 +448,7 @@ app.post('/api/comment', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
+        email: req.body.email,
         role: req.body.role,
         comment: req.body.comment,
         course: req.body.course,
@@ -474,6 +475,7 @@ app.post('/api/answers', function (req, res) {
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
+        email: req.body.email,
         role: req.body.role,
         answer: req.body.answer,
         comment_id: req.body.commentid
@@ -509,7 +511,7 @@ app.post('/api/getcomments', function (req, res) {
             // console.log('results', results);
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, comment: res.comment, time: res.time, role: res.role};
+                const comment = {id: res.id, name: res.first_name + ' ' + res.last_name, email: res.email, comment: res.comment, time: res.time, role: res.role};
                 payLoad.push(comment);
                 // console.log('comment', comment);
             });
@@ -535,7 +537,7 @@ app.post('/api/getanswers', function (req, res) {
         } else {
             results.forEach(function (res) {
                 // console.log('hela entry______:', JSON.stringify(entry, null, 2))
-                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, answer: res.answer, time: res.time, role: res.role};
+                const answer = {id: res.id, name: res.first_name + ' ' + res.last_name, email: res.email, answer: res.answer, time: res.time, role: res.role};
                 payLoad.push(answer);
                 });
             res.send({
