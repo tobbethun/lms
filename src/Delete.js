@@ -1,21 +1,22 @@
-import React from'react';
+import React from "react";
 import { handleErrors } from "./utils";
-
 
 export class Delete extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {message: null}
+        this.state = { message: null };
     }
 
     checkTypeOfUser() {
         if (this.props.user) {
-            const confirm = window.confirm("Är du säker på att du vill ta bort inlägget?");
-            if(confirm) {
-                this.removeFromDB()
+            const confirm = window.confirm(
+                "Är du säker på att du vill ta bort inlägget?"
+            );
+            if (confirm) {
+                this.removeFromDB();
             }
         } else {
-            const pin = prompt('Verifiera med Pin kod');
+            const pin = prompt("Verifiera med Pin kod");
             this.removeFromDB(pin);
         }
     }
@@ -24,38 +25,44 @@ export class Delete extends React.Component {
         fetch("/api/admin/delete/", {
             method: "post",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 id: this.props.id,
                 table: this.props.table,
-                pin: pin,
+                pin: pin
             })
-        }).then(handleErrors)
-            .then((response) => {
+        })
+            .then(handleErrors)
+            .then(response => {
                 return response.json();
             })
-            .then((json) => {
+            .then(json => {
                 if (json.code === 200) {
-                    this.setState({message: json.success});
+                    this.setState({ message: json.success });
                     this.props.updateList();
                 } else {
-                    this.setState({message: json.success});
+                    this.setState({ message: json.success });
                 }
             })
             .catch(() => {
-                this.setState({noNetworkMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."});
+                this.setState({
+                    noNetworkMessage:
+                        "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
+                });
             });
     }
 
     render() {
         return (
             <React.Fragment>
-                <span className="delete" onClick={() => this.checkTypeOfUser()}>Ta bort</span>
+                <span className="delete" onClick={() => this.checkTypeOfUser()}>
+                    Ta bort
+                </span>
             </React.Fragment>
-        )
-    };
+        );
+    }
 }
 
 export default Delete;

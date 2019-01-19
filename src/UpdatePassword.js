@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React from "react";
 
 export class UpdatePassword extends React.Component {
     constructor() {
@@ -7,18 +6,18 @@ export class UpdatePassword extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            oldPassword: '',
-            password: '',
-            retypePassword: '',
+            oldPassword: "",
+            password: "",
+            retypePassword: "",
             noMatch: false
         };
     }
     handleChange(key) {
-        return (e => {
+        return e => {
             const state = {};
             state[key] = e.target.value;
             this.setState(state);
-        });
+        };
     }
     handleSubmit(e) {
         e.preventDefault();
@@ -28,62 +27,92 @@ export class UpdatePassword extends React.Component {
             retypePassword: this.state.retypePassword
         };
         if (data.password !== data.retypePassword) {
-            this.setState({noMatch: true});
+            this.setState({ noMatch: true });
         } else {
-            this.setState({noMatch: false});
+            this.setState({ noMatch: false });
             fetch("/api/updatePassword/", {
                 method: "post",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 },
 
                 //make sure to serialize your JSON body
                 body: JSON.stringify({
                     email: this.props.userEmail,
                     oldpassword: data.oldPassword,
-                    newpassword: data.password,
+                    newpassword: data.password
                 })
             })
-                .then((response) => {
+                .then(response => {
                     return response.json();
                 })
-                .then((json) => {
+                .then(json => {
                     if (json.code === 200 || 204) {
                         this.setState({
                             updateMessage: json.success,
-                            oldPassword: '',
-                            password: '',
-                            retypePassword: ''
-                        })
+                            oldPassword: "",
+                            password: "",
+                            retypePassword: ""
+                        });
                     }
                 })
-                .catch(() =>  {
-                    this.setState({noNetworkMessage: 'Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.'})
-                })
+                .catch(() => {
+                    this.setState({
+                        noNetworkMessage:
+                            "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
+                    });
+                });
         }
     }
     render() {
-        const { oldPassword, password, retypePassword, noMatch, updateMessage, noNetworkMessage } = this.state;
+        const {
+            oldPassword,
+            password,
+            retypePassword,
+            noMatch,
+            updateMessage,
+            noNetworkMessage
+        } = this.state;
         return (
             <div>
                 <h3>{updateMessage}</h3>
-                <form className='register-form' onSubmit={this.handleSubmit}>
-                    <input type="password" placeholder="Nuvarande lösenord" value={oldPassword}
-                           onChange={this.handleChange('oldPassword')} required/>
-                    <input type="password" placeholder="Nytt lösenord" value={password}
-                           onChange={this.handleChange('password')} required/>
-                    <input className={`${noMatch && 'no-match'}`} type="password"
-                           placeholder="ange nytt lösenord igen" value={retypePassword}
-                           onChange={this.handleChange('retypePassword')} required/>
-                    <input className='button update-password' type="submit" value="Updatera lösenord"/>
+                <form className="register-form" onSubmit={this.handleSubmit}>
+                    <input
+                        type="password"
+                        placeholder="Nuvarande lösenord"
+                        value={oldPassword}
+                        onChange={this.handleChange("oldPassword")}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Nytt lösenord"
+                        value={password}
+                        onChange={this.handleChange("password")}
+                        required
+                    />
+                    <input
+                        className={`${noMatch && "no-match"}`}
+                        type="password"
+                        placeholder="ange nytt lösenord igen"
+                        value={retypePassword}
+                        onChange={this.handleChange("retypePassword")}
+                        required
+                    />
+                    <input
+                        className="button update-password"
+                        type="submit"
+                        value="Updatera lösenord"
+                    />
                 </form>
                 {noMatch && <h3>Type the same password twice</h3>}
-                {noNetworkMessage && <div className="info-box">{noNetworkMessage}</div>}
+                {noNetworkMessage && (
+                    <div className="info-box">{noNetworkMessage}</div>
+                )}
             </div>
-        )
+        );
     }
 }
-
 
 export default UpdatePassword;

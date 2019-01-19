@@ -1,7 +1,6 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {handleErrors} from "./utils";
-
+import React from "react";
+import { Link } from "react-router-dom";
+import { handleErrors } from "./utils";
 
 export class Authenticate extends React.Component {
     state = {
@@ -14,9 +13,9 @@ export class Authenticate extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.test = this.test.bind(this);
         this.state = {
-            email: '',
-            password: '',
-            loginMessage: 'Logga in på din webbkurs här',
+            email: "",
+            password: "",
+            loginMessage: "Logga in på din webbkurs här",
             verified: false,
             currentTime: new Date().toLocaleString()
         };
@@ -27,11 +26,11 @@ export class Authenticate extends React.Component {
     }
 
     handleChange(key) {
-        return (e => {
+        return e => {
             const state = {};
             state[key] = e.target.value;
             this.setState(state);
-        });
+        };
     }
 
     handleSubmit(e) {
@@ -44,20 +43,21 @@ export class Authenticate extends React.Component {
         fetch("/api/login/", {
             method: "post",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 email: data.email,
                 password: data.password,
                 currentTime: this.state.currentTime
             })
-        }).then(handleErrors)
-            .then((response) => {
+        })
+            .then(handleErrors)
+            .then(response => {
                 return response.json();
             })
-            .then((json) => {
-                this.setState({loginMessage: json.success});
+            .then(json => {
+                this.setState({ loginMessage: json.success });
                 if (json.code === 200) {
                     this.test(json.user);
                 }
@@ -66,37 +66,60 @@ export class Authenticate extends React.Component {
                 }
             })
             .catch(() => {
-                this.setState({loginMessage: "Ingen kontakt med servern. Kontrollera din internetuppkoppling och ladda sedan om sidan."});
+                this.setState({
+                    loginMessage:
+                        "Ingen kontakt med servern. Kontrollera din internetuppkoppling och ladda sedan om sidan."
+                });
                 this.btn.removeAttribute("disabled", "disabled");
             });
-
     }
 
     render() {
-        const { loginMessage, email, password, verified} = this.state;
+        const { loginMessage, email, password, verified } = this.state;
         return (
             <div className="authenticate">
                 <div className="authenticate-container">
                     <h3 className="authenticate-title">{loginMessage}</h3>
-                    <form className="authenticate-form" onSubmit={this.handleSubmit}>
-                        <input type="email" placeholder="e-post" value={email}
-                               onChange={this.handleChange('email')} required autoComplete=""/>
-                        <input type="password" placeholder="lösenord" value={password}
-                               onChange={this.handleChange('password')} required autoComplete=""/>
-                        <input ref={btn => { this.btn = btn; }} className='button' type="submit" value="Logga in"/>
+                    <form
+                        className="authenticate-form"
+                        onSubmit={this.handleSubmit}
+                    >
+                        <input
+                            type="email"
+                            placeholder="e-post"
+                            value={email}
+                            onChange={this.handleChange("email")}
+                            required
+                            autoComplete=""
+                        />
+                        <input
+                            type="password"
+                            placeholder="lösenord"
+                            value={password}
+                            onChange={this.handleChange("password")}
+                            required
+                            autoComplete=""
+                        />
+                        <input
+                            ref={btn => {
+                                this.btn = btn;
+                            }}
+                            className="button"
+                            type="submit"
+                            value="Logga in"
+                        />
                     </form>
                     <div className="authenticate-links">
                         <Link to="/register">Registrera dig</Link>
                         <Link to="/reset-password">Glömt lösenord</Link>
                     </div>
                 </div>
-                {verified &&
-                <div className="authenticate-intro">
-                    <h1>Välkommen</h1>
-                </div>
-                }
+                {verified && (
+                    <div className="authenticate-intro">
+                        <h1>Välkommen</h1>
+                    </div>
+                )}
             </div>
         );
     }
 }
-

@@ -1,16 +1,10 @@
-import React from 'react';
-import slugify from 'slugify';
-import {getUser, handleErrors} from "./utils";
-import {
-    Route,
-    Link,
-    Switch,
-    withRouter
-} from 'react-router-dom';
+import React from "react";
+import slugify from "slugify";
+import { getUser, handleErrors } from "./utils";
+import { Route, Link, Switch, withRouter } from "react-router-dom";
 import Loader from "./Loader";
-import {Auth} from "./App";
-import {Course} from "./Course";
-
+import { Auth } from "./App";
+import { Course } from "./Course";
 
 export class AuthButton extends React.Component {
     render() {
@@ -20,13 +14,28 @@ export class AuthButton extends React.Component {
         else {
             return (
                 <div className="user-logout">
-                    <Link to={`/kurs/${slugify(courseTitle)}/user`} className="user">Min sida</Link>
-                    {!onlyOneCourse && <Link to="/kurs" className="user">Mina kurser</Link>}
-                    <Link to="/login" className="logout" onClick={() => {
-                        Auth.signout(() => history.push('/'))
-                    }}>Logga ut</Link>
+                    <Link
+                        to={`/kurs/${slugify(courseTitle)}/user`}
+                        className="user"
+                    >
+                        Min sida
+                    </Link>
+                    {!onlyOneCourse && (
+                        <Link to="/kurs" className="user">
+                            Mina kurser
+                        </Link>
+                    )}
+                    <Link
+                        to="/login"
+                        className="logout"
+                        onClick={() => {
+                            Auth.signout(() => history.push("/"));
+                        }}
+                    >
+                        Logga ut
+                    </Link>
                 </div>
-            )
+            );
         }
     }
 }
@@ -47,45 +56,45 @@ export class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        if(this.state.userCourses) {
-            fetch('/api/usercourses/', {
-                method: 'post',
+        if (this.state.userCourses) {
+            fetch("/api/usercourses/", {
+                method: "post",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    email: this.state.user.email,
+                    email: this.state.user.email
                 })
-            }).then(handleErrors)
-                .then((response) => {
-                    return response.json();
-
-                }).then((json) => {
-                this.setState({userCourses: json.userCourses});
-                json.userCourses.map((item) => (
-                    this.getCourses(item)
-                ))
             })
-                .catch(() => this.setState({errorMessage: true}));
+                .then(handleErrors)
+                .then(response => {
+                    return response.json();
+                })
+                .then(json => {
+                    this.setState({ userCourses: json.userCourses });
+                    json.userCourses.map(item => this.getCourses(item));
+                })
+                .catch(() => this.setState({ errorMessage: true }));
         }
     }
 
     getCourses(usercourses) {
-        fetch('/api/course/', {
-            method: 'post',
+        fetch("/api/course/", {
+            method: "post",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                userCourses: usercourses,
+                userCourses: usercourses
             })
-        }).then(handleErrors)
-            .then((response) => {
+        })
+            .then(handleErrors)
+            .then(response => {
                 return response.json();
-
-            }).then((json) => {
+            })
+            .then(json => {
                 if (json.code === 200) {
                     this.setState(previousState => ({
                         course: [...previousState.course, json.course[0]],
@@ -98,64 +107,94 @@ export class Dashboard extends React.Component {
                         message: json.message
                     });
                 }
-
-        }).catch((error) => {
-            console.log('error', error);
-            this.setState({errorMessage: true, message: "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."})
-        });
+            })
+            .catch(error => {
+                console.log("error", error);
+                this.setState({
+                    errorMessage: true,
+                    message:
+                        "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
+                });
+            });
     }
     toggleMenu = () => {
-        if(window.innerWidth < 768) this.setState({hideMenu: !this.state.hideMenu});
+        if (window.innerWidth < 768)
+            this.setState({ hideMenu: !this.state.hideMenu });
     };
 
     render() {
-        const { lessons, course, userCourses, errorMessage, message, showBadges } = this.state;
-        if (!this.state.lessons.length) return (
-            <div>
-                { errorMessage ?
-                    (
+        const {
+            lessons,
+            course,
+            userCourses,
+            errorMessage,
+            message,
+            showBadges
+        } = this.state;
+        if (!this.state.lessons.length)
+            return (
+                <div>
+                    {errorMessage ? (
                         <div className="no-courses">
                             <div className="top-bar">
-                                <Link to="/login" className="logo">ELD Studio</Link>
+                                <Link to="/login" className="logo">
+                                    ELD Studio
+                                </Link>
                                 <AuthButton />
                             </div>
                             <div className="lesson-container">
                                 <h3>{message}</h3>
                             </div>
                         </div>
-                        ) :
-                    (<Loader />)
-                }
-            </div>
-        );
+                    ) : (
+                        <Loader />
+                    )}
+                </div>
+            );
         if (userCourses.length > 1 && showBadges) {
             return (
                 <div>
                     <div className="course-badges">
                         <h1>Välj kurs</h1>
-                        {course.map((course, index) =>
-                            <Link to={`/kurs/${slugify(course.title)}`} key={index} className="course-badge">
+                        {course.map((course, index) => (
+                            <Link
+                                to={`/kurs/${slugify(course.title)}`}
+                                key={index}
+                                className="course-badge"
+                            >
                                 <h4>{course.title}</h4>
                             </Link>
-                        )}
+                        ))}
                     </div>
                     <Switch>
                         {course &&
-                        course.map((course, index) => (
-                            <Route key={index} path={`/kurs/${slugify(course.title)}`}
-                                   component={() => <Course course={course} lessons={lessons[index]}/>}/>
-                        ))
-                        }
+                            course.map((course, index) => (
+                                <Route
+                                    key={index}
+                                    path={`/kurs/${slugify(course.title)}`}
+                                    component={() => (
+                                        <Course
+                                            course={course}
+                                            lessons={lessons[index]}
+                                        />
+                                    )}
+                                />
+                            ))}
                     </Switch>
                 </div>
-            )
-        }
-        else {
+            );
+        } else {
             return (
                 <div>
-                    <Course course={course[0]} lessons={lessons[0]} history={this.props.history} location={this.props.location} onlyOneCourse />
+                    <Course
+                        course={course[0]}
+                        lessons={lessons[0]}
+                        history={this.props.history}
+                        location={this.props.location}
+                        onlyOneCourse
+                    />
                 </div>
-            )
+            );
         }
     }
 }
