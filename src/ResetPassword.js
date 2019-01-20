@@ -55,15 +55,14 @@ class ResetPassword extends Component {
                         success: true
                     });
                 }
-                if (json.code === 404) {
-                    this.btn.removeAttribute("disabled", "disabled");
+                if (json.code === 204) {
                     this.setState({ message: json.message, loader: false });
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                console.log('error', error);
                 this.setState({
-                    message:
-                        "Ingen kontakt med servern. Kontrollera din internetuppkoppling och ladda sedan om sidan.",
+                    message: "Ingen kontakt med servern. Kontrollera din internetuppkoppling och ladda sedan om sidan.",
                     loader: false
                 });
                 this.btn.removeAttribute("disabled", "disabled");

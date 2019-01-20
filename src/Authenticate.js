@@ -9,9 +9,6 @@ export class Authenticate extends React.Component {
 
     constructor() {
         super();
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.test = this.test.bind(this);
         this.state = {
             email: "",
             password: "",
@@ -21,19 +18,19 @@ export class Authenticate extends React.Component {
         };
     }
 
-    test(user) {
+    test = (user) => {
         this.props.loginFunction(user);
-    }
+    };
 
-    handleChange(key) {
+    handleChange = (key) => {
         return e => {
             const state = {};
             state[key] = e.target.value;
             this.setState(state);
         };
-    }
+    };
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
         const data = {
@@ -72,7 +69,7 @@ export class Authenticate extends React.Component {
                 });
                 this.btn.removeAttribute("disabled", "disabled");
             });
-    }
+    };
 
     render() {
         const { loginMessage, email, password, verified } = this.state;

@@ -305,7 +305,6 @@ function generatePassword() {
 }
 
 app.post('/api/resetPassword', function (req, res) {
-    console.log('req.body.email-- ', req.body.email );
     const email = req.body.email;
     const time = req.body.currentTime;
     const generatedPassword = generatePassword();
@@ -356,7 +355,7 @@ app.post('/api/resetPassword', function (req, res) {
                         });
                     } else {
                         res.send({
-                            "code": 404,
+                            "code": 204,
                             "message": "Kan inte hitta e-post adress."
                         })
                     }

@@ -6,15 +6,13 @@ import { handleErrors } from "./utils";
 export class Admin extends React.Component {
     constructor(props) {
         super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             userList: [],
             filtered: []
         };
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         let updatedList = this.state.userList;
         updatedList.map(item => delete item.id);
         const filtered = updatedList.filter(function(item) {
@@ -32,7 +30,7 @@ export class Admin extends React.Component {
         this.getUsers();
     }
 
-    getUsers() {
+    getUsers = () => {
         fetch("/api/users/", {
             method: "post",
             headers: {
@@ -72,7 +70,7 @@ export class Admin extends React.Component {
             });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const pin = prompt("Verifiera med Pin kod");
         fetch("/api/admin/updatePassword/", {

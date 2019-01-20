@@ -3,8 +3,6 @@ import React from "react";
 export class UpdatePassword extends React.Component {
     constructor() {
         super();
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             oldPassword: "",
             password: "",
@@ -12,14 +10,14 @@ export class UpdatePassword extends React.Component {
             noMatch: false
         };
     }
-    handleChange(key) {
+    handleChange = key => {
         return e => {
             const state = {};
             state[key] = e.target.value;
             this.setState(state);
         };
-    }
-    handleSubmit(e) {
+    };
+    handleSubmit = e => {
         e.preventDefault();
         const data = {
             oldPassword: this.state.oldPassword,
@@ -64,7 +62,7 @@ export class UpdatePassword extends React.Component {
                     });
                 });
         }
-    }
+    };
     render() {
         const {
             oldPassword,

@@ -4,13 +4,8 @@ import file from "./img/file-alt.svg";
 import { handleErrors } from "./utils";
 
 export class Download extends React.Component {
-    constructor(props) {
-        super(props);
-        this.download = this.download.bind(this);
-        this.openInTab = this.openInTab.bind(this);
-    }
 
-    download() {
+    download = () => {
         fetch("/api/download/", {
             method: "post",
             headers: {
@@ -28,8 +23,8 @@ export class Download extends React.Component {
             .then(blob => {
                 fileDownload(blob, this.props.fileName);
             });
-    }
-    openInTab() {
+    };
+    openInTab = () => {
         const windowReference = window.open();
         fetch("/api/download/", {
             method: "post",
@@ -49,7 +44,7 @@ export class Download extends React.Component {
                 const file = new Blob([blob], { type: "application/pdf" });
                 windowReference.location = URL.createObjectURL(file);
             });
-    }
+    };
     render() {
         return (
             <div className="download">
