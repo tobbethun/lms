@@ -31,7 +31,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  font-family: "AvenirNextLTW01-Regular", sans-serif;
   font-size: 16px;
 }
 h2 {
@@ -53,7 +53,7 @@ input {
   margin: 10px;
   padding: 3px;
   outline: none;
-  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  font-family: "AvenirNextLTW01-Regular", sans-serif;
 }
 input:required,
 textarea:required {
@@ -62,7 +62,7 @@ textarea:required {
 }
 button,
 .button {
-  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  font-family: "AvenirNextLTW01-Regular", sans-serif;
   background: transparent;
   border: 1px solid #000;
   color: #000;
@@ -79,7 +79,7 @@ input:disabled {
   cursor: not-allowed;
 }
 a {
-  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  font-family: "AvenirNextLTW01-Regular", sans-serif;
   text-decoration: none;
   color: #000;
 }
@@ -150,6 +150,28 @@ a {
 }
 .delete-message {
   color: red;
+}
+.cookie-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px 20%;
+  background-color: #f7f9fa;
+  text-align: center;
+}
+.cookie-bar button {
+  margin-top: 10px;
+  max-width: 100px;
+}
+.cookie-bar-accepted {
+  display: none;
 }
 .authenticate {
   display: -webkit-box;
@@ -233,7 +255,7 @@ a {
   border: 1px solid red;
 }
 .login-after-register {
-  font-family: 'AvenirNextLTW01-Regular', sans-serif;
+  font-family: "AvenirNextLTW01-Regular", sans-serif;
   background: transparent;
   border: 1px solid #000;
   color: #000;

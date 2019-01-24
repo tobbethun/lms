@@ -12,6 +12,7 @@ import {
     withRouter
 } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
+import {CookieBar} from "./CookieBar";
 
 export const Auth = {
     isAuthenticated: false,
@@ -112,10 +113,13 @@ export const AuthButton = withRouter(({ history }) =>
 );
 
 export default function App() {
+    const cookieAccepted = localStorage.getItem("eldstudio-cookie");
+    const loggedIn = !!localStorage.loggedIn;
     return (
         <Router>
             <div className="main-wrapper">
                 <div className="start-page">
+                    {!cookieAccepted && !loggedIn && <CookieBar />}
                     <Switch>
                         <Redirect exact from="/" to="/login" />
                         <Route path="/login" component={Login} />
