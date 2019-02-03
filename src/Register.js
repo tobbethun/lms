@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Integritetspolicy from "./Doc/Integritetspolicy_ELD_Studio.pdf";
+import {fireTracking} from "./App";
 
 export class Register extends React.Component {
     constructor() {
@@ -137,6 +138,7 @@ export class Register extends React.Component {
         win.focus();
     };
     render() {
+        fireTracking(this.props.history.location.pathname);
         const {
             registerMessage,
             showRegistrationForm,

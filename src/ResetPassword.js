@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { handleErrors } from "./utils";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
+import {fireTracking} from "./App";
 
 class ResetPassword extends Component {
     constructor() {
@@ -71,6 +72,7 @@ class ResetPassword extends Component {
 
     render() {
         const { message, email, verified, loader, success } = this.state;
+        fireTracking(this.props.history.location.pathname);
         return (
             <React.Fragment>
                 <div className="top-bar">

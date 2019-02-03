@@ -3,37 +3,46 @@ import slugify from "slugify";
 import { getUser, handleErrors } from "./utils";
 import { Route, Link, Switch, withRouter } from "react-router-dom";
 import Loader from "./Loader";
-import { Auth } from "./App";
+import { Auth, fireTracking } from "./App";
 import { Course } from "./Course";
+import Cog from "./Cog";
 
 export class AuthButton extends React.Component {
+    state = {showMenu: false};
     render() {
-        const { history, courseTitle, onlyOneCourse } = this.props;
+        const { history, courseTitle, courseColor, onlyOneCourse } = this.props;
+        const { showMenu } = this.state;
         const isLoggedIn = Auth.isAuthenticated || localStorage.loggedIn;
+        fireTracking(history.location.pathname);
         if (!isLoggedIn) return null;
         else {
             return (
-                <div className="user-logout">
-                    <Link
-                        to={`/kurs/${slugify(courseTitle)}/user`}
-                        className="user"
-                    >
-                        Min sida
-                    </Link>
-                    {!onlyOneCourse && (
-                        <Link to="/kurs" className="user">
-                            Mina kurser
+                <div className="menu-right">
+                    <div className="menu-right-icon" onClick={() => this.setState({showMenu: !showMenu})}>
+                        <Cog color={courseColor} />
+                    </div>
+                    <div className={`menu-right-items ${showMenu ? "menu-right-visible" : ""}`}>
+                        <Link
+                            to={`/kurs/${slugify(courseTitle)}/user`}
+                            className="user"
+                        >
+                            Min sida
                         </Link>
-                    )}
-                    <Link
-                        to="/login"
-                        className="logout"
-                        onClick={() => {
-                            Auth.signout(() => history.push("/"));
-                        }}
-                    >
-                        Logga ut
-                    </Link>
+                        {!onlyOneCourse && (
+                            <Link to="/kurs" className="user">
+                                Mina kurser
+                            </Link>
+                        )}
+                        <Link
+                            to="/login"
+                            className="logout"
+                            onClick={() => {
+                                Auth.signout(() => history.push("/"));
+                            }}
+                        >
+                            Logga ut
+                        </Link>
+                    </div>
                 </div>
             );
         }

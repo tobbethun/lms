@@ -1,6 +1,7 @@
 import React from "react";
 import Markup from "./Markup";
 import { Link } from "react-router-dom";
+import {trackEvent} from "./App";
 
 export class CourseStart extends React.Component {
     componentDidMount() {
@@ -16,6 +17,7 @@ export class CourseStart extends React.Component {
                     to={firstStep}
                     className="button course-start--button"
                     style={{ backgroundColor: colorCode }}
+                    onClick={()=>trackEvent("interaction", "click", "starta kursen")}
                 >
                     Starta kursen
                 </Link>

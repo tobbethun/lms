@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from 'react-ga';
 import { Authenticate } from "./Authenticate.js";
 import { Dashboard } from "./Dashboard.js";
 import { Register } from "./Register.js";
@@ -13,6 +14,28 @@ import {
 } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import {CookieBar} from "./CookieBar";
+
+const gaCode = window.location.hostname === "localhost" ? "UA-133167489-1" : "UA-133167489-2";
+ReactGA.initialize(gaCode);
+ReactGA.pageview(window.location.pathname + window.location.search);
+
+export const fireTracking = (page) => {
+    if(page) {
+        ReactGA.pageview(page);
+    }
+    else {
+        ReactGA.pageview(window.location.hash);
+    }
+};
+
+export const trackEvent = (category, action, label) => {
+    ReactGA.event({
+        category: category,
+        action: action,
+        label: label
+    });
+};
+
 
 export const Auth = {
     isAuthenticated: false,

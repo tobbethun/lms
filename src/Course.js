@@ -34,11 +34,7 @@ export class Course extends Component {
         return (
             <div>
                 <div className="container">
-                    <div
-                        className={
-                            "side-bar " + (hideMenu && "side-bar__hidden")
-                        }
-                    >
+                    <div className={"side-bar " + (hideMenu && "side-bar__hidden")}>
                         <div className="course-menu__header">
                             <Link
                                 to={`/kurs/${slugify(course.title)}`}
@@ -105,16 +101,9 @@ export class Course extends Component {
                                                                                 .title
                                                                         )}`}
                                                                         activeClassName="is-active"
-                                                                        onClick={
-                                                                            this
-                                                                                .toggleMenu
-                                                                        }
+                                                                        onClick={this.toggleMenu}
                                                                     >
-                                                                        {
-                                                                            step
-                                                                                .fields
-                                                                                .title
-                                                                        }
+                                                                        {step.fields.title}
                                                                     </NavLink>
                                                                 </li>
                                                             )
@@ -177,6 +166,7 @@ export class Course extends Component {
                             )}
                             <AuthButtonWithRouter
                                 courseTitle={course.title}
+                                    courseColor={course.colorcode}
                                 onlyOneCourse={onlyOneCourse}
                             />
                         </div>
