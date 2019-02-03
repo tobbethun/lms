@@ -82,6 +82,12 @@ export class Attachment extends React.Component {
         })
             .then(handleErrors)
             .then(response => {
+                if (response.status === 413) {
+                    this.setState({
+                        noNetworkMessage:
+                            "Filen är för stor. Max tillåtet är 25MB."
+                    });
+                }
                 return response.json();
             })
             .then(json => {
