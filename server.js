@@ -326,8 +326,11 @@ app.post('/api/resetPassword', function (req, res) {
                     })
                 } else {
                     if (results.length > 0) {
+
                         const transporter = nodemailer.createTransport({
-                            service: 'gmail',
+                            host: "smtp.fsdata.se",
+                            port: 587,
+                            secure: false, // upgrade later with STARTTLS
                             auth: {
                                 user: dbc.email.user,
                                 pass: dbc.email.password
@@ -335,7 +338,7 @@ app.post('/api/resetPassword', function (req, res) {
                         });
 
                         const mailOptions = {
-                            from: 'babarbix@gmail.com',
+                            from: 'noreply@eldstudio.se',
                             to: email,
                             subject: 'Här kommer ditt nya lösenord',
                             text: 'Gå till eldstudio.se och logga in med ' + generatedPassword + ' gå därefter in på mina sidor och välj ett nytt lösenord genom att klicka på knappen "Uppdatera lösenord".'
