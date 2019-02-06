@@ -137,12 +137,11 @@ export const AuthButton = withRouter(({ history }) =>
 
 export default function App() {
     const cookieAccepted = localStorage.getItem("eldstudio-cookie");
-    const loggedIn = !!localStorage.loggedIn;
     return (
         <Router>
             <div className="main-wrapper">
                 <div className="start-page">
-                    {!cookieAccepted && !loggedIn && <CookieBar />}
+                    {!cookieAccepted && <CookieBar />}
                     <Switch>
                         <Redirect exact from="/" to="/login" />
                         <Route path="/login" component={Login} />
