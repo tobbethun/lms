@@ -13,7 +13,7 @@ export class AuthButton extends React.Component {
         const { history, courseTitle, courseColor, onlyOneCourse } = this.props;
         const { showMenu } = this.state;
         const isLoggedIn = Auth.isAuthenticated || localStorage.loggedIn;
-        fireTracking(history.location.pathname);
+        history && fireTracking(history.location.pathname);
         if (!isLoggedIn) return null;
         else {
             return (

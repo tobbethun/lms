@@ -72,7 +72,7 @@ class ResetPassword extends Component {
 
     render() {
         const { message, email, verified, loader, success } = this.state;
-        fireTracking(this.props.history.location.pathname);
+        this.props.history && fireTracking(this.props.history.location.pathname);
         return (
             <React.Fragment>
                 <div className="top-bar">

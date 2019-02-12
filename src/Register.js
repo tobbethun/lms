@@ -138,7 +138,7 @@ export class Register extends React.Component {
         win.focus();
     };
     render() {
-        fireTracking(this.props.history.location.pathname);
+        this.props.history && fireTracking(this.props.history.location.pathname);
         const {
             registerMessage,
             showRegistrationForm,
@@ -153,7 +153,7 @@ export class Register extends React.Component {
             noCourse,
             emailExist
         } = this.state;
-        const okToRegister = !noCourse && !emailExist;
+        const disableButton = !noCourse && emailExist;
         return (
             <div>
                 <div className="top-bar">
@@ -250,7 +250,7 @@ export class Register extends React.Component {
                                     this.btn = btn;
                                 }}
                                 className="button"
-                                disabled={okToRegister}
+                                disabled={disableButton}
                                 type="submit"
                                 value="Slutför registrering"
                             />
