@@ -2,6 +2,7 @@ import React from "react";
 import { Toast } from "./Toast";
 import Delete from "./Delete";
 import { handleErrors } from "./utils";
+import UpdateUserInfo from "./UpdateUserInfo";
 
 export class Admin extends React.Component {
     constructor(props) {
@@ -24,7 +25,7 @@ export class Admin extends React.Component {
             );
         });
         this.setState({ userList: updatedList, filtered: filtered });
-    }
+    };
 
     componentWillMount() {
         this.getUsers();
@@ -68,47 +69,8 @@ export class Admin extends React.Component {
                     this.setState({ registerMessage: json.success });
                 }
             });
-    }
+    };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const pin = prompt("Verifiera med Pin kod");
-        fetch("/api/admin/updatePassword/", {
-            method: "post",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-
-            //make sure to serialize your JSON body
-            body: JSON.stringify({
-                email: e.target.password.getAttribute("data"),
-                newpassword: e.target.password.value,
-                pin: pin
-            })
-        })
-            .then(response => {
-                return response.json();
-            })
-            .then(json => {
-                if (json.code === 200) {
-                    this.password.setAttribute("readonly", "readonly");
-                    this.setState({ message: json.success });
-                    setTimeout(() => this.setState({ message: null }), 2500);
-                }
-                if (json.code === 204) {
-                    this.setState({ message: json.success });
-                    setTimeout(() => this.setState({ message: null }), 2500);
-                }
-            })
-            .catch(e => {
-                console.log("error", e);
-                this.setState({
-                    noNetworkMessage:
-                        "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
-                });
-            });
-    }
     render() {
         const { filtered, message } = this.state;
         const adminDelete = this.props.role;
@@ -125,24 +87,9 @@ export class Admin extends React.Component {
                         <div>{user.email}</div>
                         <div>{user.role}</div>
                         <div>Kurser: {user.courses}</div>
-                        <form
-                            className="admin-update-password"
-                            onSubmit={this.handleSubmit}
-                        >
-                            <input
-                                type="text"
-                                name="password"
-                                data={user.email}
-                                placeholder="Nytt lösenord"
-                                required
-                                ref={password => {
-                                    this.password = password;
-                                }}
-                            />
-                            <button className="admin-update-button">
-                                Uppdatera lösenord
-                            </button>
-                        </form>
+                        <UpdateUserInfo
+                            user={user}
+                        />
                         {adminDelete && <Delete id={user.id} table="users" />}
                     </div>
                 ))}

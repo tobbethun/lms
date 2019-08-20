@@ -283,8 +283,8 @@ a {
   height: 60px;
   background-color: white;
   width: 100%;
-  -webkit-transition: width .4s;
-  transition: width .4s;
+  -webkit-transition: width 0.4s;
+  transition: width 0.4s;
   z-index: 13;
 }
 @media screen and (min-width: 768px) {
@@ -400,8 +400,8 @@ a {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-transition: left .4s;
-  transition: left .4s;
+  -webkit-transition: left 0.4s;
+  transition: left 0.4s;
   z-index: 15;
   font-size: 15px;
   line-height: 20px;
@@ -429,8 +429,8 @@ a {
   position: relative;
   background-color: white;
   padding: 85px 0 0 0;
-  -webkit-transition: padding .4s;
-  transition: padding .4s;
+  -webkit-transition: padding 0.4s;
+  transition: padding 0.4s;
   z-index: 2;
 }
 @media screen and (min-width: 768px) {
@@ -1066,14 +1066,18 @@ img.download-icon {
   grid-template-columns: repeat(4, 1fr);
   row-gap: 20px;
 }
-.admin-update-password {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 2;
+.admin-update-userInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
-.admin-update-password input {
-  margin: 0 10px;
+.admin-update-userInfo input {
+  margin: 10px;
 }
-.admin-update-password .admin-update-button {
+.admin-update-userInfo .admin-update-button {
   padding: 5px;
 }

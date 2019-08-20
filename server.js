@@ -92,8 +92,10 @@ app.post('/api/users', function(req, res) {
     });
 });
 
-app.post('/api/admin/updatepassword', function (req, res) {
+app.post('/api/admin/updateUserInfo', function (req, res) {
     const email = req.body.email;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
     const newpassword = req.body.newpassword;
     const pin = req.body.pin;
     const encryptedPassword = encrypt(newpassword);
@@ -113,10 +115,10 @@ app.post('/api/admin/updatepassword', function (req, res) {
                 })
             } else {
                 if (results.length > 0) {
-                    connection.query('UPDATE users SET password = ? WHERE id = ?', [encryptedPassword, results[0].id]);
+                    connection.query('UPDATE users SET first_name = ?, last_name = ?, password = ? WHERE id = ?', [firstName, lastName, encryptedPassword, results[0].id]);
                     res.send({
                         "code": 200,
-                        "success": "Lösenord uppdaterat"
+                        "success": "Användare uppdaterad. Ladda om sidan för att kontrollera."
                     });
                 }
                 else {

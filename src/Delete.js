@@ -57,9 +57,9 @@ export class Delete extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <span className="delete" onClick={() => this.checkTypeOfUser()}>
-                    Ta bort
-                </span>
+                <div>
+                    <span className="delete" onClick={() => this.checkTypeOfUser()}>Ta bort</span>
+                </div>
             </React.Fragment>
         );
     }
