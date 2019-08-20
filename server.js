@@ -155,21 +155,35 @@ app.post('/api/admin/delete', function(req, res) {
     }
 });
 
+app.post('/api/admin/addCourseToUSer', function(req, res) {
+    const course_id = req.body.course_id;
+    const email = req.body.email;
+    const pin = req.body.pin;
+    const post = {
+        course_id: course_id,
+        email: email
+    };
+    console.log(post);
+    if (pin !== dbc.pin && pin !== undefined) {
+        res.send({
+            "code": 204,
+            "success": "Fel pin ej raderad"
+        });
+    } else {
+        connection.query('INSERT INTO courses SET ?', post, function (error){
+            if (error) {
+                console.log("error occured", error)
+            } else {
+                res.send({
+                    "code": 200,
+                    "success": "Kurs tillagd."
+                });
+            }
+        });
+    }
+});
 
-// app.get('/api/users', function (req, res) {
-//     // const id = req.params.id;
-//     connection.query('SELECT * FROM users', function (err, results) {
-//         if (err) throw err;
-//         if (!err) {
-//             const response = [];
-//             res.setHeader('Content-Type', 'application/json');
-//             res.status(200).send(results);
-//         } else {
-//             console.log('error 400');
-//             res.status(400).send(err);
-//         }
-//     })
-// });
+
 
 // REGISTER NEW USER
 

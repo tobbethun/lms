@@ -42,7 +42,7 @@ class UpdateUserInfo extends Component {
             .catch(e => {
                 console.log("error", e);
                 this.setState({
-                    noNetworkMessage:
+                    message:
                         "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
                 });
             });

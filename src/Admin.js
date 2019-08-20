@@ -3,6 +3,7 @@ import { Toast } from "./Toast";
 import Delete from "./Delete";
 import { handleErrors } from "./utils";
 import UpdateUserInfo from "./UpdateUserInfo";
+import AddCourse from "./AddCourse";
 
 export class Admin extends React.Component {
     constructor(props) {
@@ -89,6 +90,9 @@ export class Admin extends React.Component {
                         <div>Kurser: {user.courses}</div>
                         <UpdateUserInfo
                             user={user}
+                        />
+                        <AddCourse
+                            email={user.email}
                         />
                         {adminDelete && <Delete id={user.id} table="users" />}
                     </div>
