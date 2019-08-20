@@ -163,7 +163,6 @@ app.post('/api/admin/addCourseToUSer', function(req, res) {
         course_id: course_id,
         email: email
     };
-    console.log(post);
     if (pin !== dbc.pin && pin !== undefined) {
         res.send({
             "code": 204,
