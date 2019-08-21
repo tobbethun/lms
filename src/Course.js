@@ -14,7 +14,7 @@ export class Course extends Component {
             hideMenu: false
         };
     }
-    componentWillMount() {
+    componentDidMount() {
         this.props.history &&
             this.props.location.pathname === "/kurs" &&
             this.props.history.push(

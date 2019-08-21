@@ -199,6 +199,7 @@ export class Attachment extends React.Component {
                                 <Comments
                                     courseID={this.props.courseID}
                                     step={upload.filename}
+                                    documentOwner={upload.email}
                                     colorCode={this.props.colorCode}
                                     dontShowAnswers
                                     commentPlaceholder="Ge din feedback här"

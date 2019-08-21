@@ -67,6 +67,16 @@ http.createServer(app).listen(app.get('port'), function () {
     console.log('Server listening on port ' + app.get('port'));
 });
 
+// Setup email
+const transporter = nodemailer.createTransport({
+    host: "smtp.fsdata.se",
+    port: 587,
+    secure: false, // upgrade later with STARTTLS
+    auth: {
+        user: dbc.email.user,
+        pass: dbc.email.password
+    }
+});
 
 // ADMIN SECTION
 
@@ -319,6 +329,7 @@ function generatePassword() {
     return retVal;
 }
 
+
 app.post('/api/resetPassword', function (req, res) {
     const email = req.body.email;
     const time = req.body.currentTime;
@@ -341,17 +352,6 @@ app.post('/api/resetPassword', function (req, res) {
                     })
                 } else {
                     if (results.length > 0) {
-
-                        const transporter = nodemailer.createTransport({
-                            host: "smtp.fsdata.se",
-                            port: 587,
-                            secure: false, // upgrade later with STARTTLS
-                            auth: {
-                                user: dbc.email.user,
-                                pass: dbc.email.password
-                            }
-                        });
-
                         const mailOptions = {
                             from: 'noreply@eldstudio.se',
                             to: email,
@@ -462,6 +462,8 @@ app.post('/api/usercourses', function(req, res) {
 // _-_-_-_-_-_-_-_-_-_-COMMENTS SECTION-_-_-_-_-_-_-_-_-_-_
 
 app.post('/api/comment', function (req, res) {
+    const documentOwner = req.body.documentOwner;
+    const url = req.body.url;
     const post  = {
         first_name: req.body.firstname,
         last_name: req.body.lastname,
@@ -483,6 +485,24 @@ app.post('/api/comment', function (req, res) {
                 "code": 200,
                 "success": "Registration sucessfull"
             });
+            if(documentOwner) {
+                console.log('documentOwner', documentOwner);
+                console.log('url', url);
+                const mailOptions = {
+                    from: 'noreply@eldstudio.se',
+                    to: documentOwner,
+                    subject: 'Du har fått feedback på en uppgift!',
+                    text: 'Här är en länk till uppgiften ' + url
+                };
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(time + ' Email with feedback sent to: ' + documentOwner + ' ' + info.response);
+                    }
+                });
+            }
         }
     });
 

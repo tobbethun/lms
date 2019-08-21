@@ -64,7 +64,7 @@ export class Dashboard extends React.Component {
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         if (this.state.userCourses) {
             fetch("/api/usercourses/", {
                 method: "post",

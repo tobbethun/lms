@@ -92,7 +92,9 @@ export class Comments extends React.Component {
                 role: data.role,
                 course: data.course,
                 comment: data.comment,
-                step: data.step
+                step: data.step,
+                documentOwner: this.props.documentOwner,
+                url: document.location.href
             })
         })
             .then(response => {
