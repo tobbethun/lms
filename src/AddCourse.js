@@ -1,15 +1,20 @@
 import React, {useState} from "react";
 
-const AddCourse = ({email}) => {
+const AddCourse = ({email, allCourses}) => {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [message, setMessage] = useState("");
+    const [selectedValue, setSelectedValue] = useState("");
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const pin = prompt("Verifiera med Pin kod");
         const newCourse = {
             email: email,
-            course_id: e.target.course_id.value,
+            course_id: selectedValue,
             pin: pin
         };
 
@@ -53,12 +58,18 @@ const AddCourse = ({email}) => {
                 className="admin-update-userInfo"
                 onSubmit={handleSubmit}
             >
-                <input
-                    type="text"
-                    name="course_id"
-                    placeholder="Lägg till kurs-id"
-                    required
-                />
+                <select value={selectedValue} onChange={handleChange}>
+                    <option>Välj kurs</option>
+                    {allCourses &&
+                        allCourses.map((course, index) => <option key={index} value={course.id}>{course.title}</option>)
+                    }
+                </select>
+                {/*<input*/}
+                    {/*type="text"*/}
+                    {/*name="course_id"*/}
+                    {/*placeholder="Lägg till kurs-id"*/}
+                    {/*required*/}
+                {/*/>*/}
                 <button className="admin-update-button">
                     Lägg till
                 </button>

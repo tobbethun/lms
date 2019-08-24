@@ -10,7 +10,8 @@ export class Admin extends React.Component {
         super(props);
         this.state = {
             userList: [],
-            filtered: []
+            filtered: [],
+            allCourses: []
         };
     }
 
@@ -31,6 +32,30 @@ export class Admin extends React.Component {
     componentWillMount() {
         this.getUsers();
     }
+    componentDidMount() {
+        this.getAllCourses();
+    }
+
+    getAllCourses = () => {
+        fetch("/api/allCourses/", {
+            method: "post",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+        })
+            .then(handleErrors)
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                if (json.code === 200) {
+                    this.setState({
+                        allCourses: json.allCourses
+                    });
+                }
+            });
+    };
 
     getUsers = () => {
         fetch("/api/users/", {
@@ -73,7 +98,7 @@ export class Admin extends React.Component {
     };
 
     render() {
-        const { filtered, message } = this.state;
+        const { filtered, message, allCourses } = this.state;
         const adminDelete = this.props.role;
         return (
             <div className="admin-users">
@@ -93,6 +118,7 @@ export class Admin extends React.Component {
                         />
                         <AddCourse
                             email={user.email}
+                            allCourses={allCourses}
                         />
                         {adminDelete && <Delete id={user.id} table="users" />}
                     </div>

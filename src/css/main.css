@@ -203,6 +203,11 @@ a {
           justify-content: space-between;
   padding: 0 16px;
 }
+.reset-password {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
 .register {
   margin-top: 16px;
   padding: 0 20px;

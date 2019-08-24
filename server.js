@@ -103,12 +103,19 @@ app.post('/api/users', function(req, res) {
 });
 
 app.post('/api/admin/updateUserInfo', function (req, res) {
+    const encryptedPassword = () => {
+        if (req.body.newpassword) {
+            return encrypt(req.body.newpassword);
+        }
+        else {
+            return req.body.oldPassword;
+        }
+    };
     const email = req.body.email;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
-    const newpassword = req.body.newpassword;
+    const newpassword = encryptedPassword();
     const pin = req.body.pin;
-    const encryptedPassword = encrypt(newpassword);
     if (pin !== dbc.pin) {
         res.send({
             "code": 204,
@@ -125,7 +132,7 @@ app.post('/api/admin/updateUserInfo', function (req, res) {
                 })
             } else {
                 if (results.length > 0) {
-                    connection.query('UPDATE users SET first_name = ?, last_name = ?, password = ? WHERE id = ?', [firstName, lastName, encryptedPassword, results[0].id]);
+                    connection.query('UPDATE users SET first_name = ?, last_name = ?, password = ? WHERE id = ?', [firstName, lastName, newpassword, results[0].id]);
                     res.send({
                         "code": 200,
                         "success": "Användare uppdaterad. Ladda om sidan för att kontrollera."
@@ -486,8 +493,6 @@ app.post('/api/comment', function (req, res) {
                 "success": "Registration sucessfull"
             });
             if(documentOwner) {
-                console.log('documentOwner', documentOwner);
-                console.log('url', url);
                 const mailOptions = {
                     from: 'noreply@eldstudio.se',
                     to: documentOwner,
@@ -708,6 +713,34 @@ app.post('/api/course', function (req, res) {
                 res.send({
                     "code": 204,
                     "message": "Du har har inga aktiva kurser för tillfället. Om detta inte stämmer kontakta din kursledare."
+                })
+            }
+        });
+});
+
+app.post('/api/allcourses', function (req, res) {
+    let allCourses = [];
+    res.setHeader('Content-Type', 'application/json');
+    client.getEntries({
+        'content_type': 'course'
+    })
+        .then(function (entries) {
+            entries.items.map((item) => {
+                let course = {
+                    id: item.sys.id,
+                    title: item.fields.title
+                };
+                allCourses.push(course);
+            });
+            if (allCourses.length) {
+                res.send({
+                    "code": 200,
+                    "allCourses": allCourses
+                });
+            } else {
+                res.send({
+                    "code": 204,
+                    "message": "Ingen kontakt med contentful"
                 })
             }
         });

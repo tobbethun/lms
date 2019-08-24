@@ -111,8 +111,7 @@ class ResetPassword extends Component {
                             <Loader />
                         )}
 
-                        <div className="authenticate-links">
-                            <Link to="/register">Registrera dig</Link>
+                        <div className="authenticate-links reset-password">
                             <Link to="/login">Logga in</Link>
                         </div>
                     </div>

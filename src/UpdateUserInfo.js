@@ -12,7 +12,8 @@ class UpdateUserInfo extends Component {
             email: this.props.user.email,
             firstName: e.target.firstName.value ? e.target.firstName.value : this.props.user.first_name,
             lastName: e.target.lastName.value ? e.target.lastName.value : this.props.user.last_name,
-            newpassword: e.target.password.value ? e.target.password.value : this.props.user.password,
+            newpassword: e.target.password.value ? e.target.password.value : "",
+            oldPassword: this.props.user.password,
             pin: pin
         };
 
