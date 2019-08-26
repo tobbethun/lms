@@ -64,12 +64,7 @@ const AddCourse = ({email, allCourses}) => {
                         allCourses.map((course, index) => <option key={index} value={course.id}>{course.title}</option>)
                     }
                 </select>
-                {/*<input*/}
-                    {/*type="text"*/}
-                    {/*name="course_id"*/}
-                    {/*placeholder="Lägg till kurs-id"*/}
-                    {/*required*/}
-                {/*/>*/}
+
                 <button className="admin-update-button">
                     Lägg till
                 </button>
