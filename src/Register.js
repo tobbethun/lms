@@ -18,12 +18,13 @@ export class Register extends React.Component {
             noMatch: false,
             showRegistrationForm: true,
             emailExist: false,
-            hascourseid: false
+            hascourseid: false,
+            courseIdOk: false
         };
     }
     componentDidMount() {
         const courseID = window.location.href.split("?")[1];
-        courseID && this.setState({ courseid: courseID, hascourseid: true });
+        courseID && this.setState({ courseid: courseID, hascourseid: true, courseIdOk: true });
     }
     checkCourseId = () => {
         if (this.state.courseid) {
@@ -46,6 +47,9 @@ export class Register extends React.Component {
                         this.state.noCourse
                             ? this.btn.setAttribute("disabled", "disabled")
                             : this.btn.removeAttribute("disabled", "disabled");
+                        this.state.noCourse
+                            ? this.setState({courseIdOk: false})
+                            : this.setState({courseIdOk: true});
                     }
                 });
         }
@@ -133,6 +137,15 @@ export class Register extends React.Component {
                 });
         }
     };
+
+    checkPasswordMatch = () => {
+        if (this.state.password !== this.state.retypePassword) {
+            this.setState({ noMatch: true });
+        } else {
+            this.setState({ noMatch: false });
+        }
+    };
+
     openInNewTab = () => {
         var win = window.open(Integritetspolicy, "_blank");
         win.focus();
@@ -151,7 +164,8 @@ export class Register extends React.Component {
             retypePassword,
             hascourseid,
             noCourse,
-            emailExist
+            emailExist,
+            courseIdOk
         } = this.state;
         const disableButton = !noCourse && emailExist;
         return (
@@ -186,6 +200,7 @@ export class Register extends React.Component {
                                 onChange={this.handleChange("firstname")}
                                 required
                                 autoComplete=""
+                                disabled={!courseIdOk}
                             />
                             <input
                                 type="lastname"
@@ -194,6 +209,7 @@ export class Register extends React.Component {
                                 onChange={this.handleChange("lastname")}
                                 required
                                 autoComplete=""
+                                disabled={!courseIdOk}
                             />
                             <input
                                 type="email"
@@ -203,6 +219,7 @@ export class Register extends React.Component {
                                 required
                                 autoComplete=""
                                 onBlur={this.checkEmail}
+                                disabled={!courseIdOk}
                             />
                             {emailExist && (
                                 <label>
@@ -219,6 +236,7 @@ export class Register extends React.Component {
                                 onChange={this.handleChange("password")}
                                 required
                                 autoComplete=""
+                                disabled={!courseIdOk}
                             />
                             <input
                                 className={`${noMatch && "no-match"}`}
@@ -226,9 +244,12 @@ export class Register extends React.Component {
                                 placeholder="Repetera lösenord"
                                 value={retypePassword}
                                 onChange={this.handleChange("retypePassword")}
+                                onBlur={this.checkPasswordMatch}
                                 required
                                 autoComplete=""
+                                disabled={!courseIdOk}
                             />
+                            {noMatch && <label>Skriv samma lösenord 2 gånger</label>}
                             <input
                                 className="aprove"
                                 type="checkbox"
