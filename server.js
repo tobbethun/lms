@@ -496,8 +496,8 @@ app.post('/api/comment', function (req, res) {
                 const mailOptions = {
                     from: 'noreply@eldstudio.se',
                     to: documentOwner,
-                    subject: 'Du har fått feedback på en uppgift!',
-                    text: 'Här är en länk till uppgiften ' + url
+                    subject: '(Webbkurs): Du har fått feedback',
+                    text: 'Det finns återkoppling på din inlämningsuppgift i utbildningsmiljön Eldstudio. Följ länken här eller logga in manuellt för att se din feedback.' + url
                 };
 
                 transporter.sendMail(mailOptions, function (error, info) {
