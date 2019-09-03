@@ -165,7 +165,8 @@ export class Dashboard extends React.Component {
                 <div>
                     <div className="course-badges">
                         <h1>Välj kurs</h1>
-                        {course.map((course, index) => (
+                        {course &&
+                            course.map((course, index) => (
                             <Link
                                 to={`/kurs/${slugify(course.title)}`}
                                 key={index}
