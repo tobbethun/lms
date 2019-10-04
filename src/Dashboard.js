@@ -22,12 +22,14 @@ export class AuthButton extends React.Component {
                         <Cog color={courseColor} />
                     </div>
                     <div className={`menu-right-items ${showMenu ? "menu-right-visible" : ""}`}>
-                        <Link
-                            to={`/kurs/${slugify(courseTitle)}/user`}
-                            className="user"
-                        >
-                            Min sida
-                        </Link>
+                        {courseTitle &&
+                            <Link
+                                to={`/kurs/${slugify(courseTitle)}/user`}
+                                className="user"
+                            >
+                                Min sida
+                            </Link>
+                        }
                         {!onlyOneCourse && (
                             <Link to="/kurs" className="user">
                                 Mina kurser
