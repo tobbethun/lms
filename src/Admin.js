@@ -119,6 +119,7 @@ export class Admin extends React.Component {
                         <AddCourse
                             email={user.email}
                             allCourses={allCourses}
+                            usersCourses={user.courses}
                         />
                         {adminDelete && <Delete id={user.id} table="users" />}
                     </div>

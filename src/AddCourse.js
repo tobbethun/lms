@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-const AddCourse = ({email, allCourses}) => {
+const AddCourse = ({email, allCourses, usersCourses}) => {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [message, setMessage] = useState("");
     const [selectedValue, setSelectedValue] = useState("");
@@ -49,7 +49,7 @@ const AddCourse = ({email, allCourses}) => {
                 setMessage("Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan.");
             });
     };
-
+    const courseList = usersCourses.split(" ");
     return (
         <div>
             <span onClick={()=> setShowUserInfo(!showUserInfo)}>Lägg till kurs</span>
@@ -61,7 +61,7 @@ const AddCourse = ({email, allCourses}) => {
                 <select value={selectedValue} onChange={handleChange}>
                     <option>Välj kurs</option>
                     {allCourses &&
-                        allCourses.map((course, index) => <option key={index} value={course.id}>{course.title}</option>)
+                        allCourses.map((course, index) => <option key={index} value={course.id} disabled={courseList.includes(course.id.toLowerCase())}>{course.title}</option>)
                     }
                 </select>
 
