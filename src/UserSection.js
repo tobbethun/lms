@@ -5,6 +5,7 @@ import check from "./img/check.svg";
 import Admin from "./Admin";
 
 export class UserSection extends React.Component {
+    _isMounted = false;
     constructor() {
         super();
         this.state = {
@@ -16,6 +17,7 @@ export class UserSection extends React.Component {
     }
 
     componentWillMount() {
+        this._isMounted = true;
         this.progress();
     }
 
@@ -35,8 +37,10 @@ export class UserSection extends React.Component {
                 return response.json();
             })
             .then(json => {
-                if (json.code === 200) {
-                    this.setState({ uploads: json.uploads });
+                if (this._isMounted) {
+                    if (json.code === 200) {
+                        this.setState({ uploads: json.uploads });
+                    }
                 }
             })
             .catch(() => {
@@ -45,6 +49,10 @@ export class UserSection extends React.Component {
                         "Ingen kontakt med servern. Kontrollera din internetuppkoppling. Ladda sedan om sidan."
                 });
             });
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     render() {

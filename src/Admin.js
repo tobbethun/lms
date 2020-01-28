@@ -6,6 +6,7 @@ import UpdateUserInfo from "./UpdateUserInfo";
 import AddCourse from "./AddCourse";
 
 export class Admin extends React.Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -33,6 +34,7 @@ export class Admin extends React.Component {
         this.getUsers();
     }
     componentDidMount() {
+        this._isMounted = true;
         this.getAllCourses();
     }
 
@@ -49,10 +51,12 @@ export class Admin extends React.Component {
                 return response.json();
             })
             .then(json => {
-                if (json.code === 200) {
-                    this.setState({
-                        allCourses: json.allCourses
-                    });
+                if (this._isMounted) {
+                    if (json.code === 200) {
+                        this.setState({
+                            allCourses: json.allCourses
+                        });
+                    }
                 }
             });
     };
@@ -73,29 +77,35 @@ export class Admin extends React.Component {
                 return response.json();
             })
             .then(json => {
-                if (json.code === 200) {
-                    const users = json.users;
-                    users.map(user => {
-                        const courses = [];
-                        json.usercourses.map((course, i) => {
-                            if (user.email === course.email) {
-                                courses.push(course.course_id);
-                            }
+                if (this._isMounted) {
+                    if (json.code === 200) {
+                        const users = json.users;
+                        users.map(user => {
+                            const courses = [];
+                            json.usercourses.map((course, i) => {
+                                if (user.email === course.email) {
+                                    courses.push(course.course_id);
+                                }
+                                return null;
+                            });
+                            user.courses = courses.join(" ").toLowerCase();
                             return null;
                         });
-                        user.courses = courses.join(" ").toLowerCase();
-                        return null;
-                    });
-                    this.setState({
-                        userList: users,
-                        filtered: json.users,
-                        userCourses: json.usercourses
-                    });
-                } else {
-                    this.setState({ registerMessage: json.success });
+                        this.setState({
+                            userList: users,
+                            filtered: json.users,
+                            userCourses: json.usercourses
+                        });
+                    } else {
+                        this.setState({ registerMessage: json.success });
+                    }
                 }
             });
     };
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     render() {
         const { filtered, message, allCourses } = this.state;

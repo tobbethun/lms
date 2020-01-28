@@ -4,6 +4,7 @@ import Delete from "./Delete";
 import { formatTime, delay, handleErrors } from "./utils";
 
 export class Comments extends React.Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
         const object = JSON.parse(localStorage.getItem("loggedIn"));
@@ -18,8 +19,8 @@ export class Comments extends React.Component {
             answer: false
         };
     }
-
     componentDidMount() {
+        this._isMounted = true;
         this.getComments();
     }
 
@@ -48,13 +49,16 @@ export class Comments extends React.Component {
                 return response.json();
             })
             .then(json => {
-                if (json.code === 200) {
-                    this.setState({ commentlist: json.comments });
-                } else {
-                    this.setState({
-                        registerMessage: json.success,
-                        uploadstatus: "error"
-                    });
+                if (this._isMounted) {
+                    if (json.code === 200) {
+                        this.setState({ commentlist: json.comments });
+                    } else {
+                        this.setState({
+                            registerMessage: json.success,
+                            uploadstatus: "error"
+                        });
+
+                    }
                 }
             })
             .catch(() => {
@@ -124,6 +128,11 @@ export class Comments extends React.Component {
                 });
             });
     };
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     render() {
         const {
             firstname,
@@ -136,7 +145,6 @@ export class Comments extends React.Component {
             errorMessage,
             noNetworkMessage
         } = this.state;
-        const { commentPlaceholder = "Skriv din kommentar här" } = this.props;
         const adminDelete = role === "admin";
         return (
             <div className="comments">
@@ -147,7 +155,7 @@ export class Comments extends React.Component {
                     <div className="comment-text">
                         <textarea
                             type="text"
-                            placeholder={commentPlaceholder}
+                            placeholder="Skriv din kommentar här"
                             className={`comment-field ${commentstatus}`}
                             value={comment}
                             onChange={this.handleChange("comment")}

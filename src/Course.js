@@ -166,7 +166,7 @@ export class Course extends Component {
                             )}
                             <AuthButtonWithRouter
                                 courseTitle={course.title}
-                                    courseColor={course.colorcode}
+                                courseColor={course.colorcode}
                                 onlyOneCourse={onlyOneCourse}
                             />
                         </div>
