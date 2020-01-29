@@ -72,15 +72,6 @@ export class Comments extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
-        const data = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            email: this.state.email,
-            role: this.state.role,
-            comment: this.state.comment,
-            course: this.props.courseID,
-            step: this.state.step
-        };
         fetch("/api/comment/", {
             method: "post",
             headers: {
@@ -90,13 +81,13 @@ export class Comments extends React.Component {
 
             //make sure to serialize your JSON body
             body: JSON.stringify({
-                firstname: data.firstname,
-                lastname: data.lastname,
-                email: data.email,
-                role: data.role,
-                course: data.course,
-                comment: data.comment,
-                step: data.step,
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                role: this.state.role,
+                course: this.props.courseID,
+                comment: this.state.comment,
+                step: this.state.step,
                 documentOwner: this.props.documentOwner,
                 url: document.location.href
             })

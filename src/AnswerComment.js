@@ -47,7 +47,6 @@ export class AnswerComment extends React.Component {
                 return response.json();
             })
             .then(json => {
-                // this.setState({loginMessage: json.success});
                 if (json.code === 200) {
                     this.setState({ answerList: json.answers });
                 }
@@ -57,14 +56,6 @@ export class AnswerComment extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.btn.setAttribute("disabled", "disabled");
-        const data = {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            email: this.state.email,
-            role: this.state.role,
-            answer: this.state.answer,
-            commentid: this.state.commentid
-        };
         fetch("/api/answers/", {
             method: "post",
             headers: {
@@ -74,12 +65,12 @@ export class AnswerComment extends React.Component {
 
             //make sure to serialize your JSON body
             body: JSON.stringify({
-                firstname: data.firstname,
-                lastname: data.lastname,
-                email: data.email,
-                role: data.role,
-                answer: data.answer,
-                commentid: data.commentid
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email,
+                role: this.state.role,
+                answer: this.state.answer,
+                commentid: this.state.commentid
             })
         })
             .then(response => {

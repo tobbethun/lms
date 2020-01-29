@@ -137,9 +137,10 @@ a {
   background: #2fbfc0;
 }
 .delete {
-  margin-left: 12px;
   color: grey;
   cursor: pointer;
+  font-size: 14px;
+  margin-left: 12px;
 }
 .delete:hover {
   color: black;
