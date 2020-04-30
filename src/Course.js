@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Link, NavLink, Route, Switch } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import slugify from "slugify";
 import { UserSection } from "./UserSection";
 import { CourseStart } from "./CourseStart";
 import Lesson from "./Lesson";
 import { AuthButtonWithRouter } from "./Dashboard";
+import CourseMenu from "./CourseMenu";
 
 export class Course extends Component {
     constructor() {
@@ -24,6 +25,11 @@ export class Course extends Component {
     render() {
         const { course, lessons, onlyOneCourse } = this.props;
         const { hideMenu } = this.state;
+        const toggleMenu = () => {
+            this.setState({
+                hideMenu: !this.state.hideMenu
+            })
+        }
         const firstStep =
             lessons &&
             slugify(course.title) +
@@ -34,88 +40,7 @@ export class Course extends Component {
         return (
             <div>
                 <div className="container">
-                    <div className={"side-bar " + (hideMenu && "side-bar__hidden")}>
-                        <div className="course-menu__header">
-                            <Link
-                                to={`/kurs/${slugify(course.title)}`}
-                                onClick={this.toggleMenu}
-                            >
-                                {course.title}
-                            </Link>
-                            <div
-                                onClick={() =>
-                                    this.setState({
-                                        hideMenu: !this.state.hideMenu
-                                    })
-                                }
-                                className="hamburger hamburger--in-menu"
-                            >
-                                <div
-                                    style={{
-                                        backgroundColor: course.colorcode
-                                    }}
-                                />
-                                <div
-                                    style={{
-                                        backgroundColor: course.colorcode
-                                    }}
-                                />
-                                <div
-                                    style={{
-                                        backgroundColor: course.colorcode
-                                    }}
-                                />
-                            </div>
-                        </div>
-                        <div className="course-menu">
-                            <div>
-                                <ul style={{ color: course.colorcode }}>
-                                    {lessons &&
-                                        lessons.map((lesson, index) => (
-                                            <li
-                                                key={index}
-                                                className={
-                                                    "course-menu--lesson " +
-                                                    (lesson.inactive
-                                                        ? "inactive"
-                                                        : "")
-                                                }
-                                            >
-                                                <span className="lesson-title">
-                                                    {lesson.title}
-                                                </span>
-                                                {lesson.steps && (
-                                                    <ul className="course-list">
-                                                        {lesson.steps.map(
-                                                            (step, index) => (
-                                                                <li key={index}>
-                                                                    <NavLink
-                                                                        exact
-                                                                        to={`/kurs/${slugify(
-                                                                            course.title
-                                                                        )}/${slugify(
-                                                                            lesson.title
-                                                                        )}/${slugify(
-                                                                            step
-                                                                                .fields
-                                                                                .title
-                                                                        )}`}
-                                                                        activeClassName="is-active"
-                                                                        onClick={this.toggleMenu}
-                                                                    >
-                                                                        {step.fields.title}
-                                                                    </NavLink>
-                                                                </li>
-                                                            )
-                                                        )}
-                                                    </ul>
-                                                )}
-                                            </li>
-                                        ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    {lessons && <CourseMenu course={course} lessons={lessons} toggleMenu={toggleMenu} hideMenu={this.state.hideMenu}/>}
                     <div
                         className={
                             "content " + (hideMenu && "content--slide-left")
