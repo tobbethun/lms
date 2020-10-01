@@ -1,3 +1,9 @@
+To run this project<br>
+* Start mamp server with mysql db
+* Run node server.js
+* Run gulp (for less compiling)
+* Run npm start
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
